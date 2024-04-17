@@ -1,0 +1,104 @@
+{% load i18n %}
+
+{% load appearance_tags %}
+{% load navigation_tags %}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<style>
+    .widget-container-dash{
+        width: 100% !important;
+        height: 157px;
+    }
+    .dashboards-panel-widget{
+        width: 100% !important;
+        height: 100% !important;
+        overflow: hidden;
+        position: relative;
+
+    }
+    .btn-container{
+        position: absolute;
+        bottom: 0%;
+        right: 0%;
+        width: 100%;
+        display: flex;
+        height: 45%;
+        background-color: #ffffff;
+        align-items: flex-end;
+        justify-content: flex-end;
+        font-weight: 200;
+    }
+    .view-btn{
+        position: relative;
+        top: -14px;
+        left: -25px;
+        display: flex;
+        border-radius: 5px;
+        gap: 10px;
+        padding: 9px 12px;
+        align-items: center;
+        background-color: #04724D;
+        color: aliceblue;
+        border: none;
+    }
+    .panel-body {
+        overflow: auto; /* Enable scrolling */
+        scrollbar-width: none; /* Hide the default scrollbar in Firefox */
+        -ms-overflow-style: none; /* Hide the default scrollbar in Edge and IE */
+        height: 68% !important;
+    }
+    
+    .panel-body::-webkit-scrollbar {
+        display: none; /* Hide the default scrollbar in Chrome, Safari, and Opera */
+    }
+    .label-of-box{
+        font-size: 18px;
+    }
+    .item-collections a{
+        color: #4d4d4d;
+        text-decoration: underline;
+    }
+    
+</style>
+
+<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 match-height widget-container-dash">
+    <div class="panel panel-secondary dashboards-panel-widget">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-10">
+                    <strong class="label-of-box">{{ label }}</strong>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-12 item-collections" style="display: flex; flex-direction: column-reverse; margin-top: -7px; padding-left: 26px;">
+                    {% navigation_get_source_columns source=object_list names=columns as source_columns %}
+                    <table class="table table-condensed table-hover table-striped">
+                        <tbody>
+                            {% for object in object_list %}
+                                {% if forloop.last %}
+                                <tr class="tr_div">
+                                    {% for column in source_columns %}
+                                            {% navigation_source_column_resolve column=column as column_value %}
+                                            {{ column_value }} 
+                                            {# Use explicit 'as column_value ' to force date rendering #}
+                                    {% endfor %}
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% if link %}
+            <div class="btn-container">
+                <a href="{{ link }}"><button class="view-btn"> {% trans 'View details' %}<span class="material-symbols-outlined">
+                    share_windows
+                    </span></button></a>
+            </div>
+        {% endif %}
+    </div>
+</div>

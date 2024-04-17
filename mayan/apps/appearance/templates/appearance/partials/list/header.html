@@ -1,0 +1,16 @@
+{% load i18n %}
+{% load static %}
+
+{% load appearance_tags %}
+{% load common_tags %}
+{% load navigation_tags %}
+
+
+
+{% if not hide_multi_item_actions %}
+    {% navigation_resolve_menu name='multi item' sort_results=True source=object_list.0 as links_multi_menus_results %}
+{% endif %}
+
+<div class="clearfix">
+    {% include 'appearance/partials/list/toolbar.html' %}
+</div>

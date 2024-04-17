@@ -1,0 +1,52 @@
+<style>
+    .grid-container {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important; /* Two columns with equal width */
+        grid-gap: 10px !important;
+    }    
+    
+    .widget {
+        padding: 10px !important;
+    }
+    
+    .widget-0 {
+        grid-column: 1 !important; /* Widget 2 will appear first */
+    }
+    
+    @media (max-width: 768px) {
+        .grid-container {
+            grid-template-columns: 1fr !important; /* Single column layout on small screens */
+        }
+    }
+
+    .dashboards-panel-widget {
+        box-shadow: none;
+        border: 1px solid #e0e0e0 !important;
+        border-radius: 9px;
+    }
+    .well{
+        background-color: #ffffff !important ;
+    }
+    
+    
+    
+    
+</style>
+
+{% if not dashboard_skip_label %}
+    <h4>
+        {{ dashboard.label }}
+    </h4>
+    <hr>
+{% endif %}
+
+<div class="well">
+    <div class="row grid-container">
+        <div class="widget widget-0">{{ widgets.2 }}</div>
+    </div>
+    <div class="row grid-container">
+        <div class="widget widget-0">{{ widgets.0 }}</div>
+        <div class="widget widget-1">{{ widgets.1 }}</div>
+    </div>
+    
+</div>

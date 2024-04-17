@@ -1,0 +1,40 @@
+/home/nagipragalathan/mayan-edms-4.5.8/mayan/apps/documents/models/document_models.py = documet DB
+
+/home/nagipragalathan/mayan-edms-4.5.8/mayan/apps/checkouts/views.py = summary views
+
+/home/nagipragalathan/mayan-edms-4.5.8/mayan/apps/documents/models/document_models.py
+
+
+/home/nagipragalathan/mayan-edms-4.5.8/mayan/apps/appearance/static/appearance/node_modules/bootswatch/flatly/bootstrap.css
+
+/home/nagipragalathan/Test/mayan-edms-4.6.3/mayan/apps/sources/urls.py = urls
+
+activate venv = source ~/.virtualenvs/mayan-edms-4.6.3/bin/activate
+
+
+
+##### Changes #######
+
+Fonts
+Docchin - padding
+navebasr( search, dropdown )
+user = admin, Setup, Tools, [User,  details,Change,  password, Logout, ] replace user icon to grear symbol, remove "user"
+1. side bar grouping, 2. remove lines, -1.open icon
+
+
+Home{
+    background color - 
+    recentyle access = last accessed file, same logic for all
+    Home = title
+}
+
+input box color changes
+
+    .form-control{
+        background: black !important;
+        color: aliceblue;
+        border: 2px solid #3d3d3d !important;
+        border-radius: 0px !important;
+    }
+    
+# DMS-AI = 3.8.19
