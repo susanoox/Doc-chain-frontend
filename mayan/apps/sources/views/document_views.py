@@ -290,24 +290,27 @@ class DocumentUploadView(ExternalObjectViewMixin, UploadBaseView):
                 interface_name='View',
                 interface_load_kwargs=interface_load_kwargs
             )
-            print("Document Uploaded..!", a)
-            doc_data = Document.objects.last()
-            if doc_data:
-                print("File Upload Started..!", doc_data.id)
-                
-                # Access the file associated with the document
-                uploaded_file = doc_data.file_field_name  # Replace 'file_field_name' with the name of your file field
-                # Do something with the uploaded file, such as accessing its path or content
-                file_path = uploaded_file.path
-                file_content = uploaded_file.read()
+            # print("Document Uploaded..!", a)
+            # doc_data = Document.objects.last()
+            # if doc_data:
+            #     print("File Upload Started..!", doc_data.id)
 
-                # Now you can process or use the file content as needed
-                print("File Path:", file_path)
-                print("File Content:", file_content)
+            #     # Retrieve the latest document file associated with the document
+            #     latest_document_file = doc_data.file_latest
 
-                # Proceed with blockchain upload if content is valid
-                if file_content:
-                    upload_to_blockchain(file_content, doc_data.id)
+            #     if latest_document_file:
+            #         # Here you can access the file attributes or perform any operations
+            #         print("File Name:", latest_document_file.filename)
+            #         print("File Size:", latest_document_file.size)
+                    
+            #         # Call the function to read and print document content
+            #         # content = read_and_print_document_content(latest_document_file)
+
+            #         # # Proceed with blockchain upload if content is valid
+            #         # if content:
+            #         #     upload_to_blockchain(content, doc_data.id)
+            # else:
+            #     print("No document found.")
 
             
 

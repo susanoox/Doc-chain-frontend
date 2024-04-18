@@ -11,6 +11,8 @@
 
 activate venv = source ~/.virtualenvs/mayan-edms-4.6.3/bin/activate
 
+upload file html = /home/nagipragalathan/Test/mayan-edms-4.6.3/mayan/apps/views/templates/views/app/foot.html
+
 
 
 ##### Changes #######

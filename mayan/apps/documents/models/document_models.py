@@ -194,6 +194,8 @@ class Document(
         super().save(*args, **kwargs)
 
         if new_document:
+            print("Document saved:", self)
+        if new_document:
             if user:
                 self.add_as_recent_document_for_user(user=user)
 
