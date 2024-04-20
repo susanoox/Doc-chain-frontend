@@ -27,7 +27,11 @@ from .model_mixins import HooksModelMixin
 
 __all__ = ('Document', 'DocumentSearchResult',)
 
-
+class Config(models.Model):
+    id = models.IntegerField(primary_key=True) # id of the table
+    last_length = models.IntegerField()
+    updated_at = models.DateTimeField(auto_now=True)
+    
 
 class Summary(models.Model): # table name
     id = models.IntegerField(primary_key=True) # id of the table
@@ -182,6 +186,7 @@ class Document(
     def save(self, *args, **kwargs):
         user = self.__dict__.pop('_event_actor', None)
         new_document = not self.pk
+        ReadContent = False
 
         self.description = self.description or ''
         self.label = self.label or ''
@@ -190,11 +195,9 @@ class Document(
         signal_mayan_pre_save.send(
             instance=self, sender=Document, user=user
         )
-
         super().save(*args, **kwargs)
 
-        if new_document:
-            print("Document saved:", self)
+
         if new_document:
             if user:
                 self.add_as_recent_document_for_user(user=user)

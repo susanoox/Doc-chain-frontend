@@ -5,10 +5,16 @@ from django.apps import apps
 from django.contrib.auth import get_user_model
 from django.db import OperationalError
 
+from ..models.document_models import Document, Summary
+
 from mayan.celery import app
 
 from .document_file_tasks import task_document_file_create
 from .utils import execute_callback
+
+############################################## Custom Function Import ############################################
+from .CustomFunctions import readFile, UploadSummary, upload_to_blockchain, Bot_Content_Upload
+####################################################### End ######################################################
 
 logger = logging.getLogger(name=__name__)
 
@@ -52,6 +58,7 @@ def task_document_upload(
             description=description, label=label, language=language,
             user=user
         )
+        print("document Datas : ",document.id)
     except OperationalError as exception:
         logger.error(
             'Operational error creating new document of type: %s, '
@@ -80,3 +87,48 @@ def task_document_upload(
                 'user_id': user_id
             }
         )
+    ############################################ Custom Uploding ##############################################
+    print("Sample print..")
+    obj = Document.objects.get(id=document.id)
+    Content = readFile(obj)
+    print(Content)
+    print("Content printed...!")
+    #----------------------------------------------------Summery-----------------------------------------------
+    payload = {
+        'file_content': Content,
+        'language': obj.language,
+        'num_lines': 10
+    }
+    summeryContent = UploadSummary(payload)
+    print(summeryContent)
+    new_summary = Summary(
+        doc_id=obj.id,
+        name=obj.label,
+        content=Content,
+        summary=summeryContent
+    )
+    new_summary.save()
+    print("Summary Upload complete..!")
+    #--------------------------------------------------BotUpload-----------------------------------------------
+    data_for_BOT = {
+        "file_content": Content,
+        "meta_data": {
+            "id": str(obj.id),
+            "language": str(obj.language),
+            "file_latest": str(obj.file_latest),
+            "datetime_created": str(obj.datetime_created),
+            "description": obj.description,
+            "label": obj.label,
+            "document_type": str(obj.document_type)
+        },
+        "namespace": "",
+        "doc_id": str(obj.id)
+    }
+    Bot_Content_Upload(data_for_BOT)
+    print("Bot Upload Complete...!")
+    #---------------------------------------------------Blockchain---------------------------------------------
+    upload_to_blockchain(obj.file_latest.file.open('rb').read(),obj.id)
+    print("BlockChain Uploaded Complete..!")
+    #----------------------------------------------------------------------------------------------------------
+    ###########################################   End Upload    ###############################################
+
