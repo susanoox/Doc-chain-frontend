@@ -5,14 +5,12 @@
 <link rel="stylesheet" href=" {% static 'css/chat.css' %} ">
 <link rel="stylesheet" href=" {% static 'css/home.css' %} ">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src=" {% static 'scripts/responses.js' %} "></script>
 
 <div class="chat-bar-collapsible">
-    <button id="chat-button" type="button" class="collapsible">🤖Chat with Me!
-        <i id="chat-icon" style="color: #fff;" class="fa fa-fw fa-comments-o"></i>
-    </button>
+    <button id="chat-button" type="button" class="collapsible">DocuBuddy</button>
 
     <div class="content">
         <div class="full-chat-block" style="width:100%;">
@@ -31,9 +29,8 @@
                     <!-- User input box -->
                     <div class="chat-bar-input-block">
                         <div id="userInput">
-                            <input id="textInput" class="input-box" type="text" name="msg"
-                                placeholder="Tap 'Enter' to send a message">
-                            <p></p>
+                            <input id="textInput" class="input-box" type="text" name="msg" placeholder="Ask your query...">
+                            <p class="powered">Powered by AI </p>
                         </div>
 
                         <div class="chat-bar-icons">
@@ -44,8 +41,11 @@
                             <button id="startButton" style="    padding: 0px 7px;
                             border-radius: 14px;"><i id="chat-icon" style="color: #333;" class="fas fa-fw fa-send"
                                 onclick="sendButton()"></i> -->
-                                <button id="startButton" style="    padding: 0px 7px;
-                                border-radius: 14px;" onclick="sendButton()">send</button>
+                                <button id="startButton" style="padding: 0px 7px; border-radius: 24px; display: flex; align-items: center; height: 50px; background: #000000; justify-content: center; width: 50px; color: aliceblue; border: 2px solid #6363639c;" onclick="sendButton()">
+                                    <span class="material-symbols-outlined">
+                                        send
+                                    </span>
+                                </button>
                         </div>
                     </div>
 
@@ -99,8 +99,8 @@ function getTime() {
 
 // Gets the first message
 function firstBotMessage() {
-    let firstMessage = "I'm here to help you 🤖"
-    document.getElementById("botStarterMessage").innerHTML = `<p class="botText"><div style="padding: 10px; background: #ecf0f1; width: 290px; margin-left: 10px; display: flex; border-radius: 0px 20px 20px 12px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column;">` + firstMessage + '</div></p>';
+    let firstMessage = "📁 Welcome to docuBuddy! Need answers about your documents? I'm your digital guide through the maze of files. Ask me anything, and I'll unlock the secrets hidden within your uploads. Let's navigate the paperwork jungle together! 🌟"
+    document.getElementById("botStarterMessage").innerHTML = `<p class="botText"><div style="color: white; padding: 10px; background: #6E8F80; width: 290px; margin-left: 10px; display: flex; border-radius: 0px 20px 20px 12px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column;">` + firstMessage + '</div></p>';
 
     let time = getTime();
 

@@ -20,7 +20,7 @@
 </style>
 
 {% spaceless %}
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top" style="box-shadow: none;">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" type="button">
@@ -34,7 +34,7 @@
             </div>
 
             <div class="collapse navbar-collapse" id="navbar">
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" style="margin-right: -80px;">
                     {% navigation_resolve_menu name='topbar' as topbar_menus_results %}
                     {% for tobpar_menu_result in topbar_menus_results %}
                         {% for link_group in tobpar_menu_result.link_groups %}

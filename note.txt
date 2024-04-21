@@ -15,6 +15,9 @@ upload file html = /home/nagipragalathan/Test/mayan-edms-4.6.3/mayan/apps/views/
 
 uploadTask py = /home/nagipragalathan/Test/mayan-edms-4.6.3/mayan/apps/documents/tasks/document_tasks.py
 
+NavBar Menu = /home/nagipragalathan/Test/mayan-edms-4.6.3/mayan/apps/common/apps.py : (144:151)
+/home/nagipragalathan/Test/mayan-edms-4.6.3/mayan/apps/navigation/templates/navigation/generic_subnavigation.html
+
 ##### Changes #######
 
 Fonts

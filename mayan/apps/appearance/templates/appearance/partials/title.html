@@ -13,11 +13,11 @@
 {% endif %}
 
 {% if not non_html_title and result.title %}
-        <div style="display: flex; margin-bottom: -5px; width: 109%; margin-left: -23px; padding-left: 34px; background: #FFFFFF; align-items: center;">
+        <div style="display: flex; margin-bottom: -5px; width: 108%; margin-left: -12px; background: #FFFFFF; align-items: center; padding: 17px;">
             {% if result.title_full == "Home" %}
-                <h3 id="content-title" title='Dashboard'>
+                <h3 id="content-title" style="margin: 0px;" title='Dashboard'>
             {% else %}
-                <h3 id="content-title" title='{{ result.title_full }}'>
+                <h3 id="content-title" style="margin: 0px;" title='{{ result.title_full }}'>
             {% endif %}
 {% endif %}
 {% if result.title_full == "Home" %}

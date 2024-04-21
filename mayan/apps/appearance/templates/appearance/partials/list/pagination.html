@@ -5,38 +5,49 @@
 {% views_get_proper_elided_page_range paginator page_obj.number 2 as page_range %}
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
 {% if page_obj %}
     <div class="pull-left">
         <div class="btn-toolbar" role="toolbar" style="margin-right: 10px;">
-            <div class="btn-group">
+            <div class="btn-group" style="gap: 3px; display: flex; flex-direction: row;">
                 {% if page_obj.has_previous %}
-                    <a alt="{% trans 'Previous page' %}" class="btn btn-default btn-sm" href="{% views_get_paging_query_string page_number=page_obj.previous_page_number %}">&lsaquo;&lsaquo;</a>
+                    <a style="border-radius: 4px; color: #000000; background: #eeeeee; border: 2px solid #eeeeee;display: flex; height: 35px; align-items: center; justify-content: center;" alt="{% trans 'Previous page' %}" class="btn btn-default btn-sm" href="{% views_get_paging_query_string page_number=page_obj.previous_page_number %}">
+                        <span class="material-symbols-outlined">
+                            keyboard_double_arrow_left
+                        </span>
+                    </a>
                 {% else %}
-                    <a alt="{% trans 'Previous page' %}" class="btn btn-default btn-sm disabled" href="#">&lsaquo;&lsaquo;</a>
+                    <a style="border-radius: 4px; color: #000000; background: #eeeeee; border: 2px solid #eeeeee;display: flex; height: 35px; align-items: center; justify-content: center;" alt="{% trans 'Previous page' %}" class="btn btn-default btn-sm disabled" href="#">
+                        <span class="material-symbols-outlined">
+                            keyboard_double_arrow_left
+                        </span>
+                    </a>
                 {% endif %}
 
                 {% for page_number in page_range %}
                     {% if page_number == paginator.ELLIPSIS %}
-                        <a class="btn btn-default btn-sm disabled" href="#">
-                            <span class="material-symbols-outlined">
-                                keyboard_double_arrow_left
-                            </span>
-                        </a>
+                        <a style="border-radius: 4px; color: #000000; background: #eeeeee; border: 2px solid #eeeeee;" class="btn btn-default btn-sm disabled" href="#">{{ paginator.ELLIPSIS }}</a>
                     {% else %}
                         {% if page_number == page_obj.number %}
-                            <a class="active btn btn-default btn-sm pagination-disabled" href="#">{{ page_number }}</a>
+                            <a style="border-radius: 4px; color: #000000; background: #eeeeee; border: 2px solid #eeeeee;" class="active btn btn-default btn-sm pagination-disabled" href="#">{{ page_number }}</a>
                         {% else %}
-                            <a class="btn btn-default btn-sm" href="{% views_get_paging_query_string page_number=page_number %}">{{ page_number }}</a>
+                            <a style="border-radius: 4px; color: #000000; background: #eeeeee; border: 2px solid #eeeeee;" class="btn btn-default btn-sm" href="{% views_get_paging_query_string page_number=page_number %}">{{ page_number }}</a>
                         {% endif %}
                     {% endif %}
                 {% endfor %}
 
                 {% if page_obj.has_next %}
-                    <a alt="{% trans 'Next page' %}" class="btn btn-default btn-sm" href="{% views_get_paging_query_string page_number=page_obj.next_page_number %}">&rsaquo;&rsaquo;</a>
+                    <a alt="{% trans 'Next page' %}" style="border-radius: 4px; color: #000000; background: #eeeeee; border: 2px solid #eeeeee;display: flex; height: 35px; align-items: center; justify-content: center;" class="btn btn-default btn-sm" href="{% views_get_paging_query_string page_number=page_obj.next_page_number %}">
+                        <span class="material-symbols-outlined">
+                            keyboard_double_arrow_right
+                        </span>
+                    </a>
                 {% else %}
-                    <a alt="{% trans 'Next page' %}" class="btn btn-default btn-sm disabled" href="#">&rsaquo;&rsaquo;</a>
+                    <a alt="{% trans 'Next page' %}" style="border-radius: 4px; color: #000000; background: #eeeeee; border: 2px solid #eeeeee;display: flex; height: 35px; align-items: center; justify-content: center;" class="btn btn-default btn-sm disabled" href="#">
+                        <span class="material-symbols-outlined">
+                            keyboard_double_arrow_right
+                        </span>
+                    </a>
                 {% endif %}
             </div>
         </div>

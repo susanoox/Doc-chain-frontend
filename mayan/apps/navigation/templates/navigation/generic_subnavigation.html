@@ -1,13 +1,14 @@
 {% load common_tags %}
 {% load navigation_tags %}
 
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
 {% if link|common_get_type == "<class 'mayan.apps.navigation.classes.Menu'>" %}
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
             {% navigation_link_get_icon link=link as link_icon %}
 
             {% if link_icon %}{{ link_icon.render }}{% endif %}
-            {{ link.label }}
             <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">

@@ -10,6 +10,8 @@ from django.utils.translation import gettext_lazy as _
 
 from mayan.apps.organizations.settings import setting_organization_url_base_path
 from mayan.apps.templating.classes import AJAXTemplate
+from mayan.apps.navigation.classes import Link, Separator, Text
+
 
 from .handlers import handler_pre_initial_setup, handler_pre_upgrade
 from .links import link_about, link_license, link_setup, link_tools
@@ -140,13 +142,13 @@ class CommonApp(MayanAppConfig):
             name='menu_topbar',
             template_name='appearance/menus/topbar.html'
         )
-
-        menu_about.bind_links(
-            links=(link_tools, link_setup, link_about, link_license)
+        sep = Separator()
+        menu_user.bind_links(
+            links=(link_tools, link_setup, sep) #, link_about, link_license
         )
 
         menu_topbar.bind_links(
-            links=(menu_about, menu_user),
+            links=(menu_user, menu_user),
             position=10
         )
 

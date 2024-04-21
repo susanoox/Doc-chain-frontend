@@ -17,7 +17,7 @@ function isPureNumber(str) {
 
 function getBotResponse(input) {
   var currentURL = window.location.href;
-  console.log('currentURL', currentURL, !( currentURL.includes("preview") || currentURL.includes("ocr/") || currentURL.includes("summery/") || currentURL.includes("cabinets/") ), currentURL.includes("preview") , currentURL.includes("ocr/") , currentURL.includes("summery/") , currentURL.includes("cabinets/"))
+  console.log('currentURL', currentURL, !( currentURL.includes("preview") || currentURL.includes("ocr/") || currentURL.includes("summery/") || currentURL.includes("cabinets/") ))
   let chatbotResUrl = "";
   if (!( currentURL.includes("preview") || currentURL.includes("ocr/") || currentURL.includes("summery/") || currentURL.includes("cabinets/") ) ) {
       chatbotResUrl = "chatbot_res";
@@ -37,7 +37,7 @@ function getBotResponse(input) {
         message: input,
       },
       success: function (data) {
-        let botHtml = '<p class="botText"><div style="padding: 10px; background: #ecf0f1; width: 290px; margin-left: 10px; display: flex; border-radius: 0px 20px 20px 12px; align-items: flex-start; justify-content: flex-start; text-align: justify;">' + data.response + '</div></p>';
+        let botHtml = '<p class="botText"><div style="padding: 10px; background: #6E8F80; width: 290px; margin-left: 10px; display: flex; border-radius: 0px 20px 20px 12px; align-items: flex-start; justify-content: flex-start; text-align: justify;">' + data.response + '</div></p>';
         $("#chatbox").append(botHtml);
         console.log(data.response, data)
         return data
