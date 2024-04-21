@@ -7,8 +7,7 @@
 </style>
 
 <div class="{{ column_class|default:'col-xs-12 col-sm-4 col-md-3 col-lg-2' }} grid-item">
-    <div class="panel panel-primary panel-item">
-        {% include 'appearance/partials/list/panel/heading.html' %}
+    <div class="panel panel-primary panel-item" style="min-height: 252px !important; border: 2px solid #e6e6e6; box-shadow: none;">
         {% include 'appearance/partials/list/panel/body.html' %}
         {% include 'appearance/partials/list/panel/footer.html' %}
     </div>

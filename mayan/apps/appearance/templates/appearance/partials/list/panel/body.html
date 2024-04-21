@@ -1,9 +1,35 @@
 {% load navigation_tags %}
+<style>
+    .title-cont a{
+        font-size: 14px; font-weight: 600; margin-left: 15px; color: #000000;
+    }
+</style>
 
-<div class="panel-body">
+<div class="panel-body" style="padding: 0px;">
     {% if not hide_columns %}
         {% for column in source_columns_non_identifier %}
-            <div class="text-center" style="">{% navigation_source_column_resolve column=column as column_value %}{% if column_value != '' %}{% if column.include_label %}<span class="source-column-label">{{ column.label }}</span>: {% endif %}{{ column_value }}{% endif %}</div>
+            {% if forloop.counter == 1 %}
+                {% if links_multi_menus_results and not hide_multi_item_actions %}
+                    <input class="form-multi-object-action-checkbox check-all-slave checkbox" name="pk_{{ object.pk }}" style="cursor: pointer; cursor: pointer; position: absolute; left: 12%; top: 3%; width: 17px; height: 17px; background-color: transparent;" type="checkbox" />
+                {% endif %}
+                <div class="text-center" style="height: 124px; overflow: hidden; margin-bottom: 10px;">{% navigation_source_column_resolve column=column as column_value %}{% if column_value != '' %}{% if column.include_label %}<span class="source-column-label">{{ column.label }}</span>: {% endif %}{{ column_value }}{% endif %}</div>
+                <span style="color: white; word-break: break-all; overflow-wrap: break-word;" class="title-cont">
+                    {% if not hide_object %}
+                        {% if not hide_link %}
+                            <a href="{{ object.get_absolute_url }}" style="font-size: 14px; font-weight: 600; margin-left: 15px; color: #000000;">{{ object }}</a>
+                        {% else %}
+                            {{ object }}
+                        {% endif %}
+                    {% else %}
+                        {% navigation_source_column_resolve column=source_columns_identifier.0 as column_value %}
+                        {{ column_value }}
+                    {% endif %}
+                </span>
+            {% elif forloop.counter == 2 %}
+                <div class="text-center" style="text-align: left; margin-left: 15px; font-size: 12px; font-weight: 400; color: #858585; margin-top: 20px;">{% navigation_source_column_resolve column=column as column_value %}{% if column_value != '' %}{% if column.include_label %}<span class="source-column-label">{{ column.label }}</span>: {% endif %}{{ column_value }}{% endif %}</div>
+            {% else %}
+                <div class="text-center" style="text-align: left; margin-left: 15px; font-size: 12px; font-weight: 400; color: #858585;">{% navigation_source_column_resolve column=column as column_value %}{% if column_value != '' %}{% if column.include_label %}<span class="source-column-label">{{ column.label }}</span>: {% endif %}{{ column_value }}{% endif %}</div>
+            {% endif %}
         {% endfor %}
     {% endif %}
 </div>

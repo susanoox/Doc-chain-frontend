@@ -6,6 +6,12 @@
 
 {% appearance_get_icon "mayan.apps.dynamic_search.icons.icon_search_form_clear" extra_context__html_data__class="appearance-input-search-clear" extra_context__html_data__id="search-form-appearance-input-search-clear" extra_context__html_data__style="display: none; top: 1px;" as icon_search_form_clear %}
 
+<style>
+    .custom-inp::placeholder{
+        color: black;
+    }
+</style>
+
 {% if not search_disable_list_filtering and search_model %}
     <div class="pull-left">
         <div class="btn-toolbar" role="toolbar">
@@ -15,7 +21,7 @@
                     {# Avoids invalid page errors when the current page number is higher that the filter page count results #}
                     <input class="form-control" id="search-filter-page" name="page" type="hidden" value="1">
                     <span class="appearance-input-search-clearable">
-                        <input class="form-control input-sm" data-submit-on-clear="true" id="search-filter-input-terms" name="{% search_get_filter_prefix %}{% search_get_query_parameter_any_field %}" placeholder="{% trans 'Filter terms' %}" type="search" value="{% search_get_query_any_field_value query=filter_query %}">
+                        <input class="form-control input-sm custom-inp" data-submit-on-clear="true" id="search-filter-input-terms" name="{% search_get_filter_prefix %}{% search_get_query_parameter_any_field %}" placeholder="{% trans 'Filter terms' %}" type="search" value="{% search_get_query_any_field_value query=filter_query %}" style="background-color: #F8F8F8; border: 1px solid #bdbdbd; color: black !important; border-radius: 5px; width:248px;">
                         {{ icon_search_form_clear }}
                     </span>
                 </div>

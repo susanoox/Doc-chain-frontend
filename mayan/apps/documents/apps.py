@@ -587,7 +587,7 @@ class DocumentsApp(MayanAppConfig):
             func=lambda context: context['object'].recent.first().datetime_accessed,
             include_label=True,
             is_sortable=True,
-            label=_(message='Access date and time'),
+            label=_(message='Access time'),
             name='datetime_accessed',
             sort_field='recent__datetime_accessed',
             source=RecentlyAccessedDocumentProxy

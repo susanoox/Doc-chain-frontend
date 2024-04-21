@@ -97,9 +97,9 @@ def task_document_upload(
     payload = {
         'file_content': Content,
         'language': obj.language,
-        'num_lines': 10
+        'num_lines': 30
     }
-    summeryContent = UploadSummary(payload)
+    summeryContent = UploadSummary(payload).get('summary')
     print(summeryContent)
     new_summary = Summary(
         doc_id=obj.id,
@@ -107,7 +107,7 @@ def task_document_upload(
         content=Content,
         summary=summeryContent
     )
-    new_summary.save()
+    new_summary.save() 
     print("Summary Upload complete..!")
     #--------------------------------------------------BotUpload-----------------------------------------------
     data_for_BOT = {

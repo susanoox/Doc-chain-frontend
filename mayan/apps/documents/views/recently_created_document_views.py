@@ -24,7 +24,7 @@ class RecentCreatedDocumentListView(DocumentListView):
                 'no_results_title': _(
                     'There are no recently created documents'
                 ),
-                'title': _(message='Recently created')
+                'title': _(message='Recently Created')
             }
         )
         return context

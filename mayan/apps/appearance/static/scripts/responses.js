@@ -17,8 +17,9 @@ function isPureNumber(str) {
 
 function getBotResponse(input) {
   var currentURL = window.location.href;
+  console.log('currentURL', currentURL, !( currentURL.includes("preview") || currentURL.includes("ocr/") || currentURL.includes("summery/") || currentURL.includes("cabinets/") ), currentURL.includes("preview") , currentURL.includes("ocr/") , currentURL.includes("summery/") , currentURL.includes("cabinets/"))
   let chatbotResUrl = "";
-  if (!currentURL.includes("documents/documents")) {
+  if (!( currentURL.includes("preview") || currentURL.includes("ocr/") || currentURL.includes("summery/") || currentURL.includes("cabinets/") ) ) {
       chatbotResUrl = "chatbot_res";
   } else {
       var parts = currentURL.split('/');

@@ -62,6 +62,9 @@
     
 </style>
 
+
+
+
 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 match-height widget-container-dash">
     <div class="panel panel-secondary dashboards-panel-widget">
         <div class="panel-heading">
@@ -77,17 +80,23 @@
                     {% navigation_get_source_columns source=object_list names=columns as source_columns %}
                     <table class="table table-condensed table-hover table-striped">
                         <tbody>
-                            {% for object in object_list %}
-                                {% if forloop.last %}
+                            {% if object_list|length == 0 %}
                                 <tr class="tr_div">
-                                    {% for column in source_columns %}
-                                            {% navigation_source_column_resolve column=column as column_value %}
-                                            {{ column_value }} 
-                                            {# Use explicit 'as column_value ' to force date rendering #}
-                                    {% endfor %}
+                                    No action done in {{ label }}.
                                 </tr>
-                                {% endif %}
-                            {% endfor %}
+                            {% else %}
+                                {% for object in object_list %}
+                                    {% if forloop.last %}
+                                    <tr class="tr_div">
+                                        {% for column in source_columns %}
+                                                {% navigation_source_column_resolve column=column as column_value %}
+                                                {{ column_value }} 
+                                                {# Use explicit 'as column_value ' to force date rendering #}
+                                        {% endfor %}
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
                         </tbody>
                     </table>
                 </div>

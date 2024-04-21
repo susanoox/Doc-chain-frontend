@@ -43,34 +43,37 @@ def chatbot_res(request):
 
         # Define the URL and payload
         url = os.getenv('AI_API') + "/v2/response"
-        payload = {"query": query}
-
+        payload = {"query": query, "namespace":"usr-"+str(request.user.id)}
+        print(payload)
         # Send a POST request with the payload
         response = requests.post(url, json=payload, timeout=int(os.getenv('REQUEST_TIMEOUT')))
 
         # Check the response status code
         if response.status_code == 200:
             data = response.json()  # Extract JSON data from the response
+            print(data['response']['response'])
             unique_labels = set()
             unique_data = []
+            
+            # print(data)
 
-            for item in data['metadata']:
-                label = item['label']
-                if label not in unique_labels:
-                    unique_data.append(item)
-                    unique_labels.add(label)
-            print(data)
+            # for item in data['metadata']:
+            #     label = item['label']
+            #     if label not in unique_labels:
+            #         unique_data.append(item)
+            #         unique_labels.add(label)
+            # print(data)
             try:
-                print(data['metadata'])
+                # print(data['metadata'])
                 out_str = f"""
                     <div style="display: flex;flex-direction: column;align-items: flex-start;">
-                        <div>{data['response']}</div>
+                        <div>{data['response']['response']}</div>
                         <ul style="margin-left: 20px;">"""
 
-                for i in unique_data:
-                    out_str += f"""
-                        <li style="margin-bottom: 5px;"><a target="_blank" onclick="window.location.href='/#/documents/documents/{i['id']}/preview/'" style="text-decoration: none;">"""+i['label']+"""</a></li>
-                    """
+                # for i in unique_data:
+                #     out_str += f"""
+                #         <li style="margin-bottom: 5px;"><a target="_blank" onclick="window.location.href='/#/documents/documents/{i['id']}/preview/'" style="text-decoration: none;">"""+i['label']+"""</a></li>
+                #     """
 
                 out_str += "</ul></div>"
                 data['response'] = out_str
@@ -88,7 +91,10 @@ def chatbot_res_with_id(request, doc_id):
 
         # Define the URL and payload
         url = os.getenv('AI_API') + "/v2/response/"+str(doc_id)
-        payload = {"query": query}
+        payload = {"query": query, "namespace":"doc-"+str(doc_id)}
+        print(payload)
+        
+        
 
         # Send a POST request with the payload
         response = requests.post(url, json=payload, timeout=int(os.getenv('REQUEST_TIMEOUT')))
@@ -98,24 +104,26 @@ def chatbot_res_with_id(request, doc_id):
             data = response.json()  # Extract JSON data from the response
             unique_labels = set()
             unique_data = []
-
-            for item in data['metadata']:
-                label = item['label']
-                if label not in unique_labels:
-                    unique_data.append(item)
-                    unique_labels.add(label)
             print(data)
+            
+
+            # for item in data['metadata']:
+            #     label = item['label']
+            #     if label not in unique_labels:
+            #         unique_data.append(item)
+            #         unique_labels.add(label)
+            # print(data)
             try:
-                print(data['metadata'])
+                # print(data['metadata'])
                 out_str = f"""
                     <div style="display: flex;flex-direction: column;align-items: flex-start;">
-                        <div>{data['response']}</div>
+                        <div>{data['response']['response']}</div>
                         <ul style="margin-left: 20px;">"""
 
-                for i in unique_data:
-                    out_str += f"""
-                        <li style="margin-bottom: 5px;"><a target="_blank" onclick="window.location.href='/#/documents/documents/{i['id']}/preview/'" style="text-decoration: none;">"""+i['label']+"""</a></li>
-                    """
+                # for i in unique_data:
+                #     out_str += f"""
+                #         <li style="margin-bottom: 5px;"><a target="_blank" onclick="window.location.href='/#/documents/documents/{i['id']}/preview/'" style="text-decoration: none;">"""+i['label']+"""</a></li>
+                #     """
 
                 out_str += "</ul></div>"
                 data['response'] = out_str

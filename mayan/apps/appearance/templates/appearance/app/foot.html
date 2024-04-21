@@ -45,8 +45,8 @@
                             border-radius: 14px;"><i id="chat-icon" style="color: #333;" class="fas fa-fw fa-send"
                                 onclick="sendButton()"></i> -->
                                 <button id="startButton" style="    padding: 0px 7px;
-                                border-radius: 14px;" onclick="sendButton()">send</div>
-                            </div>
+                                border-radius: 14px;" onclick="sendButton()">send</button>
+                        </div>
                     </div>
 
                     <div id="chat-bar-bottom">
@@ -113,8 +113,9 @@ firstBotMessage();
 // Retrieves the response
 function getHardResponse(userText) {
     let botResponse = getBotResponse(userText);
-    document.getElementById("chat-bar-bottom").scrollIntoView(true);
+    document.getElementById("chat-bar-bottom").scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
 }
+
 
 //Gets the text text from the input box and processes it
 function getResponse() {

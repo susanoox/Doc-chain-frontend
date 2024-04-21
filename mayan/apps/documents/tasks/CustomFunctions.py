@@ -6,6 +6,7 @@ import hashlib, base64
 import language_tool_python
 from requests.exceptions import ConnectionError, Timeout, RequestException
 from dotenv import load_dotenv
+from requests.exceptions import JSONDecodeError
 
 ########################################################################################
 from pdf2image import convert_from_path
@@ -23,9 +24,9 @@ load_dotenv()
 try:
     baseAi = os.getenv('AI_API')
     BlockUrl = os.getenv('BLOCK_CHAIN_API') + '/filehash'
-    Ocrurl = os.getenv('AI_API') + '/V2/ocr'
+    Ocrurl = os.getenv('AI_API') + '/v2/ocr'
     url_BOT = os.getenv('AI_API') + '/v2/upload'
-    SummaryUrl = os.getenv('AI_API') + "/V2/summary"
+    SummaryUrl = os.getenv('AI_API') + "/v2/summary" 
     RequestTimeOut = int(os.getenv('REQUEST_TIMEOUT'))
 except Exception as e:
     print("env file not found ..!", e)
@@ -105,25 +106,37 @@ def calculate_grammar_percentage(text):
             return 0
         print("grammar_percentage:", str(grammar_percentage))
         return grammar_percentage
-
+    
 def extract_text_from_image_google(content):
-    file_base64 = base64.b64encode(content).decode('utf-8')
-    payload = {'file': file_base64}
-    print(Ocrurl)
-    response = requests.post(Ocrurl, json=payload, timeout=int(os.getenv('REQUEST_TIMEOUT')))
-    json = response.json()
-    content_text = json.get("response")
-    if content_text:
-        return content_text
-    else:
-        print("No text found in the image.")
+    files = {'file': content}
+    
+    # Make a POST request to the OCR endpoint
+    response = requests.post(Ocrurl, files=files)
+    
+    print(response)  # Print response status code for debugging
+    
+    try:
+        # Attempt to parse the JSON response
+        json_response = response.json()
+        
+        # Check if the request was successful (status code 200)
+        if response.status_code == 200:
+            # Extract the text from the response JSON
+            text = json_response.get("response").get("ocr_text")
+            return text
+        else:
+            print("Error:", response.status_code)
+            return None
+    except JSONDecodeError:
+        print("Failed to decode JSON response")
         return None
-
+    
 ##################################### End of Functions ##################################################
 
 
 def readFile(Data:Document):
     document_file = Data.file_latest
+    ReadContent = ""
     #-------------------------------------------- Extract From Text ---------------------------------------------------------
     if str(document_file).lower().endswith(('.jpg', '.jpeg', '.png')):
         with document_file.file.open('rb') as img_file:
@@ -141,20 +154,11 @@ def readFile(Data:Document):
                 print("language: ", Data.language)
                 print(Data.language == "eng" and (80 > calculate_grammar_percentage(text)), (80 < calculate_grammar_percentage(text)))
                 if Data.language == "eng" and (80 < calculate_grammar_percentage(text)):
-                    # with document_file.file.open('rb') as img_file:
-                    #     file_base64 = base64.b64encode(img_file.read()).decode('utf-8')
-                    #     payload = {'file': file_base64}
-                    #     print(url)
-                    #     response = requests.post(url, json=payload, timeout=int(os.getenv('REQUEST_TIMEOUT')))
-                    #     json = response.json()
-                    #     content_text = json.get("response")
-                    #     if content_text is not None:
-                    #         ReadContent = content_text
-                    #     else:
-                            ReadContent = text
+                    ReadContent = text
                 else:
                     with document_file.file.open('rb') as img_file:
                         content_text = extract_text_from_image_google(img_file.read())
+                        print(content_text)
                         if content_text is not None:
                             ReadContent = content_text
             return ReadContent

@@ -212,6 +212,7 @@ class summery(SingleObjectDetailView):
             'object': self.object,
             'title': _('Summery Details of: %s') % self.object,
             'content': content, 
+            'doc_id':document_id
         }
 
 class Ocr(SingleObjectDetailView):
@@ -234,5 +235,7 @@ class Ocr(SingleObjectDetailView):
             'object': self.object,
             'title': _('Summery Details of: %s') % self.object,
             'content': content, 
-            'type':'ocr'
+            'type':'ocr',
+            'doc_id':document_id
+            
         }

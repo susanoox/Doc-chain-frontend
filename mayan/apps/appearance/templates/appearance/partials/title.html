@@ -13,11 +13,19 @@
 {% endif %}
 
 {% if not non_html_title and result.title %}
-        <div>
-            <h3 id="content-title" title='{{ result.title_full }}'>
+        <div style="display: flex; margin-bottom: -5px; width: 109%; margin-left: -23px; padding-left: 34px; background: #FFFFFF; align-items: center;">
+            {% if result.title_full == "Home" %}
+                <h3 id="content-title" title='Dashboard'>
+            {% else %}
+                <h3 id="content-title" title='{{ result.title_full }}'>
+            {% endif %}
+{% endif %}
+{% if result.title_full == "Home" %}
+    <span id="appearance-title-text" style="font-weight: 600; font-size: 20px;">Dashboard</span>
+{% else %}
+    <span id="appearance-title-text" style="font-weight: 600; font-size: 20px;">{{ result.title }}</span>
 {% endif %}
 
-<span id="appearance-title-text">{{ result.title }}</span>
 
 {% if not non_html_title and result.title %}
             </h3>
@@ -31,5 +39,5 @@
 {% if not non_html_title %}
         </div>
     </div>
-    {% if title or subtitle %}<hr/>{% endif %}
+    {% if title or subtitle %}<hr style="height: 1px; width: 109%; background-color: #e6e6e6; margin-left: -22px;"/>{% endif %}
 {% endif %}
