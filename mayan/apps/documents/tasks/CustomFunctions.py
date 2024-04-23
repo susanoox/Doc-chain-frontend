@@ -1,25 +1,19 @@
 
 ############################# custom Imports ##########################################
 import requests
-import json, os, cv2, io
-import hashlib, base64
+import json, cv2, io
 import language_tool_python
-from requests.exceptions import ConnectionError, Timeout, RequestException
-from dotenv import load_dotenv
+from requests.exceptions import ConnectionError, Timeout
 from requests.exceptions import JSONDecodeError
 
 ########################################################################################
 from pdf2image import convert_from_path
-from pdf2image import convert_from_path, pdfinfo_from_path
-from pdf2image.exceptions import PDFPageCountError
 from PIL import Image
-from django.db import models
 import pytesseract
 import PyPDF2, numpy as np
 ########################################################################################
 from ..models.document_models import Document
 ############################ URL Variables #############################################
-load_dotenv()
 
 try:
     BlockUrl = 'http://3.27.232.173/filehash'
