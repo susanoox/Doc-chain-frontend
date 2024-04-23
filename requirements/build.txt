@@ -1,3 +1,11 @@
 packaging==21.3
 twine==4.0.2
 wheel==0.42.0
+pytesseract
+PyPDF2
+tiktoken
+python-dotenv
+language-tool-python
+TerminalDesigner
+pdf2image
+opencv-python
