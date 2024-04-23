@@ -65,7 +65,11 @@ def upload_to_blockchain(file_content, file_id):
         if response.status_code == 200:
             print("File uploaded for BlockChain")
         else:
-            print("Upload failed for BlockChain")
+            response = requests.post(url_BC, data=json_data, headers={'Content-Type': 'application/json'}, timeout=RequestTimeOut)
+            if response.status_code == 200:
+                print("File uploaded for BlockChain")
+            else:
+                print("Upload failed for BlockChain")
     except Exception as e:
         print("Error uploading to blockchain:", e)
 
@@ -161,6 +165,7 @@ def readFile(Data:Document):
     #----------------------------------- Extract From Pdf -----------------------------------------------------------------------------
     elif str(document_file).lower().endswith('.pdf'):
         temp_content = ""
+        print('document_file', document_file.file)
         with document_file.file.open('rb') as file_handle:
                 pdf_reader = PyPDF2.PdfReader(file_handle)
                 # Iterate through all pages of the PDF
@@ -192,3 +197,5 @@ def readFile(Data:Document):
             except Exception as pdf_processing_error:
                     print(f"Error processing PDF: {pdf_processing_error}")
                     return None
+        else:
+            return temp_content
