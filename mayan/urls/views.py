@@ -2,10 +2,8 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 import os
 import requests
-from dotenv import load_dotenv
 
 
-load_dotenv()
 
 def simple_string_view(request):
     """
