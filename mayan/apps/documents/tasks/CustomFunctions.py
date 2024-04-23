@@ -9,7 +9,7 @@ from requests.exceptions import JSONDecodeError
 ########################################################################################
 from pdf2image import convert_from_path
 from PIL import Image
-import pytesseract
+import pytesseract, hashlib
 import PyPDF2, numpy as np
 ########################################################################################
 from ..models.document_models import Document

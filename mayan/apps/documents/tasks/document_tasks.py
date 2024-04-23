@@ -18,6 +18,9 @@ from .CustomFunctions import readFile, UploadSummary, upload_to_blockchain, Bot_
 
 logger = logging.getLogger(name=__name__)
 
+# obj = Summary.objects.all()
+# for i in obj:
+#     print(i.id, i.summary, i.doc_id)
 
 @app.task(bind=True, ignore_results=True, retry_backoff=True)
 def task_document_upload(
