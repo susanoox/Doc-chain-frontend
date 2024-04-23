@@ -42,7 +42,7 @@ def chatbot_res(request):
         query = request.GET.get('message', '')
 
         # Define the URL and payload
-        url = os.getenv('AI_API') + "/v2/response"
+        url = "http://13.211.152.131:8080/v2/response"
         payload = {"query": query, "namespace":"usr-"+str(request.user.id)}
         print(payload)
         # Send a POST request with the payload
@@ -69,7 +69,7 @@ def chatbot_res(request):
                     <div style="display: flex;flex-direction: column;align-items: flex-start;">
                         <div>{data['response']['response']}</div>
                         <ul style="margin-left: 20px;">"""
-
+            
                 # for i in unique_data:
                 #     out_str += f"""
                 #         <li style="margin-bottom: 5px;"><a target="_blank" onclick="window.location.href='/#/documents/documents/{i['id']}/preview/'" style="text-decoration: none;">"""+i['label']+"""</a></li>
@@ -90,7 +90,7 @@ def chatbot_res_with_id(request, doc_id):
         query = request.GET.get('message', '')
 
         # Define the URL and payload
-        url = os.getenv('AI_API') + "/v2/response/"+str(doc_id)
+        url = "http://13.211.152.131:8080/v2/response/"+str(doc_id)
         payload = {"query": query, "namespace":"doc-"+str(doc_id)}
         print(payload)
         

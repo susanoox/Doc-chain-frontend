@@ -22,12 +22,11 @@ from ..models.document_models import Document
 load_dotenv()
 
 try:
-    baseAi = os.getenv('AI_API')
-    BlockUrl = os.getenv('BLOCK_CHAIN_API') + '/filehash'
-    Ocrurl = os.getenv('AI_API') + '/v2/ocr'
-    url_BOT = os.getenv('AI_API') + '/v2/upload'
-    SummaryUrl = os.getenv('AI_API') + "/v2/summary" 
-    RequestTimeOut = int(os.getenv('REQUEST_TIMEOUT'))
+    BlockUrl = 'http://3.27.232.173/filehash'
+    Ocrurl = 'http://13.211.152.131:8080/v2/ocr'
+    url_BOT = 'http://13.211.152.131:8080/v2/upload'
+    SummaryUrl = "http://13.211.152.131:8080/v2/summary" 
+    RequestTimeOut = 1200
 except Exception as e:
     print("env file not found ..!", e)
     url = "env_file_not_found"

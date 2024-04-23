@@ -636,7 +636,7 @@ a i {
 }
 
 #accordion-sidebar .collapsed .accordion-indicator {
-   transform: rotate(90deg);
+   transform: rotate(0deg);
 }
 
 #accordion-sidebar ul.list-unstyled {

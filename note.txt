@@ -26,6 +26,79 @@ navebasr( search, dropdown )
 user = admin, Setup, Tools, [User,  details,Change,  password, Logout, ] replace user icon to grear symbol, remove "user"
 1. side bar grouping, 2. remove lines, -1.open icon
 
+#####################
+##### changes 2 #####
+
+----------------------------------------- Waiting list ------------------------------------------------
+Title = gap in subtitle[left, right], center , color changes, padding even num
+-------------------------------------------------------------------------------------------------------
+
+------------------------------------------- Completed Work --------------------------------------------
+document nav bar size
+-------------------------------------------------------------------------------------------------------
+
+
+
+DropDown = padding, Design, gap for dropdown itemps, gap for input box and dropdown box, color change to white.
+
+home = white in full page, ligray for background, remove hover in button
+
+
+nav = gear, icon rotaiting
+
+chatbot = extra div border
+
+
+Change height 
+Settings icon. Drop down nope.. active state normal
+Wheel - in black , active - green 
+Dropdown - down state
+
+Home = { Background change gray color
+Down white to gray
+Title should be like design and centre.. gap 
+}
+Button ={
+Button underline remove
+Icon weight - 300
+}
+
+Next page.... 
+Background gray
+Title div and padding 
+Image center
+Filter, show list, pagenation background color
+
+
+Chatbot = {
+Curve back div make radius
+Chatbot icon in chat 
+Close and open icon in 
+Powered by ai should be in below of text box and make a gap for that
+Background gray 
+Make position moment in chatbot
+}
+
+Document view page {
+Center title and action button should be in center and background should be white l
+Action button change .. dropdown... Color green
+White space into gray
+Hover gray... Selected green tag
+Remove title document
+}
+
+Trush{
+Background gray 
+Box into white and border
+Action into green color
+
+
+}
+
+Table active green box and border
+
+
+####################
 
 Home{
     background color - 

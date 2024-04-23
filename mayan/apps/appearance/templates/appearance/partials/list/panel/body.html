@@ -1,7 +1,10 @@
 {% load navigation_tags %}
 <style>
-    .title-cont a{
+    .a-tag-div{
         font-size: 14px; font-weight: 600; margin-left: 15px; color: #000000;
+    }
+    .a-tag-div a{
+        color: #000000;
     }
 </style>
 
@@ -16,13 +19,17 @@
                 <span style="color: white; word-break: break-all; overflow-wrap: break-word;" class="title-cont">
                     {% if not hide_object %}
                         {% if not hide_link %}
-                            <a href="{{ object.get_absolute_url }}" style="font-size: 14px; font-weight: 600; margin-left: 15px; color: #000000;">{{ object }}</a>
+                            <div class="a-tag-div">
+                                <a href="{{ object.get_absolute_url }}" style="font-size: 14px; font-weight: 600; color: #000000;">{{ object }}</a>
+                            </div>
                         {% else %}
                             {{ object }}
                         {% endif %}
                     {% else %}
-                        {% navigation_source_column_resolve column=source_columns_identifier.0 as column_value %}
-                        {{ column_value }}
+                        <div class="a-tag-div">
+                            {% navigation_source_column_resolve column=source_columns_identifier.0 as column_value %}
+                            {{ column_value }}
+                        </div>
                     {% endif %}
                 </span>
             {% elif forloop.counter == 2 %}

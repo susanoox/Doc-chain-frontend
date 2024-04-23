@@ -14,11 +14,26 @@
     .form-control-new::placeholder{
         color: white;
     }
+    .select-box option:first-child{
+        margin-top: 10px;
+    }
+    .select-box option{
+        background-color: #f2f2f2;
+    }
+    .select-box option{
+        min-height: 1.2em;
+        padding: 16px;
+        background-color: #FFFFFF;
+        -webkit-box-shadow: 2px 6px 21px -2px rgba(0,0,0,0.75);
+        -moz-box-shadow: 2px 6px 21px -2px rgba(0,0,0,0.75);
+        box-shadow: 2px 6px 21px -2px rgba(0,0,0,0.75);
+        color: black;
+    }
 </style>
 
-<form action="{% url 'search:search_results' %}" class="navbar-form navbar-left" id="search-navbar-form" method="get" role="search" style="flex-direction: row; display: flex; justify-content: space-between; align-items: center; width: 82%; position: absolute; margin-left: 14%;">
+<form action="{% url 'search:search_results' %}" class="navbar-form navbar-left" id="search-navbar-form" method="get" role="search" style="flex-direction: row; display: flex; justify-content: space-between; align-items: center; width: 81%; position: absolute; height: 100%; margin: 0px; margin-left: 14.6%;">
     <div class="form-group">
-        <select  class="form-control search-select-search-model" name="{% search_get_search_model_name_query_variable %}" style="background: black !important; color: aliceblue; border: 2px solid #3d3d3d !important; border-radius: 0px !important;">
+        <select  class="form-control search-select-search-model select-box" name="{% search_get_search_model_name_query_variable %}" style="background: black !important; color: #FFFFFFCC; border: 2px solid #3d3d3d !important; border-radius: 0px !important; height: 28px; width: 160px; font-size: 12px; padding: 4px; margin-left: 10%;">
             {% for search_model in search_models %}
             {{ search_model.self.full_name }}
                 <option {% if search_model.full_name == default_search_model.full_name %}selected{% endif %} value="{{ search_model.full_name }}">{{ search_model }}</option>
@@ -28,7 +43,7 @@
     <div style="display: flex; flex-direction: row; gap: 10px;">
         <div class="form-group">
             {% if setting_disable_simple_search == False %}
-                <input class="form-control form-control-new" id="search-navbar-form-input-terms" name="{% search_get_query_parameter_any_field %}" placeholder="{% trans 'Search terms' %}" type="search" value="{{ search_terms|default:'' }}" style="background: black !important; color: aliceblue; border: 2px solid #3d3d3d !important; border-radius: 0px !important;">
+                <input class="form-control form-control-new" id="search-navbar-form-input-terms" name="{% search_get_query_parameter_any_field %}" placeholder="{% trans 'Search terms' %}" type="search" value="{{ search_terms|default:'' }}" style="background: black !important; color: #FFFFFF; border: 2px solid #3d3d3d !important; border-radius: 0px !important; height: 28px; width: 248px; font-size: 12px; font-weight: 400; line-height: 15.3px;">
             {% endif %}
         </div>
     
@@ -36,9 +51,9 @@
             <button alt="{% trans 'Search' %}" class="btn btn-primary" type="submit">{{ icon_search }} {% trans 'Search' %}</button>
         {% endif %} -->
     
-        <a alt="{% trans 'Advanced search' %}" class="btn btn-primary search-anchor-search-advanced" href="{% url 'search:search_advanced' %}?{% search_get_search_model_name_query_variable %}={{ default_search_model.full_name }}" id="search-button-search-advanced" style="background: black !important; color: aliceblue; border: 2px solid #3d3d3d !important; border-radius: 0px !important; padding: 8.9px;">
-            <div style="display: flex; flex-direction: row; align-items: center; gap: 15px; justify-content: center;">
-                <span class="material-symbols-outlined">
+        <a alt="{% trans 'Advanced search' %}" class="btn btn-primary search-anchor-search-advanced" href="{% url 'search:search_advanced' %}?{% search_get_search_model_name_query_variable %}={{ default_search_model.full_name }}" id="search-button-search-advanced" style="background: black !important; color: #FFFFFF; border: 2px solid #3d3d3d !important; border-radius: 0px !important; padding: 8.9px; width: 111px; height: 28px; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+            <div style="display: flex; flex-direction: row; align-items: center; gap: 7px; justify-content: center; font-weight: 400; font-size: 12px; color: #FFFFFF;">
+                <span class="material-symbols-outlined" style="font-size: 20px; font-weight: 300; color: #E0E0E0;">
                     read_more
                 </span>{% if setting_disable_simple_search == False %}{% trans 'Advanced' %}{% else %}{% trans 'Advanced search' %}{% endif %}
             </div>
