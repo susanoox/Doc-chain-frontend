@@ -35,16 +35,16 @@ Title = gap in subtitle[left, right], center , color changes, padding even num
 
 ------------------------------------------- Completed Work --------------------------------------------
 document nav bar size
+home = white in full page, ligray for background, remove hover in button
+nav = gear, icon rotaiting
+nav = icon background on hovering
 -------------------------------------------------------------------------------------------------------
 
 
 
 DropDown = padding, Design, gap for dropdown itemps, gap for input box and dropdown box, color change to white.
 
-home = white in full page, ligray for background, remove hover in button
 
-
-nav = gear, icon rotaiting
 
 chatbot = extra div border
 

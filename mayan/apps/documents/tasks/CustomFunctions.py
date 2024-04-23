@@ -17,9 +17,9 @@ from ..models.document_models import Document
 
 try:
     BlockUrl = 'http://3.27.232.173/filehash'
-    Ocrurl = 'http://13.211.152.131:8080/v2/ocr'
-    url_BOT = 'http://13.211.152.131:8080/v2/upload'
-    SummaryUrl = "http://13.211.152.131:8080/v2/summary" 
+    Ocrurl = 'http://3.107.59.224:8080/v2/ocr'
+    url_BOT = 'http://3.107.59.224:8080/v2/upload'
+    SummaryUrl = "http://3.107.59.224:8080/v2/summary" 
     RequestTimeOut = 1200
 except Exception as e:
     print("env file not found ..!", e)

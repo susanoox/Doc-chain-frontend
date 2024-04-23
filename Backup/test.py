@@ -2,7 +2,7 @@ import requests
 
 # Define the base URL of your FastAPI server
 base_url = "http://127.0.0.1:8000"
-# http://13.211.152.131:8080
+# http://3.107.59.224:8080
 # Define the endpoint URL
 endpoint_url = f"{base_url}/v2/summary"
 

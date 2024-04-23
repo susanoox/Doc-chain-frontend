@@ -40,7 +40,7 @@ def chatbot_res(request):
         query = request.GET.get('message', '')
 
         # Define the URL and payload
-        url = "http://13.211.152.131:8080/v2/response"
+        url = "http://3.107.59.224:8080/v2/response"
         payload = {"query": query, "namespace":"usr-"+str(request.user.id)}
         print(payload)
         # Send a POST request with the payload
@@ -88,7 +88,7 @@ def chatbot_res_with_id(request, doc_id):
         query = request.GET.get('message', '')
 
         # Define the URL and payload
-        url = "http://13.211.152.131:8080/v2/response/"+str(doc_id)
+        url = "http://3.107.59.224:8080/v2/response/"+str(doc_id)
         payload = {"query": query, "namespace":"doc-"+str(doc_id)}
         print(payload)
         

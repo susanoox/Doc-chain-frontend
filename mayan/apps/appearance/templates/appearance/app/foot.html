@@ -8,9 +8,23 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src=" {% static 'scripts/responses.js' %} "></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
 <div class="chat-bar-collapsible">
-    <button id="chat-button" type="button" class="collapsible">DocuBuddy</button>
+    <button id="chat-button" type="button" class="collapsible">
+        <img style="width: 50px; border-radius: 32px; border: 2px solid #c8c8c8;" src="https://images.unsplash.com/photo-1657641898365-48ae7d64e676?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGN1dGUlMjByb2JvdHxlbnwwfHwwfHx8MA%3D%3D"/>
+        <div style="line-height: 0; display: flex; flex-direction: column; justify-content: center; align-items: flex-start;">
+            <h5 style="font-size: 18px; margin-top: 5px;">DocuBuddy</h5>
+            <p style="font-size: 8px;">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+        </div>
+        <span class="material-symbols-outlined" id="close-btn" style="position: absolute; right: 10px; top: 10px; display:none;">
+            cancel
+        </span>
+        <span class="material-symbols-outlined" id="extend-btn" style="position: absolute; right: 10px; top: 10px;">
+            expand_circle_up
+        </span>
+        
+    </button>
 
     <div class="content">
         <div class="full-chat-block" style="width:100%;">
@@ -28,8 +42,15 @@
 
                     <!-- User input box -->
                     <div class="chat-bar-input-block">
-                        <div id="userInput">
-                            <input id="textInput" class="input-box" type="text" name="msg" placeholder="Ask your query...">
+                        <div>
+                            <div id="userInput" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; width: 352px; background: #ffffff; margin-left: -11px; padding: 0px 5px; border: 2px solid #e3e4e4;">
+                                <input id="textInput" class="input-box" type="text" name="msg" placeholder="Ask your query...">
+                                <button id="startButton" style="padding: 0px 7px; display: flex; align-items: center; height: 50px; justify-content: center; width: 50px; color: #818181; border: none; background: transparent;" onclick="sendButton()">
+                                    <span class="material-symbols-outlined">
+                                        send
+                                    </span>
+                                </button>
+                            </div>
                             <p class="powered">Powered by AI </p>
                         </div>
 
@@ -41,11 +62,6 @@
                             <button id="startButton" style="    padding: 0px 7px;
                             border-radius: 14px;"><i id="chat-icon" style="color: #333;" class="fas fa-fw fa-send"
                                 onclick="sendButton()"></i> -->
-                                <button id="startButton" style="padding: 0px 7px; border-radius: 24px; display: flex; align-items: center; height: 50px; background: #000000; justify-content: center; width: 50px; color: aliceblue; border: 2px solid #6363639c;" onclick="sendButton()">
-                                    <span class="material-symbols-outlined">
-                                        send
-                                    </span>
-                                </button>
                         </div>
                     </div>
 
@@ -64,10 +80,21 @@
 <script>
     // Collapsible
 var coll = document.getElementsByClassName("collapsible");
-
+var extend = document.getElementById("extend-btn");
+var close_btn = document.getElementById("close-btn");
+var count = 0
 for (let i = 0; i < coll.length; i++) {
     coll[i].addEventListener("click", function () {
         this.classList.toggle("active");
+        if (count%2 === 0){
+            close_btn.style.display = 'block';
+            extend.style.display = 'none';
+        }else{
+            close_btn.style.display = 'none';
+            extend.style.display = 'block';
+        }
+        count++;
+        console.log("samopke", count)
 
         var content = this.nextElementSibling;
 
