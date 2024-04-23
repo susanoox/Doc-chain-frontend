@@ -1,7 +1,7 @@
 
 ############################# custom Imports ##########################################
 import requests
-import json, cv2, io
+import json, cv2, io, hashlib
 import language_tool_python
 from requests.exceptions import ConnectionError, Timeout
 from requests.exceptions import JSONDecodeError
@@ -134,7 +134,10 @@ def readFile(Data:Document):
     if str(document_file).lower().endswith(('.jpg', '.jpeg', '.png')):
         with document_file.file.open('rb') as img_file:
             img = Image.open(img_file)
-            image = cv2.cvtColor(np.array(img), cv2.COLOR_BGR2GRAY)  # Convert to grayscale
+            try:
+                image = cv2.cvtColor(np.array(img), cv2.COLOR_BGR2GRAY)  # Convert to grayscale4
+            except:
+                image=np.array(img)
             _, threshold_image = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
             denoised_image = cv2.fastNlMeansDenoising(threshold_image, None, h=10, templateWindowSize=7, searchWindowSize=21)
             enhanced_image = cv2.convertScaleAbs(denoised_image, alpha=1.5, beta=30)

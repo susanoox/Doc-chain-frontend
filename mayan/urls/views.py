@@ -38,10 +38,10 @@ def chatbot_response(user_message):
 def chatbot_res(request):
     if request.method == 'GET':
         query = request.GET.get('message', '')
-
+        print("Without id")
         # Define the URL and payload
         url = "http://3.107.59.224:8080/v2/response"
-        payload = {"query": query, "namespace":"usr-"+str(request.user.id)}
+        payload = {"query": query, "namespace":""}
         print(payload)
         # Send a POST request with the payload
         response = requests.post(url, json=payload, timeout=1200)
@@ -86,13 +86,11 @@ def chatbot_res(request):
 def chatbot_res_with_id(request, doc_id):
     if request.method == 'GET':
         query = request.GET.get('message', '')
-
+        print("With id ,", doc_id)
         # Define the URL and payload
         url = "http://3.107.59.224:8080/v2/response/"+str(doc_id)
-        payload = {"query": query, "namespace":"doc-"+str(doc_id)}
+        payload = {"query": query, "namespace":""}
         print(payload)
-        
-        
 
         # Send a POST request with the payload
         response = requests.post(url, json=payload, timeout=1200)
