@@ -210,7 +210,7 @@ class summery(SingleObjectDetailView):
             content = "Summary not found for this document."
         return {
             'object': self.object,
-            'title': _('Summery Details of: %s') % self.object,
+            'title': _('Summary Details of: %s') % self.object,
             'content': content, 
             'doc_id':document_id
         }
@@ -233,7 +233,7 @@ class Ocr(SingleObjectDetailView):
         #     content = "Summary not found for this document."
         return {
             'object': self.object,
-            'title': _('Summery Details of: %s') % self.object,
+            'title': _('Summary Details of: %s') % self.object,
             'content': content, 
             'type':'ocr',
             'doc_id':document_id

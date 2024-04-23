@@ -14,8 +14,7 @@
     <button id="chat-button" type="button" class="collapsible">
         <img style="width: 50px; border-radius: 32px; border: 2px solid #c8c8c8;" src="https://images.unsplash.com/photo-1657641898365-48ae7d64e676?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGN1dGUlMjByb2JvdHxlbnwwfHwwfHx8MA%3D%3D"/>
         <div style="line-height: 0; display: flex; flex-direction: column; justify-content: center; align-items: flex-start;">
-            <h5 style="font-size: 18px; margin-top: 5px;">DocuBuddy</h5>
-            <p style="font-size: 8px;">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+            <h5 style="font-size: 18px; ">DocuBuddy</h5>
         </div>
         <span class="material-symbols-outlined" id="close-btn" style="position: absolute; right: 10px; top: 10px; display:none;">
             cancel
@@ -127,7 +126,7 @@ function getTime() {
 // Gets the first message
 function firstBotMessage() {
     let firstMessage = "📁 Welcome to docuBuddy! Need answers about your documents? I'm your digital guide through the maze of files. Ask me anything, and I'll unlock the secrets hidden within your uploads. Let's navigate the paperwork jungle together! 🌟"
-    document.getElementById("botStarterMessage").innerHTML = `<img src="https://images.unsplash.com/photo-1657641898365-48ae7d64e676?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGN1dGUlMjByb2JvdHxlbnwwfHwwfHx8MA%3D%3D"/><p class="botText"><div style="color: white; padding: 10px; background: #6E8F80; width: 290px; margin-left: 10px; display: flex; border-radius: 0px 20px 20px 12px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column;">` + firstMessage + '</div></p>';
+    document.getElementById("botStarterMessage").innerHTML = `<img style='width: 48px; border-radius: 26px;' src="https://png.pngtree.com/thumb_back/fh260/background/20230626/pngtree-animated-3d-illustration-of-a-cute-ai-robot-greeting-with-cartoon-image_3682359.jpg"/><p class="botText"><div style="color: white; padding: 10px; background: #6E8F80; width: 290px; margin-left: 10px; display: flex; border-radius: 0px 20px 20px 12px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column;">` + firstMessage + '</div></p>';
 
     let time = getTime();
 

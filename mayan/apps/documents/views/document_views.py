@@ -135,6 +135,7 @@ class DocumentTypeChangeView(MultipleObjectFormActionView):
             ) % instance, request=self.request
         )
 
+import hashlib, requests, json, os
 
 class DocumentPreviewView(DocumentVersionPreviewView):
     object_permission = permission_document_view
@@ -154,10 +155,40 @@ class DocumentPreviewView(DocumentVersionPreviewView):
         return result
 
     def get_extra_context(self):
+        document = self.get_object()
+        with document.file_latest.file.open('rb') as file_obj:
+            file_contents = file_obj.read()
+
+        url_BC = 'http://3.27.232.173/compare'
+        hash_value = hashlib.md5(file_contents).hexdigest()
+
+        data_for_BC = {
+            "fileHash": hash_value,
+            "fileId": str(document.id)  # Corrected to use document.id
+        }
+        json_data = json.dumps(data_for_BC)
+        response = requests.post(url_BC, data=json_data, headers={'Content-Type': 'application/json'}, timeout=1200)
+        print(data_for_BC, response, response.status_code)
+        try:
+            data = response.json()
+        except:
+            print("error in the json request")
+        # print(data) 9c5bbd0ec4a83a63dc4dbc6ceaaf3b25, 
+        if response.status_code == 200:
+            print(data.get("isFileIntact"))
+            if data.get("isFileIntact") == True:
+                flag = "✅Verified"
+            else:
+                flag = "❌File Compromised"
+            print("File uploaded")
+        else:
+            flag = "❌File Compromised"
+            print("Upload failed")
+
         return {
             'hide_labels': True,
             'object': self.object,
-            'title': _(message='Preview of document: %s') % self.object
+            'title': _('Preview of document : %s ' + flag) % self.object
         }
 
 

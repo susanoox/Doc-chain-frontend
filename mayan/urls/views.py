@@ -44,7 +44,7 @@ def chatbot_res(request):
         payload = {"query": query, "namespace":"usr-"+str(request.user.id)}
         print(payload)
         # Send a POST request with the payload
-        response = requests.post(url, json=payload, timeout=int(os.getenv('REQUEST_TIMEOUT')))
+        response = requests.post(url, json=payload, timeout=1200)
 
         # Check the response status code
         if response.status_code == 200:
@@ -65,7 +65,7 @@ def chatbot_res(request):
                 # print(data['metadata'])
                 out_str = f"""
                     <div style="display: flex;flex-direction: column;align-items: flex-start;">
-                        <div>{data['response']['response']}</div>
+                        <div>{data['response']['response'].replace('code 404: ', '')}</div>
                         <ul style="margin-left: 20px;">"""
             
                 # for i in unique_data:
@@ -95,7 +95,7 @@ def chatbot_res_with_id(request, doc_id):
         
 
         # Send a POST request with the payload
-        response = requests.post(url, json=payload, timeout=int(os.getenv('REQUEST_TIMEOUT')))
+        response = requests.post(url, json=payload, timeout=1200)
 
         # Check the response status code
         if response.status_code == 200:
@@ -115,7 +115,7 @@ def chatbot_res_with_id(request, doc_id):
                 # print(data['metadata'])
                 out_str = f"""
                     <div style="display: flex;flex-direction: column;align-items: flex-start;">
-                        <div>{data['response']['response']}</div>
+                        <div>{data['response']['response'].replace('code 404: ', '')}</div>
                         <ul style="margin-left: 20px;">"""
 
                 # for i in unique_data:

@@ -58,11 +58,11 @@ link_check_out_info = Link(
     permission=permission_document_check_out_detail_view,
     text=_(message='Check in/out'), view='checkouts:check_out_info'
 )
-# Summery Links
+# Summary Links
 
 summery_button = Link(
     args='resolved_object.pk',icon=icon_summary_notes,
-    text=_('Summery'),
+    text=_('Summary'),
     view='checkouts:summery_doc'
 )
 
