@@ -24,7 +24,7 @@ docker-buildkitd-config-create:
 	fi
 
 docker-build: ## Build a new image locally.
-docker-build: docker-dockerfile-update docker-buildkitd-config-create
+docker-build: docker-buildkitd-config-create
 	docker buildx rm mirrored || true
 	docker context rm tls-context || true
 	docker context create tls-context

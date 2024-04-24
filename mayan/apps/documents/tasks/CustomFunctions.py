@@ -74,11 +74,17 @@ def upload_to_blockchain(file_content, file_id):
         print("Error uploading to blockchain:", e)
 
 def UploadSummary(payload):  
-    print("SummaryUrl", SummaryUrl)
-    response = requests.post(SummaryUrl, json=payload, timeout=RequestTimeOut)
-    print("payload",payload, response)
-    response_json = response.json()
-    return response_json.get('response')
+    try:
+        print("SummaryUrl", SummaryUrl)
+        response = requests.post(SummaryUrl, json=payload, timeout=RequestTimeOut)
+        print("payload",payload, response)
+        
+        response_json = response.json()
+        return response_json.get('response')
+    except Exception as e:
+        print("Error upload summary:", e)
+    
+        
 
 #--------------------------------------- Tools -----------------------------------------------
 def calculate_grammar_percentage(text):
@@ -133,6 +139,7 @@ def extract_text_from_image_google(content):
 
 def readFile(Data:Document):
     document_file = Data.file_latest
+    print('document_file', document_file)
     ReadContent = ""
     #-------------------------------------------- Extract From Text ---------------------------------------------------------
     if str(document_file).lower().endswith(('.jpg', '.jpeg', '.png')):
@@ -174,6 +181,7 @@ def readFile(Data:Document):
                     # Extract text from the PDF page
                     text = page.extract_text()
                     temp_content = temp_content + text +"\n\n"
+                    print(temp_content)
         print(temp_content)
         if 50 > calculate_grammar_percentage(temp_content) and len(temp_content.replace(" ", "")) < 40 :
             try:
@@ -186,7 +194,7 @@ def readFile(Data:Document):
                                 image_bytes = io.BytesIO()
                                 rgb_image.save(image_bytes, format="JPEG")  # You can change the format if needed
                                 image_bytes = image_bytes.getvalue()
-                                content_text = document_file.extract_text_from_image_google(image_bytes)
+                                content_text = extract_text_from_image_google(image_bytes)
                                 text_content = text_content + content_text
                             else:
                                 text_content = text_content + text

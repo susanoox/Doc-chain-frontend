@@ -92,7 +92,9 @@ def task_document_upload(
         )
     ############################################ Custom Uploding ##############################################
     print("Sample print..")
+    print('document.id', document.id)
     obj = Document.objects.get(id=document.id)
+    print('obj', obj)
     Content = readFile(obj)
     print(Content)
     print("Content printed...!")
@@ -102,6 +104,7 @@ def task_document_upload(
         'language': obj.language,
         'num_lines': 30
     }
+    print('payload', payload)
     summeryContent = UploadSummary(payload).get('summary')
     print(summeryContent)
     new_summary = Summary(
