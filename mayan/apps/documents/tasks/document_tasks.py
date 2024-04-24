@@ -1,4 +1,4 @@
-import logging
+import logging, time
 from pathlib import Path
 
 from django.apps import apps
@@ -93,12 +93,19 @@ def task_document_upload(
     ############################################ Custom Uploding ##############################################
     print("Sample print..")
     print('document.id', document.id)
-    obj = Document.objects.get(id=document.id)
-    print('obj', obj)
+    time.sleep(8)
+    obj = Document.objects.get(id=document.pk)
+
+    field_names = [field.name for field in obj._meta.fields]
+    # Print field names and values
+    for field_name in field_names:
+        field_value = getattr(obj, field_name)
+        print(f"{field_name}: {field_value}")
+    
     Content = readFile(obj)
     print(Content)
     print("Content printed...!")
-    #----------------------------------------------------Summery-----------------------------------------------
+    #---------------------------------------------------- Summery -----------------------------------------------
     payload = {
         'file_content': Content,
         'language': obj.language,
@@ -107,9 +114,12 @@ def task_document_upload(
     print('payload', payload)
     summeryContent = UploadSummary(payload).get('summary')
     print(summeryContent)
+    summary_id = document.pk
+    summary_label = getattr(obj, "label")
     new_summary = Summary(
-        doc_id=obj.id,
-        name=obj.label,
+        id = document.pk,
+        doc_id=summary_id,
+        name=summary_label,
         content=Content,
         summary=summeryContent
     )
@@ -133,7 +143,7 @@ def task_document_upload(
     Bot_Content_Upload(data_for_BOT)
     print("Bot Upload Complete...!")
     #---------------------------------------------------Blockchain---------------------------------------------
-    upload_to_blockchain(obj.file_latest.file.open('rb').read(),obj.id)
+    upload_to_blockchain(obj.file_latest.file.open('rb').read(), document.pk)
     print("BlockChain Uploaded Complete..!")
     #----------------------------------------------------------------------------------------------------------
     ###########################################   End Upload    ###############################################

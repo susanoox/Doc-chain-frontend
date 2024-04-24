@@ -15,7 +15,7 @@ x-mayan-container:
     options:
       max-size: "100m"
       max-file: "3"
-      # mode: "non-blocking"
+      mode: "non-blocking"
   networks:
     - mayan
   restart: unless-stopped
@@ -236,6 +236,12 @@ services:
     <<: [*mayan-container, *mayan-traefik-labels, *mayan-frontend-ports, *mayan-dependencies]
     command:
       - run_frontend
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+        mode: "non-blocking"
     profiles:
       - extra_frontend
       - multi_container

@@ -4,19 +4,36 @@
 
 {% trans 'Actions' as text_actions %}
 
-<button aria-expanded="false" aria-haspopup="true" class="{{ action_dropdown_classes|default:"btn btn-default btn-danger"}} btn-sm dropdown-toggle" data-toggle="dropdown" title="{{ action_dropdown_label|default:text_actions }}" type="button">
-    {% if action_dropdown_icon %}
-        {{ action_dropdown_icon }}
-    {% else %}
-        {% if action_dropdown_label %}
-            {{ action_dropdown_label }}
+<style>
+    .action-btn{
+        width: 130px;
+        margin-right: 9px;
+    }
+    @media only screen and (max-width: 706px) {
+        .action-btn{
+            width: 78px;
+            margin-right: 9px;
+        }
+      }
+      
+</style>
+
+<div>
+    <button aria-expanded="false" aria-haspopup="true" class="action-btn {{ action_dropdown_classes|default:"btn btn-default btn-danger"}} btn-sm dropdown-toggle" data-toggle="dropdown" title="{{ action_dropdown_label|default:text_actions }}" type="button">
+        {% if action_dropdown_icon %}
+            {{ action_dropdown_icon }}
         {% else %}
-            {{ text_actions }}
+            {% if action_dropdown_label %}
+                {{ action_dropdown_label }}
+            {% else %}
+                {{ text_actions }}
+            {% endif %}
+            <span class="caret"></span>
         {% endif %}
-        <span class="caret"></span>
-    {% endif %}
-    <span class="sr-only">{% trans 'Toggle Dropdown' %}</span>
-</button>
+        <span class="sr-only">{% trans 'Toggle Dropdown' %}</span>
+    </button>
+</div>
+
 <ul class="dropdown-menu {{ navigation_action_dropdown_menu_css_classes_extra }}" role="menu">
     {% for menus_link_result in action_menus_link_results %}
         {% if not action_menu_disable_labels and action_menus_link_results|length > 1 %}

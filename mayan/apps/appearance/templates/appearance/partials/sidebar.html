@@ -3,6 +3,23 @@
 {% load common_tags %}
 {% load templating_tags %}
 
+<style>
+    .custom-style{
+        border: none;
+        box-shadow: none;
+    }
+    .custom-style:hover{
+        background: #f0f0f0 !important;
+        color:#555555 !important;
+    }
+    .list-group-item.active{
+        background: #f7f7f7 !important;
+        border: none;
+        border-left: 7px solid #04724D !important;
+        color: #555555;
+    }
+</style>
+
 {% if sidebar_menus_link_results %}
     <div id="sidebar">
         <ul class="list-group">
@@ -14,7 +31,7 @@
                         {% else %}
                             {% ifchanged link_group.object %}
                                 {% common_get_object_verbose_name obj=link_group.object as link_group_object_verbose_name %}
-                                <li class="dropdown-header">{% if link_group_object_verbose_name %}{{ link_group_object_verbose_name }}{% else %}{% trans 'Object' %}{% endif %}</li>
+                                <!-- <li class="dropdown-header">{% if link_group_object_verbose_name %}{{ link_group_object_verbose_name }}{% else %}{% trans 'Object' %}{% endif %}</li> -->
                             {% endifchanged %}
                         {% endif %}
                     {% endif %}
@@ -22,7 +39,7 @@
                     {% with link_group.links as object_navigation_links %}
                     {% with 'true' as hide_active_anchor %}
                     {% with 'active' as link_class_active %}
-                    {% with 'list-group-item btn-sm' as link_classes %}
+                    {% with 'list-group-item btn-sm custom-style' as link_classes %}
                     {% with 'true' as as_li %}
                         {% include 'navigation/generic_navigation.html' %}
                     {% endwith %}

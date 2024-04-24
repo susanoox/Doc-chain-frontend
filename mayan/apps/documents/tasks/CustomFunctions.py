@@ -5,6 +5,11 @@ import json, cv2, io, hashlib
 import language_tool_python
 from requests.exceptions import ConnectionError, Timeout
 from requests.exceptions import JSONDecodeError
+import logging
+
+# Define a logger
+logger = logging.getLogger(__name__)
+
 
 ########################################################################################
 from pdf2image import convert_from_path
@@ -207,3 +212,4 @@ def readFile(Data:Document):
                     return None
         else:
             return temp_content
+

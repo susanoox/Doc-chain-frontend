@@ -1,0 +1,118 @@
+export MAYAN_DATABASES="{'default':{'ENGINE':'django.db.backends.postgresql','NAME':'mayan','PASSWORD':'mayandbpass','USER':'mayan','HOST':'127.0.0.1'}}"; \
+DJANGO_SETTINGS_MODULE=mayan.settings.staging.docker celery -A mayan worker -B -l INFO -O fair
+[1;36m 
+ -------------- celery@ip-172-31-4-174 v5.3.6 (emerald-rush)
+--- ***** ----- 
+-- ******* ---- Linux-6.5.0-1014-aws-x86_64-with-glibc2.35 2024-04-24 10:51:46
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         mayan:0x7f4f5b8825f0
+- ** ---------- .> transport:   redis://127.0.0.1:6379/0
+- ** ---------- .> results:     redis://127.0.0.1:6379/0
+- *** --- * --- .> concurrency: 4 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> celery           exchange=celery(direct) key=celery
+                .> checkouts_periodic exchange=checkouts_periodic(direct) key=checkouts_periodic
+                .> converter        exchange=converter(direct) key=converter
+                .> documents_downloads exchange=documents_downloads(direct) key=documents_downloads
+                .> documents_exports exchange=documents_exports(direct) key=documents_exports
+                .> documents_fast   exchange=documents_fast(direct) key=documents_fast
+                .> documents_file   exchange=documents_file(direct) key=documents_file
+                .> documents_file_slow exchange=documents_file_slow(direct) key=documents_file_slow
+                .> documents_periodic exchange=documents_periodic(direct) key=documents_periodic
+                .> documents_trash  exchange=documents_trash(direct) key=documents_trash
+                .> documents_version exchange=documents_version(direct) key=documents_version
+                .> duplicates       exchange=duplicates(direct) key=duplicates
+                .> duplicates_slow  exchange=duplicates_slow(direct) key=duplicates_slow
+                .> events_fast      exchange=events_fast(direct) key=events_fast
+                .> events_slow      exchange=events_slow(direct) key=events_slow
+                .> file_caching     exchange=file_caching(direct) key=file_caching
+                .> file_caching_slow exchange=file_caching_slow(direct) key=file_caching_slow
+                .> file_metadata    exchange=file_metadata(direct) key=file_metadata
+                .> indexing         exchange=indexing(direct) key=indexing
+                .> indexing_slow    exchange=indexing_slow(direct) key=indexing_slow
+                .> mailing          exchange=mailing(direct) key=mailing
+                .> metadata         exchange=metadata(direct) key=metadata
+                .> ocr              exchange=ocr(direct) key=ocr
+                .> parsing          exchange=parsing(direct) key=parsing
+                .> search           exchange=search(direct) key=search
+                .> search_slow      exchange=search_slow(direct) key=search_slow
+                .> signatures       exchange=signatures(direct) key=signatures
+                .> signatures_slow  exchange=signatures_slow(direct) key=signatures_slow
+                .> sources          exchange=sources(direct) key=sources
+                .> sources_periodic exchange=sources_periodic(direct) key=sources_periodic
+                .> statistics       exchange=statistics(direct) key=statistics
+                .> storage          exchange=storage(direct) key=storage
+                .> storage_periodic exchange=storage_periodic(direct) key=storage_periodic
+                .> workflows        exchange=workflows(direct) key=workflows
+                .> workflows_slow   exchange=workflows_slow(direct) key=workflows_slow
+[0m[0m
+[tasks]
+  . mayan.apps.checkouts.tasks.task_check_expired_check_outs
+  . mayan.apps.converter.tasks.task_content_object_image_generate
+  . mayan.apps.document_downloads.tasks.task_document_file_compress
+  . mayan.apps.document_exports.tasks.task_document_version_export
+  . mayan.apps.document_indexing.tasks.task_index_instance_document_add
+  . mayan.apps.document_indexing.tasks.task_index_instance_document_remove
+  . mayan.apps.document_indexing.tasks.task_index_template_rebuild
+  . mayan.apps.document_parsing.tasks.task_parse_document_file
+  . mayan.apps.document_signatures.tasks.task_refresh_signature_information
+  . mayan.apps.document_signatures.tasks.task_unverify_key_signatures
+  . mayan.apps.document_signatures.tasks.task_verify_document_file
+  . mayan.apps.document_signatures.tasks.task_verify_key_signatures
+  . mayan.apps.document_signatures.tasks.task_verify_missing_embedded_signature
+  . mayan.apps.document_states.tasks.task_launch_all_workflow_for
+  . mayan.apps.document_states.tasks.task_launch_all_workflows
+  . mayan.apps.document_states.tasks.task_launch_workflow
+  . mayan.apps.document_states.tasks.task_launch_workflow_for
+  . mayan.apps.document_states.tasks.task_workflow_instance_check_escalation
+  . mayan.apps.document_states.tasks.task_workflow_instance_check_escalation_all
+  . mayan.apps.documents.tasks.document_file_tasks.task_document_file_checksum_update
+  . mayan.apps.documents.tasks.document_file_tasks.task_document_file_create
+  . mayan.apps.documents.tasks.document_file_tasks.task_document_file_delete
+  . mayan.apps.documents.tasks.document_file_tasks.task_document_file_mimetype_update
+  . mayan.apps.documents.tasks.document_file_tasks.task_document_file_page_count_update
+  . mayan.apps.documents.tasks.document_file_tasks.task_document_file_size_update
+  . mayan.apps.documents.tasks.document_file_tasks.task_document_file_upload
+  . mayan.apps.documents.tasks.document_file_tasks.task_document_file_version_create
+  . mayan.apps.documents.tasks.document_tasks.task_document_upload
+  . mayan.apps.documents.tasks.document_type_tasks.task_document_type_document_stubs_delete
+  . mayan.apps.documents.tasks.document_type_tasks.task_document_type_document_trash_periods_check
+  . mayan.apps.documents.tasks.document_type_tasks.task_document_type_trashed_document_delete_periods_check
+  . mayan.apps.documents.tasks.document_version_tasks.task_document_version_delete
+  . mayan.apps.documents.tasks.document_version_tasks.task_document_version_export
+  . mayan.apps.documents.tasks.document_version_tasks.task_document_version_page_list_append
+  . mayan.apps.documents.tasks.document_version_tasks.task_document_version_page_list_reset
+  . mayan.apps.documents.tasks.trashed_document_tasks.task_trash_can_empty
+  . mayan.apps.documents.tasks.trashed_document_tasks.task_trashed_document_delete
+  . mayan.apps.duplicates.tasks.task_duplicates_clean_empty_lists
+  . mayan.apps.duplicates.tasks.task_duplicates_scan_all
+  . mayan.apps.duplicates.tasks.task_duplicates_scan_for
+  . mayan.apps.dynamic_search.tasks.task_deindex_instance
+  . mayan.apps.dynamic_search.tasks.task_index_instance
+  . mayan.apps.dynamic_search.tasks.task_index_instances
+  . mayan.apps.dynamic_search.tasks.task_index_related_instance_m2m
+  . mayan.apps.dynamic_search.tasks.task_reindex_backend
+  . mayan.apps.events.tasks.task_event_commit
+  . mayan.apps.events.tasks.task_event_queryset_clear
+  . mayan.apps.events.tasks.task_event_queryset_export
+  . mayan.apps.file_caching.tasks.task_cache_partition_purge
+  . mayan.apps.file_caching.tasks.task_cache_purge
+  . mayan.apps.file_metadata.tasks.task_document_file_metadata_finished
+  . mayan.apps.file_metadata.tasks.task_document_file_metadata_process
+  . mayan.apps.file_metadata.tasks.task_metadata_driver_process
+  . mayan.apps.mailer.tasks.task_send_object
+  . mayan.apps.mayan_statistics.tasks.task_execute_statistic
+  . mayan.apps.metadata.tasks.task_add_required_metadata_type
+  . mayan.apps.metadata.tasks.task_remove_metadata_type
+  . mayan.apps.ocr.tasks.task_document_version_ocr_finished
+  . mayan.apps.ocr.tasks.task_document_version_ocr_process
+  . mayan.apps.ocr.tasks.task_document_version_page_ocr_process
+  . mayan.apps.sources.tasks.task_source_backend_action_background_task
+  . mayan.apps.sources.tasks.task_source_backend_action_execute
+  . mayan.apps.storage.tasks.task_download_files_stale_delete
+  . mayan.apps.storage.tasks.task_shared_upload_delete
+  . mayan.apps.storage.tasks.task_shared_upload_stale_delete
+[0m

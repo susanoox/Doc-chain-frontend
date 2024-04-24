@@ -10,29 +10,53 @@
 <script src=" {% static 'scripts/responses.js' %} "></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
-<div class="chat-bar-collapsible">
-    <button id="chat-button" type="button" class="collapsible">
-        <img style="width: 50px; border-radius: 32px; border: 2px solid #c8c8c8;" src="https://images.unsplash.com/photo-1657641898365-48ae7d64e676?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGN1dGUlMjByb2JvdHxlbnwwfHwwfHx8MA%3D%3D"/>
-        <div style="line-height: 0; display: flex; flex-direction: column; justify-content: center; align-items: flex-start;">
-            <h5 style="font-size: 18px; ">DocuBuddy</h5>
-        </div>
-        <span class="material-symbols-outlined" id="close-btn" style="position: absolute; right: 10px; top: 10px; display:none;">
-            cancel
-        </span>
-        <span class="material-symbols-outlined" id="extend-btn" style="position: absolute; right: 10px; top: 10px;">
-            expand_circle_up
-        </span>
+<style>
+    .content{
+        background-color: transparent;
+    }
+    .chat-bar-collapsible{
+        background-color: transparent;
+        box-shadow: none;
+        margin-bottom: 79px;
+        margin-right: -32px;
+    }
+    #circle-chat-button{
+        position: fixed;
+        right: 22px;
+        bottom: 21px;
+        width: 50px;
+        z-index: 9999;
+        height: 50px;
+        border-radius: 34px;
+        display: flex;
+        background-image: url(https://s.cafebazaar.ir/images/icons/com.auto.bot.answer.chatgpt-7eca1f54-1d93-45b8-8e8d-767d6ba9ee02_512x512.png?x-img=v1/resize,h_256,w_256,lossless_false/optimize);
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        border: 2px solid #009199;
+        background-position-x: -1px;
+      }
+      
+</style>
+
+<button id="circle-chat-button" type="button">
+
+</button>       
+<div class="chat-bar-collapsible" style="background-color: transparent; box-shadow: none;">
+
+    <button id="chat-button" type="button" class="collapsible" style="background-color: transparent;border:none;">
         
     </button>
 
-    <div class="content">
-        <div class="full-chat-block" style="width:100%;">
+    <div class="content" style="box-shadow: -1px 2px 20px #00000033;border-radius: 11px;">
+        <div class="full-chat-block" style="width: 100%; border-radius: 8px; border: 1px solid #eaeaea; background: #ffffff;">
+            <p style="text-align: start; padding: 11px; font-size: 16px; font-weight: 800;">Welcome to DocuBuddy chat !</p>
             <!-- Message Container -->
             <div class="outer-container">
                 <div class="chat-container">
                     <!-- Messages -->
                     <div id="chatbox">
-                        <h5 id="chat-timestamp"></h5>
+                        <!-- <h5 id="chat-timestamp"></h5> -->
                         <p id="botStarterMessage" class="botText"><span>Loading...</span></p>
                     </div>
                     
@@ -42,9 +66,9 @@
                     <!-- User input box -->
                     <div class="chat-bar-input-block">
                         <div>
-                            <div id="userInput" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; width: 352px; background: #ffffff; margin-left: -11px; padding: 0px 5px; border: 2px solid #e3e4e4;">
+                            <div id="userInput" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; width: 352px; background: #ffffff; padding: 10px; border: 1px solid #e3e4e4; gap: 10px; border-left: none;">
                                 <input id="textInput" class="input-box" type="text" name="msg" placeholder="Ask your query...">
-                                <button id="startButton" style="padding: 0px 7px; display: flex; align-items: center; height: 50px; justify-content: center; width: 50px; color: #818181; border: none; background: transparent;" onclick="sendButton()">
+                                <button id="startButton" style="padding: 0px 7px; display: flex; align-items: center; height: 45px; justify-content: center; width: 46px; color: #ffffff; border-radius: 10px; border: none; background: #04724d;" onclick="sendButton()">
                                     <span class="material-symbols-outlined">
                                         send
                                     </span>
@@ -81,6 +105,27 @@
 var coll = document.getElementsByClassName("collapsible");
 var extend = document.getElementById("extend-btn");
 var close_btn = document.getElementById("close-btn");
+var circle_btn = document.getElementById("circle-chat-button");
+
+circle_btn.addEventListener("click", function () {
+    // Loop through each element with class name "content"
+    var contents = document.getElementsByClassName("content");
+    for (var i = 0; i < contents.length; i++) {
+        var content = contents[i];
+        if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+            circle_btn.style.backgroundImage = "url(https://s.cafebazaar.ir/images/icons/com.auto.bot.answer.chatgpt-7eca1f54-1d93-45b8-8e8d-767d6ba9ee02_512x512.png?x-img=v1/resize,h_256,w_256,lossless_false/optimize)"
+            circle_btn.style.backgroundPosition = "-1px 0px";
+            circle_btn.style.backgroundSize = "cover";
+        } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+            circle_btn.style.backgroundPosition = "-3px -3px";
+            circle_btn.style.backgroundSize = "52px";
+            circle_btn.style.backgroundImage = "url(https://cdn-icons-png.flaticon.com/256/4210/4210923.png)"
+        }
+    }
+});
+
 var count = 0
 for (let i = 0; i < coll.length; i++) {
     coll[i].addEventListener("click", function () {
@@ -126,12 +171,13 @@ function getTime() {
 // Gets the first message
 function firstBotMessage() {
     let firstMessage = "📁 Welcome to docuBuddy! Need answers about your documents? I'm your digital guide through the maze of files. Ask me anything, and I'll unlock the secrets hidden within your uploads. Let's navigate the paperwork jungle together! 🌟"
-    document.getElementById("botStarterMessage").innerHTML = `<img style='width: 48px; border-radius: 26px;' src="https://png.pngtree.com/thumb_back/fh260/background/20230626/pngtree-animated-3d-illustration-of-a-cute-ai-robot-greeting-with-cartoon-image_3682359.jpg"/><p class="botText"><div style="color: white; padding: 10px; background: #6E8F80; width: 290px; margin-left: 10px; display: flex; border-radius: 0px 20px 20px 12px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column;">` + firstMessage + '</div></p>';
+    document.getElementById("botStarterMessage").innerHTML = `<p class="botText"><div style="color: #585d63; padding: 10px; background: #ececed; width: 290px; margin-left: 10px; display: flex; border-radius: 0px 20px 20px 12px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column; font-size: 12px; font-weight: 500;">` + firstMessage + '</div></p>';
 
     let time = getTime();
 
     $("#chat-timestamp").append(time);
     document.getElementById("userInput").scrollIntoView(false);
+    document.getElementById("chat-bar-bottom").scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
 }
 
 firstBotMessage();

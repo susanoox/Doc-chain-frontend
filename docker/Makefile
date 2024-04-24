@@ -176,5 +176,10 @@ docker-staging-worker: ## Launch a worker instance that uses the production-like
 	export MAYAN_DATABASES="{'default':{'ENGINE':'django.db.backends.postgresql','NAME':'$(DEFAULT_DATABASE_NAME)','PASSWORD':'$(DEFAULT_DATABASE_PASSWORD)','USER':'$(DEFAULT_DATABASE_USER)','HOST':'127.0.0.1'}}"; \
 	DJANGO_SETTINGS_MODULE=mayan.settings.staging.docker celery -A mayan worker -B -l INFO -O fair
 
+docker-staging-logger:
+	export MAYAN_DATABASES="{'default':{'ENGINE':'django.db.backends.postgresql','NAME':'$(DEFAULT_DATABASE_NAME)','PASSWORD':'$(DEFAULT_DATABASE_PASSWORD)','USER':'$(DEFAULT_DATABASE_USER)','HOST':'127.0.0.1'}}"; \
+	export C_FORCE_ROOT="true"; \
+	DJANGO_SETTINGS_MODULE=mayan.settings.staging.docker celery -A mayan worker -B -l WARNING -O fair
+
 docker-staging-worker-1: 
-	DJANGO_SETTINGS_MODULE=mayan.settings.staging.docker celery -A mayan worker -B -l INFO -O fair
+	DJANGO_SETTINGS_MODULE=mayan.settings.staging.docker celery -A mayan worker -B -l WARNING -O fair
