@@ -187,29 +187,29 @@ def readFile(Data:Document):
                     text = page.extract_text()
                     temp_content = temp_content + text +"\n\n"
                     print(temp_content)
-        print(temp_content)
-        if 50 > calculate_grammar_percentage(temp_content) and len(temp_content.replace(" ", "")) < 40 :
-            try:
-                images = convert_from_path(document_file.file.path)
-                for i, image in enumerate(images):
-                        try:
-                            text = pytesseract.image_to_string(image)
-                            if 80 > calculate_grammar_percentage(text) and len(temp_content.replace(" ", "")) < 40:
-                                rgb_image = image.convert("RGB")
-                                image_bytes = io.BytesIO()
-                                rgb_image.save(image_bytes, format="JPEG")  # You can change the format if needed
-                                image_bytes = image_bytes.getvalue()
-                                content_text = extract_text_from_image_google(image_bytes)
-                                text_content = text_content + content_text
-                            else:
-                                text_content = text_content + text
-                        except Exception as e:
-                            print("error while reading image",e)
-                content = text_content
-                return content
-            except Exception as pdf_processing_error:
-                    print(f"Error processing PDF: {pdf_processing_error}")
-                    return None
-        else:
-            return temp_content
+        return temp_content
+        # if 50 > calculate_grammar_percentage(temp_content) and len(temp_content.replace(" ", "")) < 40 :
+        #     try:
+        #         images = convert_from_path(document_file.file.path)
+        #         for i, image in enumerate(images):
+        #                 try:
+        #                     text = pytesseract.image_to_string(image)
+        #                     if 80 > calculate_grammar_percentage(text) and len(temp_content.replace(" ", "")) < 40:
+        #                         rgb_image = image.convert("RGB")
+        #                         image_bytes = io.BytesIO()
+        #                         rgb_image.save(image_bytes, format="JPEG")  # You can change the format if needed
+        #                         image_bytes = image_bytes.getvalue()
+        #                         content_text = extract_text_from_image_google(image_bytes)
+        #                         text_content = text_content + content_text
+        #                     else:
+        #                         text_content = text_content + text
+        #                 except Exception as e:
+        #                     print("error while reading image",e)
+        #         content = text_content
+        #         return content
+        #     except Exception as pdf_processing_error:
+        #             print(f"Error processing PDF: {pdf_processing_error}")
+        #             return None
+        # else:
+        #     return temp_content
 

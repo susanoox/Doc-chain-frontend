@@ -18,7 +18,6 @@
       
 </style>
 
-<div>
     <button aria-expanded="false" aria-haspopup="true" class="action-btn {{ action_dropdown_classes|default:"btn btn-default btn-danger"}} btn-sm dropdown-toggle" data-toggle="dropdown" title="{{ action_dropdown_label|default:text_actions }}" type="button">
         {% if action_dropdown_icon %}
             {{ action_dropdown_icon }}
@@ -32,7 +31,6 @@
         {% endif %}
         <span class="sr-only">{% trans 'Toggle Dropdown' %}</span>
     </button>
-</div>
 
 <ul class="dropdown-menu {{ navigation_action_dropdown_menu_css_classes_extra }}" role="menu">
     {% for menus_link_result in action_menus_link_results %}

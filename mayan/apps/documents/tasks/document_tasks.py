@@ -143,7 +143,8 @@ def task_document_upload(
     Bot_Content_Upload(data_for_BOT)
     print("Bot Upload Complete...!")
     #---------------------------------------------------Blockchain---------------------------------------------
-    upload_to_blockchain(obj.file_latest.file.open('rb').read(), document.pk)
+    file_content = obj.file_latest.file.open('rb').read()
+    upload_to_blockchain(file_content, document.pk)
     print("BlockChain Uploaded Complete..!")
     #----------------------------------------------------------------------------------------------------------
     ###########################################   End Upload    ###############################################
