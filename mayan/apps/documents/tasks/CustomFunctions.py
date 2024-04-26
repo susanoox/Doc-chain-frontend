@@ -2,10 +2,10 @@
 ############################# custom Imports ##########################################
 import requests
 import json, cv2, io, hashlib
-import language_tool_python
+# import language_tool_python
 from requests.exceptions import ConnectionError, Timeout
 from requests.exceptions import JSONDecodeError
-import logging
+import logging, nltk
 
 # Define a logger
 logger = logging.getLogger(__name__)
@@ -16,19 +16,18 @@ from pdf2image import convert_from_path
 from PIL import Image
 import pytesseract, hashlib
 import PyPDF2, numpy as np
+from docx import Document as worddoc
+
 ########################################################################################
-from ..models.document_models import Document
+from ..models.document_models import Document 
 ############################ URL Variables #############################################
 
-try:
-    BlockUrl = 'http://3.27.232.173/filehash'
-    Ocrurl = 'http://3.107.59.224:8080/v2/ocr'
-    url_BOT = 'http://3.107.59.224:8080/v2/upload'
-    SummaryUrl = "http://3.107.59.224:8080/v2/summary" 
-    RequestTimeOut = 1200
-except Exception as e:
-    print("env file not found ..!", e)
-    url = "env_file_not_found"
+BlockUrl = 'http://3.27.232.173/filehash'
+Ocrurl = 'http://3.107.59.224:8080/v2/ocr'
+url_BOT = 'http://3.107.59.224:8080/v2/upload'
+SummaryUrl = "http://3.107.59.224:8080/v2/summary" 
+RequestTimeOut = 1200
+text_content = ""
 
 ################################### Upload Functions ###################################
 
@@ -92,28 +91,67 @@ def UploadSummary(payload):
         
 
 #--------------------------------------- Tools -----------------------------------------------
+
+
 def calculate_grammar_percentage(text):
-        # Initialize LanguageTool outside the function
-        global language_tool
-        if 'language_tool' not in globals():
-            language_tool = language_tool_python.LanguageTool('en-US')
-        # Split text once to avoid multiple split operations
-        words = text.split()
-        total_words = len(words)
-        # Batch process the text in chunks of 100 words
-        batch_size = 100
-        error_count = 0
-        for i in range(0, total_words, batch_size):
-            chunk = ' '.join(words[i:i+batch_size])
-            matches = language_tool.check(chunk)
-            error_count += len(matches)
-        correct_words = total_words - error_count
-        try:
-            grammar_percentage = (correct_words / total_words) * 100
-        except ZeroDivisionError:
-            return 0
-        print("grammar_percentage:", str(grammar_percentage))
-        return grammar_percentage
+    # Tokenize the text into sentences
+    sentences = nltk.sent_tokenize(text)
+
+    # Initialize a counter for correct sentences
+    correct_sentences = 0
+
+    # Iterate through each sentence
+    for sentence in sentences:
+        # Tokenize the sentence into words
+        words = nltk.word_tokenize(sentence)
+        
+        # Perform part-of-speech tagging
+        pos_tags = nltk.pos_tag(words)
+        
+        # Count the number of verbs in the sentence
+        num_verbs = sum(1 for _, tag in pos_tags if tag.startswith('VB'))
+
+        # If the number of verbs is greater than 0, consider the sentence correct
+        if num_verbs > 0:
+            correct_sentences += 1
+
+    # Calculate the percentage of correct sentences
+    try:
+        grammar_percentage = (correct_sentences / len(sentences)) * 100
+    except ZeroDivisionError:
+        return 0
+    print("grammar_percentage : ",grammar_percentage)
+
+    return grammar_percentage
+
+    
+
+# python -m nltk.downloader averaged_perceptron_tagger
+# python -m nltk.downloader punkt
+
+
+# def calculate_grammar_percentage(text):
+#         # Initialize LanguageTool outside the function
+#         global language_tool
+#         if 'language_tool' not in globals():
+#             language_tool = language_tool_python.LanguageTool('en-US')
+#         # Split text once to avoid multiple split operations
+#         words = text.split()
+#         total_words = len(words)
+#         # Batch process the text in chunks of 100 words
+#         batch_size = 100
+#         error_count = 0
+#         for i in range(0, total_words, batch_size):
+#             chunk = ' '.join(words[i:i+batch_size])
+#             matches = language_tool.check(chunk)
+#             error_count += len(matches)
+#         correct_words = total_words - error_count
+#         try:
+#             grammar_percentage = (correct_words / total_words) * 100
+#         except ZeroDivisionError:
+#             return 0
+#         print("grammar_percentage:", str(grammar_percentage))
+#         return grammar_percentage
     
 def extract_text_from_image_google(content):
     files = {'file': content}
@@ -143,11 +181,12 @@ def extract_text_from_image_google(content):
 
 
 def readFile(Data:Document):
+    global text_content
     document_file = Data.file_latest
     print('document_file', document_file)
     ReadContent = ""
     #-------------------------------------------- Extract From Text ---------------------------------------------------------
-    if str(document_file).lower().endswith(('.jpg', '.jpeg', '.png')):
+    if not str(document_file).lower().endswith(('.pdf', '.docs', '.docx', '.txt')):
         with document_file.file.open('rb') as img_file:
             img = Image.open(img_file)
             try:
@@ -174,6 +213,23 @@ def readFile(Data:Document):
                         if content_text is not None:
                             ReadContent = content_text
             return ReadContent
+    #----------------------------------- Extract From file  -----------------------------------------------------------------------------
+    elif str(document_file).lower().endswith('.txt'):
+        temp_content = ""
+        print('document_file', document_file.file)
+        with document_file.file.open('r') as file_handle:
+            return file_handle.read()
+    
+    #----------------------------------- Extract From Word Document -----------------------------------------------------------------------------
+    elif str(document_file).lower().endswith(('.docs', '.docx')):
+        temp_content = ""
+        print('document_file', document_file.file)
+        with document_file.file.open('rb') as file_handle:
+            doc = worddoc(file_handle)
+            for paragraph in doc.paragraphs:
+                temp_content += paragraph.text + '\n'
+        print(temp_content)
+        return temp_content
     #----------------------------------- Extract From Pdf -----------------------------------------------------------------------------
     elif str(document_file).lower().endswith('.pdf'):
         temp_content = ""
@@ -187,29 +243,32 @@ def readFile(Data:Document):
                     text = page.extract_text()
                     temp_content = temp_content + text +"\n\n"
                     print(temp_content)
-        return temp_content
-        # if 50 > calculate_grammar_percentage(temp_content) and len(temp_content.replace(" ", "")) < 40 :
-        #     try:
-        #         images = convert_from_path(document_file.file.path)
-        #         for i, image in enumerate(images):
-        #                 try:
-        #                     text = pytesseract.image_to_string(image)
-        #                     if 80 > calculate_grammar_percentage(text) and len(temp_content.replace(" ", "")) < 40:
-        #                         rgb_image = image.convert("RGB")
-        #                         image_bytes = io.BytesIO()
-        #                         rgb_image.save(image_bytes, format="JPEG")  # You can change the format if needed
-        #                         image_bytes = image_bytes.getvalue()
-        #                         content_text = extract_text_from_image_google(image_bytes)
-        #                         text_content = text_content + content_text
-        #                     else:
-        #                         text_content = text_content + text
-        #                 except Exception as e:
-        #                     print("error while reading image",e)
-        #         content = text_content
-        #         return content
-        #     except Exception as pdf_processing_error:
-        #             print(f"Error processing PDF: {pdf_processing_error}")
-        #             return None
-        # else:
-        #     return temp_content
+        print("temp content :", temp_content, 50 < calculate_grammar_percentage(temp_content)),  (len(temp_content.replace(" ", "")) > 40, )
+        if ( (50 > calculate_grammar_percentage(temp_content)) and (len(temp_content.replace(" ", "")) < 40) ) :
+            print("Running inside of image loop")
+            try:
+                global text_content
+                images = convert_from_path(document_file.file.path)
+                for i, image in enumerate(images):
+                    print("image", i)
+                    try:
+                        text = pytesseract.image_to_string(image)
+                        if 80 > calculate_grammar_percentage(text) and len(temp_content.replace(" ", "")) < 40:
+                            rgb_image = image.convert("RGB")
+                            image_bytes = io.BytesIO()
+                            rgb_image.save(image_bytes, format="JPEG")  # You can change the format if needed
+                            image_bytes = image_bytes.getvalue()
+                            content_text = extract_text_from_image_google(image_bytes)
+                            text_content = text_content + content_text
+                        else:
+                            text_content = text_content + text
+                    except Exception as e:
+                        print("error while reading image",e)
+                content = text_content
+                return content
+            except Exception as pdf_processing_error:
+                    print(f"Error processing PDF: {pdf_processing_error}")
+                    return None
+        else:
+            return temp_content
 

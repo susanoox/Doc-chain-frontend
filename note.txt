@@ -116,3 +116,13 @@ input box color changes
     }
     
 # DMS-AI = 3.8.19
+
+###############################################
+pip install python-docx
+----------------------------------------------
+python -m nltk.downloader averaged_perceptron_tagger
+# python -m nltk.downloader punkt
+----------------------------------------------
+sudo apt update
+sudo apt install libreoffice
+###############################################

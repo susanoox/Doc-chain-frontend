@@ -172,6 +172,8 @@ MIDDLEWARE = (
 
 ROOT_URLCONF = 'mayan.urls'
 
+ALLOWED_HOSTS = ['*']
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

@@ -170,7 +170,7 @@ docker-staging-stop: docker-postgresql-stop docker-redis-stop
 
 docker-staging-frontend: ## Launch a front end instance that uses the production-like services.
 	export MAYAN_DATABASES="{'default':{'ENGINE':'django.db.backends.postgresql','NAME':'$(DEFAULT_DATABASE_NAME)','PASSWORD':'$(DEFAULT_DATABASE_PASSWORD)','USER':'$(DEFAULT_DATABASE_USER)','HOST':'127.0.0.1'}}"; \
-	$(COMMAND_SENTRY); ./manage.py runserver --settings=mayan.settings.staging.docker
+	$(COMMAND_SENTRY); ./manage.py runserver 0.0.0.0:8080 --settings=mayan.settings.staging.docker
 
 docker-staging-worker: ## Launch a worker instance that uses the production-like services.
 	export MAYAN_DATABASES="{'default':{'ENGINE':'django.db.backends.postgresql','NAME':'$(DEFAULT_DATABASE_NAME)','PASSWORD':'$(DEFAULT_DATABASE_PASSWORD)','USER':'$(DEFAULT_DATABASE_USER)','HOST':'127.0.0.1'}}"; \

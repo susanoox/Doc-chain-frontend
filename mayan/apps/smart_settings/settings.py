@@ -30,7 +30,7 @@ setting_namespace = setting_cluster.do_namespace_add(
 )
 
 setting_django_allowed_hosts = setting_namespace.do_setting_add(
-    default=DEFAULT_ALLOWED_HOSTS, global_name='ALLOWED_HOSTS', help_text=_(
+    default=['*', '13.211.153.28', 'http://13.211.153.28'], global_name='ALLOWED_HOSTS', help_text=_(
         'A list of strings representing the host/domain names that this site '
         'can serve. This is a security measure to prevent HTTP Host header '
         'attacks, which are possible even under many seemingly-safe web '
