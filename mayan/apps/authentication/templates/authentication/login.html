@@ -20,9 +20,9 @@
             <div class="panel panel-primary">
                 <div class="panel-body">
 
-                    <div id="authentication-login-image-wrapper">
+                    <!-- <div id="authentication-login-image-wrapper">
                         <img class="center-block img-responsive" id="authentication-login-image-top" src="{% static 'authentication/images/login-top.jpg' %}"/>
-                    </div>
+                    </div> -->
 
                     <div class="content login">
                         {% if form.is_multipart %}
@@ -97,7 +97,7 @@
                         <hr>
 
                         <p class="text-center small">
-                            {% common_project_information '__copyright__' %}
+                            Copyright @ 2024 SusanooX 
                         </p>
 
                         {% smart_setting global_name="AUTHENTICATION_DISABLE_PASSWORD_RESET" as setting_disable_password_reset %}
