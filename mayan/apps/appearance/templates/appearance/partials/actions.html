@@ -1,11 +1,30 @@
 {% load navigation_tags %}
 
 {% navigation_resolve_menus names='object,secondary' sort_results=True as action_menus_link_results %}
-<div class="pull-right btn-group" id="menu-actions">
-    {% if action_menus_link_results %}
-    {% include 'navigation/actions_dropdown.html' %}
-    {% endif %}
-    <div class="pull-right btn-group">Test Text</div>
+<div class="action-btn-container">
+    <div class="action-btn-content">
+        {% if action_menus_link_results %}
+        {% include 'navigation/actions_dropdown.html' %}
+        {% endif %}
+        <div class="pull-right btn-group">Test Text</div>
+    </div>
 </div>
 <div class="clearfix"></div>
+
+<style>
+    .action-btn-container {
+        position: absolute;
+        right: 0px;
+        top: 4px;
+        z-index: 1020;
+        width: 200px !important;
+    }
+    .action-btn-content{
+        display: flex;
+        align-items: center;
+        height: 54px !important;
+        margin-right: 20px !important;
+        background: #FFFFFF !important;
+    }
+</style>
 

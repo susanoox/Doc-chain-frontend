@@ -10,14 +10,13 @@
             <span class="sr-only">{% trans 'Open main menu' %}</span>
             <i aria-hidden="true" data-hidden="true" class="fa fa-bars"></i>
         </button>
-{% endif %}
-
+{% endif %}       
 {% if not non_html_title and result.title %}
-        <div style="display: flex; margin-bottom: -5px; width: 108%; margin-left: -12px; background: #FFFFFF; align-items: center; padding: 17px;">
+        <div class="title-container">
             {% if result.title_full == "Home" %}
-                <h3 id="content-title" style="margin: 0px;" title='Dashboard'>
+                <h3 id="content-title" style="margin-top: 0px;" title='Dashboard'>
             {% else %}
-                <h3 id="content-title" style="margin: 0px;" title='{{ result.title_full }}'>
+                <h3 id="content-title" style="margin-top: 0px;" title='{{ result.title_full }}'>
             {% endif %}
 {% endif %}
 {% if result.title_full == "Home" %}
@@ -39,5 +38,20 @@
 {% if not non_html_title %}
         </div>
     </div>
-    {% if title or subtitle %}<hr style="height: 1px; width: 109%; background-color: #e6e6e6; margin-left: -22px;"/>{% endif %}
+    {% if title or subtitle %}<hr style="height: 1px; width: 150%; background-color: #E0E0E0; margin-left: -22px; margin-top: -0.5px;"/>{% endif %}
 {% endif %}
+
+<style>
+    .title-container {
+        display: flex;
+        background: #FFFFFF;
+        height: 58px !important;
+        margin-top: -1px !important;
+        margin-left: -12px !important;
+        width: 110% !important;
+        align-items: center;
+        padding: 16px !important;
+        color: #000000 !important;
+        font-size: 20px !important;
+    }
+</style>

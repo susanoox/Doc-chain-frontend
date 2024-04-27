@@ -360,7 +360,7 @@ a i {
 #menu-actions {
     position: fixed;
     right: 20px;
-    top: 75px;
+    top: 72px;
     z-index: 1020;
 }
 
@@ -383,7 +383,7 @@ a i {
         position: absolute;
         border-left: 2px solid #e0e0e0 !important;
         right: 0;
-        top: 55px;
+        top: 50px;
         width: 184px;
         z-index: 900;
     }
