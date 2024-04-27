@@ -126,3 +126,21 @@ python -m nltk.downloader averaged_perceptron_tagger
 sudo apt update
 sudo apt install libreoffice
 ###############################################
+
+image, docs, text,
+
+doc and pdf (grammer < 50)
+
+
+---------------------------------------------- Apr 27 notes -----------------------------------------------
+Use the lsof command to find the process ID (PID) of the process running on the port.: You can use the following command:
+Code
+
+lsof -i tcp:8000
+
+Use the kill command to kill the process.: You can use the following command:
+Code
+
+kill -9 <PID>
+
+-------------------------------------------------------------------------------------------------------------

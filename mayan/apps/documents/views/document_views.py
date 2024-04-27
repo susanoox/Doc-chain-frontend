@@ -148,9 +148,12 @@ class DocumentPreviewView(DocumentVersionPreviewView):
             DocumentVersionPreviewView, self
         ).dispatch(request=request, *args, **kwargs)
         self.object.add_as_recent_document_for_user(user=request.user)
-        event_document_viewed.commit(
-            actor=request.user, target=self.object
-        )
+        try:
+            event_document_viewed.commit(
+                actor=request.user, target=self.object
+            )
+        except:
+            print("error in this phase...!")
 
         return result
 
