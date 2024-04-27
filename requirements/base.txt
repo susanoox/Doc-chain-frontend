@@ -62,3 +62,4 @@ TerminalDesigner
 pdf2image
 opencv-python
 nltk
+python-docx
