@@ -212,7 +212,7 @@ class summery(SingleObjectDetailView):
                 content = summary_data.content
             except Summary.DoesNotExist:
                 try:
-                    if document_id in PROCESSING_FILE_QUEUE:
+                    if int(document_id) in PROCESSING_FILE_QUEUE:
                         content = "The summary is processing for this file. Please wait a moment."
                     else:
                         content = "Summary text is not available in this file."
@@ -247,7 +247,7 @@ class Ocr(SingleObjectDetailView):
                 content = ocr_data.content
             except Summary.DoesNotExist:
                 try:
-                    if document_id in PROCESSING_FILE_QUEUE:
+                    if int(document_id) in PROCESSING_FILE_QUEUE:
                         content = "The OCR is processing for this file. Please wait a moment."
                     else:
                         content = "Ocr text is not available in this file."
