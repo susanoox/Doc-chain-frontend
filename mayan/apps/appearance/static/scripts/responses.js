@@ -40,6 +40,8 @@ function getBotResponse(input) {
         let botHtml = '<p class="botText"><div style="color: #585d63; padding: 10px; background: #ececed; width: 290px; margin-left: 10px; display: flex; border-radius: 0px 20px 20px 12px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column; font-size: 12px; font-weight: 500;">' + data.response + '</div></p>';
         $("#chatbox").append(botHtml);
         console.log(data.response, data)
+        document.querySelector(".powered").scrollIntoView(true);
+
         return data
       },
       error: function (data) {

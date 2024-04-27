@@ -17,7 +17,7 @@
     .chat-bar-collapsible{
         background-color: transparent;
         box-shadow: none;
-        margin-bottom: 79px;
+        margin-bottom: 15px;
         margin-right: -32px;
     }
     #circle-chat-button{
@@ -39,25 +39,30 @@
       
 </style>
 
-<button id="circle-chat-button" type="button">
+<!-- <button id="circle-chat-button" type="button"> -->
 
 </button>       
 <div class="chat-bar-collapsible" style="background-color: transparent; box-shadow: none;">
 
-    <button id="chat-button" type="button" class="collapsible" style="background-color: transparent;border:none;">
+    <!-- <button id="chat-button" type="button" class="collapsible" style="background-color: transparent;border:none;">
         
-    </button>
+    </button> -->
 
-    <div class="content" style="box-shadow: -1px 2px 20px #00000033;border-radius: 11px;">
-        <div class="full-chat-block" style="width: 100%; border-radius: 8px; border: 1px solid #eaeaea; background: #ffffff;">
-            <p style="text-align: start; padding: 11px; font-size: 16px; font-weight: 800;">Welcome to DocuBuddy chat !</p>
+    <div class="content" style="box-shadow: -1px 2px 20px #00000033;border-radius: 0px;">
+        <div class="full-chat-block" style="width: 100%; border-radius: 0px;">
+            <!-- <p style="text-align: start; padding: 11px; font-size: 16px; font-weight: 800;">Welcome to DocuBuddy chat !</p> -->
             <!-- Message Container -->
             <div class="outer-container">
                 <div class="chat-container">
                     <!-- Messages -->
-                    <div id="chatbox">
-                        <!-- <h5 id="chat-timestamp"></h5> -->
-                        <p id="botStarterMessage" class="botText"><span>Loading...</span></p>
+                    <div class="chat-box-container">
+                        <div id="chatbox">
+                            <!-- <h5 id="chat-timestamp"></h5> -->
+                            <p id="botStarterMessage" class="botText"><span>Loading...</span></p>
+                        </div>
+                        <div id="chat-bar-bottom">
+                            <p></p>
+                        </div>    
                     </div>
                     
                     {% csrf_token %}
@@ -66,18 +71,18 @@
                     <!-- User input box -->
                     <div class="chat-bar-input-block">
                         <div>
-                            <div id="userInput" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; width: 352px; background: #ffffff; padding: 10px; border: 1px solid #e3e4e4; gap: 10px; border-left: none;">
+                            <div id="userInput" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; width: 352px; background: #ffffff; padding: 10px;  gap: 10px; border-left: none;">
                                 <input id="textInput" class="input-box" type="text" name="msg" placeholder="Ask your query...">
-                                <button id="startButton" style="padding: 0px 7px; display: flex; align-items: center; height: 45px; justify-content: center; width: 46px; color: #ffffff; border-radius: 10px; border: none; background: #04724d;" onclick="sendButton()">
+                                <button id="startButton" style="padding: 4px 12px; display: flex; align-items: center; height: 42px; justify-content: center; width: 48px; color: #ffffff; border-radius: 4px; border: none; background: #04724d;" onclick="sendButton()">
                                     <span class="material-symbols-outlined">
                                         send
                                     </span>
                                 </button>
                             </div>
-                            <p class="powered">Powered by AI </p>
+                            <p class="powered">Powered by AI - Docubuddy </p>
                         </div>
 
-                        <div class="chat-bar-icons">
+                        <!-- <div class="chat-bar-icons"> -->
 
                             <!-- <button id="startButton" style="    padding: 0px 7px;
                             border-radius: 14px;"><i id="voiceInputIcon" class="fas fa-send"></i></button>
@@ -85,11 +90,7 @@
                             <button id="startButton" style="    padding: 0px 7px;
                             border-radius: 14px;"><i id="chat-icon" style="color: #333;" class="fas fa-fw fa-send"
                                 onclick="sendButton()"></i> -->
-                        </div>
-                    </div>
-
-                    <div id="chat-bar-bottom">
-                        <p></p>
+                        <!-- </div> -->
                     </div>
 
                 </div>
@@ -105,32 +106,33 @@
 var coll = document.getElementsByClassName("collapsible");
 var extend = document.getElementById("extend-btn");
 var close_btn = document.getElementById("close-btn");
-var circle_btn = document.getElementById("circle-chat-button");
+// var circle_btn = document.getElementById("circle-chat-button");
 
-circle_btn.addEventListener("click", function () {
-    // Loop through each element with class name "content"
-    var contents = document.getElementsByClassName("content");
-    for (var i = 0; i < contents.length; i++) {
-        var content = contents[i];
-        if (content.style.maxHeight) {
-            content.style.maxHeight = null;
-            circle_btn.style.backgroundImage = "url(https://s.cafebazaar.ir/images/icons/com.auto.bot.answer.chatgpt-7eca1f54-1d93-45b8-8e8d-767d6ba9ee02_512x512.png?x-img=v1/resize,h_256,w_256,lossless_false/optimize)"
-            circle_btn.style.backgroundPosition = "-1px 0px";
-            circle_btn.style.backgroundSize = "cover";
-        } else {
-            content.style.maxHeight = content.scrollHeight + "px";
-            circle_btn.style.backgroundPosition = "-3px -3px";
-            circle_btn.style.backgroundSize = "52px";
-            circle_btn.style.backgroundImage = "url(https://cdn-icons-png.flaticon.com/256/4210/4210923.png)"
-        }
-    }
-});
+// circle_btn.addEventListener("click", function () {
+//     // Loop through each element with class name "content"
+//     var contents = document.getElementsByClassName("content");
+//     for (var i = 0; i < contents.length; i++) {
+//         var content = contents[i];
+//         if (content.style.maxHeight) {
+//             content.style.maxHeight = null;
+//             circle_btn.style.backgroundImage = "url(https://s.cafebazaar.ir/images/icons/com.auto.bot.answer.chatgpt-7eca1f54-1d93-45b8-8e8d-767d6ba9ee02_512x512.png?x-img=v1/resize,h_256,w_256,lossless_false/optimize)"
+//             circle_btn.style.backgroundPosition = "-1px 0px";
+//             circle_btn.style.backgroundSize = "cover";
+//         } else {
+//             content.style.maxHeight = content.scrollHeight + "px";
+//             circle_btn.style.backgroundPosition = "-3px -3px";
+//             circle_btn.style.backgroundSize = "52px";
+//             circle_btn.style.backgroundImage = "url(https://cdn-icons-png.flaticon.com/256/4210/4210923.png)"
+//         }
+//     }
+// });
 
 var count = 0
 for (let i = 0; i < coll.length; i++) {
     coll[i].addEventListener("click", function () {
         this.classList.toggle("active");
         if (count%2 === 0){
+            close_btn.style.display = 'block';
             close_btn.style.display = 'block';
             extend.style.display = 'none';
         }else{
@@ -145,7 +147,8 @@ for (let i = 0; i < coll.length; i++) {
         if (content.style.maxHeight) {
             content.style.maxHeight = null;
         } else {
-            content.style.maxHeight = content.scrollHeight + "px";
+            // content.style.maxHeight = content.scrollHeight + "px";
+            content.style.maxHeight ="95vh";
         }
 
     });
@@ -176,8 +179,9 @@ function firstBotMessage() {
     let time = getTime();
 
     $("#chat-timestamp").append(time);
-    document.getElementById("userInput").scrollIntoView(false);
-    document.getElementById("chat-bar-bottom").scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+    // document.getElementById("userInput").scrollIntoView(false);
+    // document.getElementById("chat-bar-bottom").scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+    document.querySelector(".powered").scrollIntoView(true);
 }
 
 firstBotMessage();
@@ -185,7 +189,11 @@ firstBotMessage();
 // Retrieves the response
 function getHardResponse(userText) {
     let botResponse = getBotResponse(userText);
-    document.getElementById("chat-bar-bottom").scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+    // document.getElementById("chat-bar-bottom").scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+    // document.getElementById("chat-bar-bottom").scrollIntoView(true);
+    document.querySelector(".powered").scrollIntoView(true);
+
+
 }
 
 
@@ -201,7 +209,9 @@ function getResponse() {
 
     $("#textInput").val("");
     $("#chatbox").append(userHtml);
-    document.getElementById("chat-bar-bottom").scrollIntoView(true);
+    // document.getElementById("chat-bar-bottom").scrollIntoView(true);
+    document.querySelector("#textInput").scrollIntoView(true);
+
 
     setTimeout(() => {
         getHardResponse(userText);
@@ -215,7 +225,9 @@ function buttonSendText(sampleText) {
 
     $("#textInput").val("");
     $("#chatbox").append(userHtml);
-    document.getElementById("chat-bar-bottom").scrollIntoView(true);
+    // document.getElementById("chat-bar-bottom").scrollIntoView(true);
+    document.querySelector(".powered").scrollIntoView(true);
+
 
     //Uncomment this if you want the bot to respond to this buttonSendText event
     // setTimeout(() => {
@@ -229,6 +241,7 @@ function sendButton() {
 
 // Press enter to send a message
 $("#textInput").keypress(function (e) {
+    console.log("key pressed ", e);
     if (e.which == 13) {
         getResponse();
     }
