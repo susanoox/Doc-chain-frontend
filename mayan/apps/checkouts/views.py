@@ -2,9 +2,8 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from mayan.apps.acls.models import AccessControlList
-from mayan.apps.documents.models.document_models import Document
+from mayan.apps.documents.models.document_models import Document, DocErrorHandling, Summary
 from mayan.apps.documents.views.document_views import DocumentListView
-from mayan.apps.documents.models.document_models import Summary
 
 from mayan.apps.views.exceptions import ActionError
 from mayan.apps.views.generics import (
@@ -204,10 +203,29 @@ class summery(SingleObjectDetailView):
     def get_extra_context(self):
         document_id = self.kwargs['document_id']
         try:
-            summary_data = Summary.objects.get(doc_id=document_id)
-            content = summary_data.summary
-        except Summary.DoesNotExist:
-            content = "Summary not found for this document."
+            obj = Document.objects.get(id=document_id)
+            filetry = obj.file_latest.file
+            print(filetry)
+            try:
+                summary_data = Summary.objects.get(doc_id=document_id)
+                content = summary_data.content
+                errhandling = DocErrorHandling.objects.get(doc_id=document_id)
+                errhandling = DocErrorHandling.objects.get(doc_id=document_id)
+                if errhandling.summary_file == False:
+                    errhandling.summary_file = True
+                    errhandling.save()
+            except Summary.DoesNotExist:
+                try:
+                    errhandling = DocErrorHandling.objects.get(doc_id=document_id)
+                    if errhandling.summary_file == False:
+                        content = "The summary are processing for this file please wait a moment"
+                    else:
+                        content = "Summary text is not available in this file."
+                except:
+                    content = "The summary are processing for this file please wait a moment"
+        except:
+            content = "The File is Processing please wait a moment"
+        
         return {
             'object': self.object,
             'title': _('Summary Details of: %s') % self.object,
@@ -226,16 +244,31 @@ class Ocr(SingleObjectDetailView):
 
     def get_extra_context(self):
         document_id = self.kwargs['document_id']
-        # try:
-        summary_data = Summary.objects.get(doc_id=document_id)
-        content = summary_data.content
-        # except Summary.DoesNotExist:
-        #     content = "Summary not found for this document."
+        try:
+            obj = Document.objects.get(id=document_id)
+            filetry = obj.file_latest.file
+            try:
+                ocr_data = Summary.objects.get(doc_id=document_id)
+                content = ocr_data.content
+                errhandling = DocErrorHandling.objects.get(doc_id=document_id)
+                if errhandling.ocr == False:
+                    errhandling.ocr = True
+                    errhandling.save()
+            except Summary.DoesNotExist:
+                try:
+                    errhandling = DocErrorHandling.objects.get(doc_id=document_id)
+                    if errhandling.ocr == False:
+                        content = "The ocr are processing for this file please wait a moment."
+                    else:
+                        content = "Ocr text is not available in this file."
+                except:
+                    content = "ocr not found for this document."
+        except:
+            content = "The File is Processing please wait amoment"
         return {
             'object': self.object,
-            'title': _('Summary Details of: %s') % self.object,
+            'title': _('Ocr Details of: %s') % self.object,
             'content': content, 
             'type':'ocr',
             'doc_id':document_id
-            
         }

@@ -32,6 +32,14 @@ class Config(models.Model):
     last_length = models.IntegerField()
     updated_at = models.DateTimeField(auto_now=True)
     
+class DocErrorHandling(models.Model):
+    id = models.IntegerField(primary_key=True) # id of the table
+    doc_id = models.IntegerField()
+    ocr = models.BooleanField(default=False)
+    summary_file = models.BooleanField(default=False)
+    blockchain = models.BooleanField(default=False)
+    updated_at = models.DateTimeField(auto_now=True)
+    
 
 class Summary(models.Model): # table name
     id = models.IntegerField(primary_key=True) # id of the table
