@@ -10,7 +10,13 @@
             <span class="sr-only">{% trans 'Open main menu' %}</span>
             <i aria-hidden="true" data-hidden="true" class="fa fa-bars"></i>
         </button>
+<<<<<<< HEAD
 {% endif %}       
+=======
+{% endif %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+>>>>>>> ab99d28 (Blockchain badge ui is completed)
 {% if not non_html_title and result.title %}
         <div class="title-container">
             {% if result.title_full == "Home" %}
@@ -22,7 +28,46 @@
 {% if result.title_full == "Home" %}
     <span id="appearance-title-text" style="font-weight: 600; font-size: 20px;">Dashboard</span>
 {% else %}
-    <span id="appearance-title-text" style="font-weight: 600; font-size: 20px;">{{ result.title }}</span>
+    <span id="appearance-title-text" style="font-weight: 600; font-size: 20px;">
+        {% if "Verified" in result.title  %}
+                <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 25px;">
+                    <div style="font-weight: 600; font-size: 20px;">
+                        Preview of Document
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; flex-direction: row; background: #04724D; padding: 4px 8px 4px 8px; border-radius: 200px; font-size: 18px; font-weight: 600; color: #FFFFFF;gap:4px;">
+                        <i class="material-icons">check_circle</i>
+                        Verified
+                    </div>
+                </div>
+            {% elif  "Compromised" in  result.title %}
+                <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 25px;">
+                    <div style="font-weight: 600; font-size: 20px;">
+                        Preview of Document
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; flex-direction: row; background: #FF4444; padding: 4px 8px 4px 8px; border-radius: 200px; font-size: 18px; font-weight: 600; color: #FFFFFF; gap:4px;">
+                        <span class="material-symbols-outlined"  style="font-size: 20px;">
+                            emergency_home
+                        </span>
+                        File Compromised
+                    </div>
+                </div>
+            {% elif "Processing" in result.title %}
+                <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 25px;">
+                    <div style="font-weight: 600; font-size: 20px;">
+                        Preview of Document
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; flex-direction: row; background: #FF9E44; padding: 4px 8px 4px 8px; border-radius: 200px; font-size: 18px; font-weight: 600; color: #FFFFFF;gap:4px;">
+                        <span class="material-symbols-outlined"  style="font-size: 20px;">
+                            pending
+                        </span>
+                        Processing
+                    </div>
+                </div>
+            {% else %}
+                {{ result.title }}
+
+        {% endif %}
+    </span>
 {% endif %}
 
 
@@ -41,6 +86,7 @@
     {% if title or subtitle %}<hr style="height: 1px; width: 150%; background-color: #E0E0E0; margin-left: -22px; margin-top: -0.5px;"/>{% endif %}
 {% endif %}
 
+<<<<<<< HEAD
 <style>
     .title-container {
         display: flex;
@@ -55,3 +101,46 @@
         font-size: 20px !important;
     }
 </style>
+=======
+
+{% if  "Processing" in  result.title %}
+
+<script>
+    function checkProcessingStatus(docId) {
+        // Send a GET request to your Django view
+        fetch(`/check_process/{{ doc_id }}`)
+            .then(response => {
+                // Check if the response is successful
+                if (response.ok) {
+                    // Parse the JSON response
+                    return response.json();
+                } else {
+                    // Handle error responses
+                    throw new Error('Failed to fetch processing status');
+                }
+            })
+            .then(data => {
+                // Check the status returned by Django
+                if (data.file) {
+                    // Document is still processing
+                    console.log('Document is still processing');
+                } else {
+                    // Document processing has finished
+                    console.log('Document processing has finished');
+                    location.reload();
+                    // Stop checking for status updates
+                    clearInterval(checkInterval);
+                }
+            })
+            .catch(error => {
+                // Log any errors that occur during the request
+                console.error('Error checking processing status:', error);
+            });
+    }
+    const checkInterval = setInterval(() => {
+        checkProcessingStatus( {{ doc_id }} );
+    }, 2000);
+</script>
+
+{% endif %}
+>>>>>>> ab99d28 (Blockchain badge ui is completed)

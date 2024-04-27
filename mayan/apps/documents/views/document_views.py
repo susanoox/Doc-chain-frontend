@@ -195,7 +195,9 @@ class DocumentPreviewView(DocumentVersionPreviewView):
         return {
             'hide_labels': True,
             'object': self.object,
-            'title': _('Preview of document : %s ' + flag) % self.object
+            'title': _('Preview of document : %s ' + flag) % self.object,
+            'doc_id': document.pk
+            
         }
 
 

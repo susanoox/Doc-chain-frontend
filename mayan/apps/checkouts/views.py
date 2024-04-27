@@ -22,6 +22,7 @@ from .permissions import (
     permission_document_check_in, permission_document_check_in_override,
     permission_document_check_out, permission_document_check_out_detail_view
 )
+from mayan.apps.documents.tasks.document_tasks import PROCESSING_FILE_QUEUE
 
 
 class DocumentCheckInView(MultipleObjectConfirmActionView):
@@ -209,22 +210,16 @@ class summery(SingleObjectDetailView):
             try:
                 summary_data = Summary.objects.get(doc_id=document_id)
                 content = summary_data.content
-                errhandling = DocErrorHandling.objects.get(doc_id=document_id)
-                errhandling = DocErrorHandling.objects.get(doc_id=document_id)
-                if errhandling.summary_file == False:
-                    errhandling.summary_file = True
-                    errhandling.save()
             except Summary.DoesNotExist:
                 try:
-                    errhandling = DocErrorHandling.objects.get(doc_id=document_id)
-                    if errhandling.summary_file == False:
-                        content = "The summary are processing for this file please wait a moment"
+                    if document_id in PROCESSING_FILE_QUEUE:
+                        content = "The summary is processing for this file. Please wait a moment."
                     else:
                         content = "Summary text is not available in this file."
                 except:
-                    content = "The summary are processing for this file please wait a moment"
+                    content = "The summary is processing for this file. Please wait a moment."
         except:
-            content = "The File is Processing please wait a moment"
+            content = "Summary text is not available in this file."
         
         return {
             'object': self.object,
@@ -250,21 +245,16 @@ class Ocr(SingleObjectDetailView):
             try:
                 ocr_data = Summary.objects.get(doc_id=document_id)
                 content = ocr_data.content
-                errhandling = DocErrorHandling.objects.get(doc_id=document_id)
-                if errhandling.ocr == False:
-                    errhandling.ocr = True
-                    errhandling.save()
             except Summary.DoesNotExist:
                 try:
-                    errhandling = DocErrorHandling.objects.get(doc_id=document_id)
-                    if errhandling.ocr == False:
-                        content = "The ocr are processing for this file please wait a moment."
+                    if document_id in PROCESSING_FILE_QUEUE:
+                        content = "The OCR is processing for this file. Please wait a moment."
                     else:
                         content = "Ocr text is not available in this file."
                 except:
                     content = "ocr not found for this document."
         except:
-            content = "The File is Processing please wait amoment"
+            content = "ocr not found for this document."
         return {
             'object': self.object,
             'title': _('Ocr Details of: %s') % self.object,
