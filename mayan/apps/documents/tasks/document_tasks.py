@@ -18,6 +18,8 @@ from .CustomFunctions import readFile, UploadSummary, upload_to_blockchain, Bot_
 
 logger = logging.getLogger(name=__name__)
 
+PROCESSING_FILE_QUEUE = []
+
 # obj = Summary.objects.all()
 # for i in obj:
 #     print(i.id, i.summary, i.doc_id)
@@ -28,6 +30,7 @@ def task_document_upload(
     callback_dict=None, description=None, label=None, language=None,
     user_id=None
 ):
+    global CURRENT_FILES
     callback_dict = callback_dict or {}
 
     DocumentType = apps.get_model(
@@ -62,6 +65,9 @@ def task_document_upload(
             user=user
         )
         print("document Datas : ",document.id)
+        PROCESSING_FILE_QUEUE.append(document.id)
+        print("upload started..!", document.id, "are updated...!", "file pushed into queue")
+        
     except OperationalError as exception:
         logger.error(
             'Operational error creating new document of type: %s, '
@@ -152,6 +158,8 @@ def task_document_upload(
     file_content = obj.file_latest.file.open('rb').read()
     upload_to_blockchain(file_content, document.pk)
     print("BlockChain Uploaded Complete..!")
+    PROCESSING_FILE_QUEUE.remove(document.pk)
+    print(document.pk, "poped into the queue..!")
     #----------------------------------------------------------------------------------------------------------
     ###########################################   End Upload    ###############################################
 
