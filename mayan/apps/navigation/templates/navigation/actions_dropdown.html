@@ -6,8 +6,16 @@
 
 <style>
     .action-btn{
-        width: 130px;
-        margin-right: 9px;
+        display: flex;
+        width: 95px;
+        height: 32px !important;
+        margin-right: 10px;
+        border-radius: 0px !important;
+        background: #04724D !important;
+        border: 0px !important;
+        gap: 6px;
+        padding: 4px 12px 4px 12px !important;
+        align-items: center;
     }
     @media only screen and (max-width: 706px) {
         .action-btn{
@@ -27,7 +35,7 @@
             {% else %}
                 {{ text_actions }}
             {% endif %}
-            <span class="caret"></span>
+            <span class="material-symbols-outlined">expand_more</span>
         {% endif %}
         <span class="sr-only">{% trans 'Toggle Dropdown' %}</span>
     </button>
