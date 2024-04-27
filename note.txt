@@ -117,6 +117,7 @@ input box color changes
     
 # DMS-AI = 3.8.19
 
+============================================================================================
 ###############################################
 pip install python-docx
 ----------------------------------------------
@@ -142,5 +143,43 @@ Use the kill command to kill the process.: You can use the following command:
 Code
 
 kill -9 <PID>
+==========================================================================================
 
--------------------------------------------------------------------------------------------------------------
+docker images = list images
+
+delete 
+
+docker rmi <docker image id>
+docker rm <container id>
+make docker-build
+
+cd docker
+docker compose up
+
+------------------ seperate development checking---------------
+docker-staging-start
+frontent
+logger
+---------------------------------------------------------------
+
+=================================================
+
+summary generation on the process
+
+---------------------------------------------
+
+docker ps to list running docker 
+
+docker images 
+
+
+
+--------------------------------------
+1. error handling = [summary, ocr]
+2. grammer 
+3. image = all of the format [img, txt, pdf, docs]
+4. text = [readFile return should not be none]
+
+############# blockchain ###############
+> Showing Message = (time < 1 min) then show "Waiting"
+----------------------------------------

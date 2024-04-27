@@ -185,33 +185,13 @@ def readFile(Data:Document):
     document_file = Data.file_latest
     print('document_file', document_file)
     ReadContent = ""
-    #-------------------------------------------- Extract From Text ---------------------------------------------------------
-    if not str(document_file).lower().endswith(image_extensions):
-        with document_file.file.open('rb') as img_file:
-            img = Image.open(img_file)
-            try:
-                image = cv2.cvtColor(np.array(img), cv2.COLOR_BGR2GRAY)  # Convert to grayscale4
-            except:
-                image=np.array(img)
-            _, threshold_image = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-            denoised_image = cv2.fastNlMeansDenoising(threshold_image, None, h=10, templateWindowSize=7, searchWindowSize=21)
-            enhanced_image = cv2.convertScaleAbs(denoised_image, alpha=1.5, beta=30)
-            config = r'--oem 3 -c tessedit_char_whitelist=௦௧௨௩௪௫௬௭௮௯ௐஂஃஅஆஇஈஉஊஎஏஐஒஓஔகஙசஞடணதநனபமயரலவஷஸஹாிீுூேைொோௌௐௗ்0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz --psm 6'
-            if Data.language == ("tam" or "eng"):
-                text = pytesseract.image_to_string(enhanced_image, lang=Data.language, config=config)
-            else:
-                text = pytesseract.image_to_string(enhanced_image, lang=Data.language)
-            if text:
-                print("language: ", Data.language)
-                print(Data.language == "eng" and (80 > calculate_grammar_percentage(text)), (80 < calculate_grammar_percentage(text)))
-                if Data.language == "eng" and (80 < calculate_grammar_percentage(text)):
-                    ReadContent = text
-                else:
-                    with document_file.file.open('rb') as img_file:
-                        content_text = extract_text_from_image_google(img_file.read())
-                        print(content_text)
-                        if content_text is not None:
-                            ReadContent = content_text
+    #-------------------------------------------- Extract From Text Images ---------------------------------------------------------
+    if str(document_file).lower().endswith(image_extensions):
+            with document_file.file.open('rb') as img_file:
+                content_text = extract_text_from_image_google(img_file.read())
+                print(content_text)
+                if content_text is not None:
+                    ReadContent = content_text
             return ReadContent
     #----------------------------------- Extract From file  -----------------------------------------------------------------------------
     elif str(document_file).lower().endswith('.txt'):
@@ -244,31 +224,34 @@ def readFile(Data:Document):
                     temp_content = temp_content + text +"\n\n"
                     print(temp_content)
         print("temp content :", temp_content, 50 < calculate_grammar_percentage(temp_content)),  (len(temp_content.replace(" ", "")) > 40, )
-        if ( (50 > calculate_grammar_percentage(temp_content)) and (len(temp_content.replace(" ", "")) < 40) ) :
-            print("Running inside of image loop")
-            try:
-                global text_content
-                images = convert_from_path(document_file.file.path)
-                for i, image in enumerate(images):
-                    print("image", i)
-                    try:
-                        text = pytesseract.image_to_string(image)
-                        if 80 > calculate_grammar_percentage(text) and len(temp_content.replace(" ", "")) < 40:
-                            rgb_image = image.convert("RGB")
-                            image_bytes = io.BytesIO()
-                            rgb_image.save(image_bytes, format="JPEG")  # You can change the format if needed
-                            image_bytes = image_bytes.getvalue()
-                            content_text = extract_text_from_image_google(image_bytes)
-                            text_content = text_content + content_text
-                        else:
-                            text_content = text_content + text
-                    except Exception as e:
-                        print("error while reading image",e)
-                content = text_content
-                return content
-            except Exception as pdf_processing_error:
-                    print(f"Error processing PDF: {pdf_processing_error}")
-                    return None
+        if len(temp_content.split('\n')) > 3:
+            if ( (50 > calculate_grammar_percentage(temp_content)) and (len(temp_content.replace(" ", "")) < 40) ) :
+                print("Running inside of image loop")
+                try:
+                    global text_content
+                    images = convert_from_path(document_file.file.path)
+                    for i, image in enumerate(images):
+                        print("image", i)
+                        try:
+                            text = pytesseract.image_to_string(image)
+                            if 80 > calculate_grammar_percentage(text) and len(temp_content.replace(" ", "")) < 40:
+                                rgb_image = image.convert("RGB")
+                                image_bytes = io.BytesIO()
+                                rgb_image.save(image_bytes, format="JPEG")  # You can change the format if needed
+                                image_bytes = image_bytes.getvalue()
+                                content_text = extract_text_from_image_google(image_bytes)
+                                text_content = text_content + content_text
+                            else:
+                                text_content = text_content + text
+                        except Exception as e:
+                            print("error while reading image",e)
+                    content = text_content
+                    return content
+                except Exception as pdf_processing_error:
+                        print(f"Error processing PDF: {pdf_processing_error}")
+                        return None
+            else:
+                return temp_content
         else:
             return temp_content
-
+        

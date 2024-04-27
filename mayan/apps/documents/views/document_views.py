@@ -28,6 +28,8 @@ from ..permissions import (
 
 from .document_version_views import DocumentVersionPreviewView
 
+from ..tasks.document_tasks import PROCESSING_FILE_QUEUE
+
 logger = logging.getLogger(name=__name__)
 
 
@@ -153,7 +155,7 @@ class DocumentPreviewView(DocumentVersionPreviewView):
                 actor=request.user, target=self.object
             )
         except:
-            print("error in this phase...!")
+            print("error in this File...!")
 
         return result
 
@@ -178,9 +180,11 @@ class DocumentPreviewView(DocumentVersionPreviewView):
             print("error in the json request")
         # print(data) 9c5bbd0ec4a83a63dc4dbc6ceaaf3b25, 
         if response.status_code == 200:
-            print(data.get("isFileIntact"))
+            print(data.get("isFileIntact"), data.get("isLoading"))
             if data.get("isFileIntact") == True:
                 flag = "✅Verified"
+            elif (data.get("isLoading") == True) and(document.pk in  PROCESSING_FILE_QUEUE):
+                flag = "⏳ Processing..."
             else:
                 flag = "❌File Compromised"
             print("File uploaded")

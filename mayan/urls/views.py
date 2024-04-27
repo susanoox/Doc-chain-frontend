@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 import os
 import requests
-
+from mayan.apps.documents.tasks.document_tasks import PROCESSING_FILE_QUEUE
 
 
 def simple_string_view(request):
@@ -129,4 +129,7 @@ def chatbot_res_with_id(request, doc_id):
         else:
             return JsonResponse({"error": "Failed to send data."}, status=500)
 
+    return JsonResponse({"error": "Invalid request method."}, status=400)
+
+def check_process(request):
     return JsonResponse({"error": "Invalid request method."}, status=400)
