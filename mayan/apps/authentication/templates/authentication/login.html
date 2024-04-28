@@ -12,16 +12,14 @@
 {% block project_name %}{% endblock %}
 
 {% block content %}
-    <div class="login-container">
-        <div class="logo-container">
-            <img id="doc-chain-logo" src="{% static 'appearance/images/doc-chain-logo.svg' %}" />
-            <span class="logo-text">DocChain</span>
-        </div>
-        <div class="">
-            <div class="login-form-container">
-                <div class="login-form-content">
-                    <div class="">
-                        <div class="login-form-title">Login</div>
+    {% appearance_app_templates template_name='login_content' %}
+
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+
+            <div class="panel panel-primary">
+                <div class="panel-body">
+
                     <!-- <div id="authentication-login-image-wrapper">
                         <img class="center-block img-responsive" id="authentication-login-image-top" src="{% static 'authentication/images/login-top.jpg' %}"/>
                     </div> -->
@@ -55,13 +53,6 @@
                                 {% endif %}
 
                                 <input type="hidden" name="next" value="{{ next|escape }}" />
-                                    
-                                    {% smart_setting global_name="AUTHENTICATION_DISABLE_PASSWORD_RESET" as setting_disable_password_reset %}
-                                    {% if not setting_disable_password_reset %}
-                                        <div class="forgot-password-text">
-                                            <a href="{% url 'authentication:password_reset_view' %}">{% trans 'Forgot your password?' %}</a>
-                                        </div>
-                                    {% endif %}
 
                                 <div class="form-group">
                                     {% for button in form_button_overrides %}
@@ -75,12 +66,12 @@
                                         </button>
                                         &nbsp;
                                     {% empty %}
-                                            <button class="login-button" name="{% if form.prefix %}{{ form.prefix }}-submit{% else %}submit{% endif %}" type="submit">
-                                                <!-- {% if submit_icon %}
+                                        <button class="{{ submit_button_css_classes|default:'btn btn-primary btn-hotkey-default' }} {{ submit_button_css_extra_classes }}" name="{% if form.prefix %}{{ form.prefix }}-submit{% else %}submit{% endif %}" type="submit">
+                                            {% if submit_icon %}
                                                 {{ submit_icon.render }}
                                             {% else %}
                                                 <i class="fa fa-check"></i>
-                                                {% endif %} -->
+                                            {% endif %}
                                             {% if submit_label %}{{ submit_label }}{% else %}{% if form.instance %}{% trans 'Save' %}{% else %}{% trans 'Submit' %}{% endif %}{% endif %}
                                         </button>
                                         {% if previous %}
@@ -102,18 +93,22 @@
                                 </div>
                             </div>
                         </form>
+
+                        <hr>
+
+                        <p class="text-center small">
+                            Copyright @ 2024 SusanooX 
+                        </p>
+
+                        {% smart_setting global_name="AUTHENTICATION_DISABLE_PASSWORD_RESET" as setting_disable_password_reset %}
+                        {% if not setting_disable_password_reset %}
+                            <div class="text-center">
+                                <a href="{% url 'authentication:password_reset_view' %}">{% trans 'Forgot your password?' %}</a>
                             </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
-        <div class="">
-            <div class="copyright-container">
-                <span class="copyright-content">
-                    Copyright 2024 - SusanooX Digitals
-                </span>
-            </div>
-        </div>
     </div>
-    {% appearance_app_templates template_name='login_content' %}
 {% endblock %}
