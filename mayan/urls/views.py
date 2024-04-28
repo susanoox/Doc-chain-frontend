@@ -131,5 +131,8 @@ def chatbot_res_with_id(request, doc_id):
 
     return JsonResponse({"error": "Invalid request method."}, status=400)
 
-def check_process(request):
-    return JsonResponse({"error": "Invalid request method."}, status=400)
+def check_process(request, doc_id):
+    if int(doc_id) in  PROCESSING_FILE_QUEUE:
+        return JsonResponse({"file": True}, status=200)
+    else:
+        return JsonResponse({"file": False}, status=404)
