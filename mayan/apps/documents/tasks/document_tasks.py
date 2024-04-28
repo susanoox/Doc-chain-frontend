@@ -118,7 +118,7 @@ def task_document_upload(
     payload = {
         'file_content': Content,
         'language': obj.language,
-        'num_lines': 30
+        'num_lines': 10
     }
     print('payload', payload)
     summeryContent = UploadSummary(payload).get('summary')

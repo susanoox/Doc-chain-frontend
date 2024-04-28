@@ -95,34 +95,35 @@ def UploadSummary(payload):
 
 def calculate_grammar_percentage(text):
     # Tokenize the text into sentences
-    sentences = nltk.sent_tokenize(text)
+    # sentences = nltk.sent_tokenize(text)
 
-    # Initialize a counter for correct sentences
-    correct_sentences = 0
+    # # Initialize a counter for correct sentences
+    # correct_sentences = 0
 
-    # Iterate through each sentence
-    for sentence in sentences:
-        # Tokenize the sentence into words
-        words = nltk.word_tokenize(sentence)
+    # # Iterate through each sentence
+    # for sentence in sentences:
+    #     # Tokenize the sentence into words
+    #     words = nltk.word_tokenize(sentence)
         
-        # Perform part-of-speech tagging
-        pos_tags = nltk.pos_tag(words)
+    #     # Perform part-of-speech tagging
+    #     pos_tags = nltk.pos_tag(words)
         
-        # Count the number of verbs in the sentence
-        num_verbs = sum(1 for _, tag in pos_tags if tag.startswith('VB'))
+    #     # Count the number of verbs in the sentence
+    #     num_verbs = sum(1 for _, tag in pos_tags if tag.startswith('VB'))
 
-        # If the number of verbs is greater than 0, consider the sentence correct
-        if num_verbs > 0:
-            correct_sentences += 1
+    #     # If the number of verbs is greater than 0, consider the sentence correct
+    #     if num_verbs > 0:
+    #         correct_sentences += 1
 
-    # Calculate the percentage of correct sentences
-    try:
-        grammar_percentage = (correct_sentences / len(sentences)) * 100
-    except ZeroDivisionError:
-        return 0
-    print("grammar_percentage : ",grammar_percentage)
+    # # Calculate the percentage of correct sentences
+    # try:
+    #     grammar_percentage = (correct_sentences / len(sentences)) * 100
+    # except ZeroDivisionError:
+    #     return 0
+    # print("grammar_percentage : ",grammar_percentage)
 
-    return grammar_percentage
+    # return grammar_percentage
+    return 0
 
     
 
