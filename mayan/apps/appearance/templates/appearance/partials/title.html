@@ -16,9 +16,9 @@
 {% if not non_html_title and result.title %}
         <div class="title-container">
             {% if result.title_full == "Home" %}
-                <h3 id="content-title" style="margin-top: 0px;" title='Dashboard'>
+                <h3 id="content-title" style="margin-top: 0px !important; margin-bottom: 0px !important;" title='Dashboard'>
             {% else %}
-                <h3 id="content-title" style="margin-top: 0px;" title='{{ result.title_full }}'>
+                <h3 id="content-title" style="margin-top: 0px; margin-bottom: 0px !important;" title='{{ result.title_full }}'>
             {% endif %}
 {% endif %}
 {% if result.title_full == "Home" %}
@@ -26,21 +26,21 @@
 {% else %}
     <span id="appearance-title-text" style="font-weight: 600; font-size: 20px;">
         {% if "Verified" in result.title  %}
-                <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 25px;">
+                <div class="badge-container">
                     <div style="font-weight: 600; font-size: 20px;">
                         Preview of Document
                     </div>
-                    <div style="display: flex; align-items: center; justify-content: center; flex-direction: row; background: #04724D; padding: 4px 8px 4px 8px; border-radius: 200px; font-size: 18px; font-weight: 600; color: #FFFFFF;gap:4px;">
+                    <div class="badge-content" style="background: #04724D !important;">
                         <i class="material-icons">check_circle</i>
                         Verified
                     </div>
                 </div>
             {% elif  "Compromised" in  result.title %}
-                <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 25px;">
+                <div class="badge-container">
                     <div style="font-weight: 600; font-size: 20px;">
                         Preview of Document
                     </div>
-                    <div style="display: flex; align-items: center; justify-content: center; flex-direction: row; background: #FF4444; padding: 4px 8px 4px 8px; border-radius: 200px; font-size: 18px; font-weight: 600; color: #FFFFFF; gap:4px;">
+                    <div class="badge-content">
                         <span class="material-symbols-outlined"  style="font-size: 20px;">
                             emergency_home
                         </span>
@@ -48,11 +48,11 @@
                     </div>
                 </div>
             {% elif "Processing" in result.title %}
-                <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 25px;">
+                <div class="badge-container">
                     <div style="font-weight: 600; font-size: 20px;">
                         Preview of Document
                     </div>
-                    <div style="display: flex; align-items: center; justify-content: center; flex-direction: row; background: #FF9E44; padding: 4px 8px 4px 8px; border-radius: 200px; font-size: 18px; font-weight: 600; color: #FFFFFF;gap:4px;">
+                    <div class="badge-content" style="background: #FF9E44 !important;">
                         <span class="material-symbols-outlined"  style="font-size: 20px;">
                             pending
                         </span>
@@ -61,11 +61,43 @@
                 </div>
             {% else %}
                 {{ result.title }}
-
         {% endif %}
     </span>
 {% endif %}
-
+<style>
+    .title-container {
+        display: flex;
+        background: #FFFFFF;
+        height: 58px !important;
+        margin-top: -1px !important;
+        margin-left: -12px !important;
+        width: 110% !important;
+        align-items: center;
+        padding: 16px !important;
+        color: #000000 !important;
+        font-size: 20px !important;
+    }
+    .badge-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 24px;
+        margin-top: 2px;
+    }
+    .badge-content {
+        display: flex;
+        flex-direction: row;
+        border-radius: 200px !important;
+        gap: 4px !important;
+        align-items: center;
+        justify-content: center;
+        color: #FFFFFF !important;
+        background: #FF4444;
+        padding: 4px 8px 4px 8px !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+    }
+</style>
 
 {% if not non_html_title and result.title %}
             </h3>
@@ -121,20 +153,5 @@
         checkProcessingStatus( {{ doc_id }} );
     }, 2000);
 </script>
-
-<style>
-    .title-container {
-        display: flex;
-        background: #FFFFFF;
-        height: 58px !important;
-        margin-top: -1px !important;
-        margin-left: -12px !important;
-        width: 110% !important;
-        align-items: center;
-        padding: 16px !important;
-        color: #000000 !important;
-        font-size: 20px !important;
-    }
-</style>
 
 {% endif %}

@@ -30,7 +30,6 @@
 
 .content {
     max-height: 0;
-
     overflow: hidden;
     height: 90vh;
     transition: max-height 0.2s ease-in;
@@ -65,7 +64,6 @@
     scrollbar-width: none;
     height: max-content;
     transition: max-height 0.2s ease-in;
-    padding: 10px;
     background: rgba(255, 255, 255, 0.85);
 }
 
@@ -152,7 +150,7 @@
 
 .powered {
     display: flex;
-    width: 100%;
+    max-width: 100% !important;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
@@ -189,7 +187,7 @@
     padding: 12px;
     border-radius: 4px;
     /* border-bottom-right-radius: 2px; */
-    max-width: 80%;
+    max-width: 267px !important;
     margin-right: 10px;
     animation: floatup .5s forwards;
     font-size: 12px;
