@@ -2,7 +2,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from mayan.apps.acls.models import AccessControlList
-from mayan.apps.documents.models.document_models import Document, DocErrorHandling, Summary
+from mayan.apps.documents.models.document_models import Document, Summary
 from mayan.apps.documents.views.document_views import DocumentListView
 
 from mayan.apps.views.exceptions import ActionError

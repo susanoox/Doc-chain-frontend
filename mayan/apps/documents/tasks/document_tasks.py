@@ -5,7 +5,7 @@ from django.apps import apps
 from django.contrib.auth import get_user_model
 from django.db import OperationalError
 
-from ..models.document_models import Document, Summary, DocErrorHandling
+from ..models.document_models import Document, Summary
 
 from mayan.celery import app
 
@@ -107,9 +107,6 @@ def task_document_upload(
     for field_name in field_names:
         field_value = getattr(obj, field_name)
         print(f"{field_name}: {field_value}")
-        
-    #---------------------------------------------- Create Checkpoint ------------------------------------------
-    doc_checkpoint = DocErrorHandling.objects.create(doc_id = document.pk)
     
     print("-"*50+"\ncheck point created..!\n"+"-"*50)
     
