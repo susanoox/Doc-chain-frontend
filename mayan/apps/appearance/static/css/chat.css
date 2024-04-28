@@ -4,7 +4,7 @@
     bottom: 0;
     right: 50px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-   
+
 }
 
 .collapsible {
@@ -30,17 +30,30 @@
 
 .content {
     max-height: 0;
-    
+
     overflow: hidden;
     height: 90vh;
-    transition: max-height 0.2s ease-out;
+    transition: max-height 0.2s ease-in;
     background-color: #f1f1f1;
     width: 21vw;
 }
-.content-open{
+
+.content-open {
     border: 1px solid #04724D;
     max-height: 90vh;
+    animation: floatup 0.5s ease forwards;
+}
 
+@keyframes slideIn {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .full-chat-block {
@@ -51,7 +64,7 @@
     overflow: auto;
     scrollbar-width: none;
     height: max-content;
-    transition: max-height 0.2s ease-out;
+    transition: max-height 0.2s ease-in;
     padding: 10px;
     background: rgba(255, 255, 255, 0.85);
 }
@@ -136,7 +149,8 @@
     outline: none;
     border: 1px solid #e6e6e6;
 }
-.powered{
+
+.powered {
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -178,7 +192,7 @@
     max-width: 80%;
     margin-right: 10px;
     animation: floatup .5s forwards;
-    font-size: 12px; 
+    font-size: 12px;
     font-weight: 400;
     line-height: 15.3px;
     color: #000000;
@@ -209,6 +223,7 @@
         transform: translateY(14px);
         opacity: .0;
     }
+
     to {
         transform: translateY(0px);
         opacity: 1;
@@ -221,6 +236,7 @@
         border-radius: 0px;
         z-index: 999;
     }
+
     .chat-bar-collapsible {
         position: fixed;
         bottom: 0;
@@ -228,6 +244,7 @@
         width: 100%;
         z-index: 999;
     }
+
     .collapsible {
         width: 100%;
         border: 0px;
