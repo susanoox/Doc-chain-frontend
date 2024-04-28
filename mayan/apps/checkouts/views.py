@@ -209,7 +209,7 @@ class summery(SingleObjectDetailView):
             print(filetry)
             try:
                 summary_data = Summary.objects.get(doc_id=document_id)
-                content = summary_data.content
+                content = summary_data.summary
             except Summary.DoesNotExist:
                 try:
                     if int(document_id) in PROCESSING_FILE_QUEUE:
