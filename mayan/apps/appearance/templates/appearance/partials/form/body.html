@@ -5,6 +5,22 @@
 {% load appearance_tags %}
 {% load templating_tags %}
 
+
+<style>
+    .help-block {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 15px;
+        color: rgba(0, 0, 0, 0.7);
+    }
+    #fields input{
+        background: rgba(255, 255, 255, 1);
+        border-radius: 0px;
+        border: 2px solid rgba(0, 0, 0, 0.24);
+    }
+</style>
+
 {% for asset in form.media.render_css %}
     {{ asset|safe }}
 {% endfor %}
@@ -28,7 +44,7 @@
                 {% if field|widget_type == 'radioselect' %}
                     <div class="btn-group" data-toggle="buttons">
                         {% for option in field %}
-                            <label class="btn btn-default {% if field.value == option.data.value %}active{% endif %}" for="{{ option.data.id }}">
+                            <label style="font-style: normal; font-weight: 600; font-size: 14px; color: #000000;" class="btn btn-default {% if field.value == option.data.value %}active{% endif %}" for="{{ option.data.id }}">
                                 <input type="radio" name="{{ option.data.name }}" id="{{ option.data.id }}" value="{{ option.data.value }}" {% if field.value == option.data.value %}checked{% endif %}> {{ option.data.label }}
                             </label>
                         {% endfor %}
@@ -47,9 +63,9 @@
 
     {% for fieldset in form.get_fieldsets %}
         {% if form.get_fieldsets|length > 1 %}
-            <fieldset class="appearance-fieldset">
+            <fieldset class="appearance-fieldset" style="border:none;"  id="fields">
         {% endif %}
-            {% if form.get_fieldsets|length > 1 and fieldset.0 %}<legend class="appearance-legend">{{ fieldset.0 }}</legend>{% endif %}
+            {% if form.get_fieldsets|length > 1 and fieldset.0 %}<legend class="appearance-legend" style="background: none; color: rgba(0, 0, 0, 0.48); font-weight: 600; font-size: 16px; margin-left: -11px;">{{ fieldset.0 }}</legend>{% endif %}
 
             {% with form|appearance_form_get_visile_fields_map as field_map %}
                 {% for field_name in fieldset.1.fields %}

@@ -44,7 +44,7 @@
             {% navigation_get_source_columns source=object_list only_identifier=True as source_columns_identifier %}
             {% navigation_get_source_columns source=object_list exclude_identifier=True as source_columns_non_identifier %}
 
-            <div class="well center-block" style="background: #F8F8F8">
+            <div class="well center-block" style="background: #F8F8F8; margin-left:-18px;">
                 <div class="row-items grid-container">
                     {% for object in object_list %}
                         {% include 'appearance/partials/list/panel/single.html' %}

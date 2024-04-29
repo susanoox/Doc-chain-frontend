@@ -33,7 +33,7 @@
 
 <form action="{% url 'search:search_results' %}" class="navbar-form navbar-left" id="search-navbar-form" method="get" role="search" style="flex-direction: row; display: flex; justify-content: space-between; align-items: center; width: 81%; position: absolute; height: 100%; margin: 0px; margin-left: 14.6%;">
     <div class="form-group">
-        <select  class="form-control search-select-search-model select-box" name="{% search_get_search_model_name_query_variable %}" style="background: black !important; color: #FFFFFFCC; border: 2px solid #3d3d3d !important; border-radius: 0px !important; height: 28px; width: 160px; font-size: 12px; padding: 4px; margin-left: 10%;">
+        <select  class="form-control search-select-search-model select-box" name="{% search_get_search_model_name_query_variable %}" style="background: black !important; color: #FFFFFFCC; border: 2px solid #3d3d3d !important; border-radius: 0px !important; height: 28px; width: 160px; font-size: 12px; padding: 4px; margin-left: 19px;">
             {% for search_model in search_models %}
             {{ search_model.self.full_name }}
                 <option {% if search_model.full_name == default_search_model.full_name %}selected{% endif %} value="{{ search_model.full_name }}">{{ search_model }}</option>

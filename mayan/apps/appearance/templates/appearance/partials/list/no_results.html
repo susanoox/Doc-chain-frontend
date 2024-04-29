@@ -1,25 +1,48 @@
 {% load i18n %}
+{% load static %}
 
 <style>
     .container-btn-secondary .btn {
         margin-bottom: 5px;
     }
+    .details{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        position: absolute;
+        background: #f8f8f8;
+        width: 100%;
+        margin-left: -3%;
+        margin-top: -3%;
+        height: 75vh;
+    }
 </style>
 
-<div class="text-center">
+<div class="text-center details">
     <div style="font-size: 150%;">
         {% if no_results_icon %}
-            {{ no_results_icon.render }}
+            {% if no_results_title == "There are no documents in the trash can" %}
+                <img src="{% static 'images/trashcan.png' %}" style="width: 261.69px; margin-left: 138px; height: 160px;"/>
+            {% else %}
+                {{ no_results_icon.render }}
+            {% endif %}
         {% else %}
             <i class="fa fa-times"></i>
         {% endif %}
     </div>
 
-    {% trans 'No results' as default_title %}
-    <h4>{{ no_results_title|default:default_title }}</h4>
-    {% if no_results_text %}
-        <p class="small">{{ no_results_text }}</p>
-    {% endif %}
+    <div style="width: 389px;">
+        {% trans 'No results' as default_title %}
+            {% if no_results_title == "There are no documents in the trash can" %}
+                <h4 style="font-weight: 600; font-size: 18px; color: rgba(0, 0, 0, 0.7);">There are no documents in the Trash.</h4>
+            {% else %}
+                <h4 style="font-weight: 600; font-size: 18px; color: rgba(0, 0, 0, 0.7);">{{ no_results_title|default:default_title }}</h4>
+            {% endif %}
+        {% if no_results_text %}
+            <p class="small" style="color: rgba(0, 0, 0, 0.24); font-weight: 400; font-size: 14px; text-align: center;">{{ no_results_text }}</p>
+        {% endif %}
+    </div>
 
     {% if no_results_main_link %}
         <div>

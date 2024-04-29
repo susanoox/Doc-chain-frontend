@@ -15,14 +15,31 @@
     .page-loader{
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start !important;
         gap: 20px;
         flex-direction: column;
         font-size: 13px;
         font-weight: 700;
-        color: #04724d;    
+        color: #04724d;
+    }
+    .page-loader::-webkit-scrollbar {
+        width: 5px; /* Width of the scrollbar */
     }
     
+    /* Track */
+    .page-loader::-webkit-scrollbar-track {
+        background: #aaaaaa33; /* Color of the track */
+    }
+    
+    /* Handle */
+    .page-loader::-webkit-scrollbar-thumb {
+        background: #04724d; /* Color of the scrollbar handle */
+    }
+    
+    /* Handle on hover */
+    .page-loader::-webkit-scrollbar-thumb:hover {
+        background: #5cae93; /* Color of the scrollbar handle on hover */
+    }
     /* Dark theme  */
     @media (prefers-color-scheme: dark) {
         :root {

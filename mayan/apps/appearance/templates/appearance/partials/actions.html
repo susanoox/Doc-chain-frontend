@@ -86,7 +86,7 @@
 {% load navigation_tags %}
 {% navigation_resolve_menus names='object,secondary' sort_results=True as action_menus_link_results %}
 
-<div class="pull-right btn-group" id="menu-actions">
+<div class="pull-right btn-group" id="menu-actions" style="position: absolute; right: 20px; top: 13px; z-index: 1020;">
         {% if action_menus_link_results %}
         {% include 'navigation/actions_dropdown.html' %}
         {% endif %}

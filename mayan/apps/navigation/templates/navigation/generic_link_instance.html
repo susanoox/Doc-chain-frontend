@@ -1,4 +1,5 @@
 {% load navigation_tags %}
+{% load static %}
 
 {% if link.separator %}
     <li role="separator" class="divider"></li>
@@ -16,9 +17,20 @@
 
         {% if link.html_extra_attributes %}{{ link.html_extra_attributes }}{% endif %}
         {% if link.url %}href="{{ link.url }}"{% endif %}
-        >{% if link_icon and not hide_icon %}{{ link_icon.render }}{% endif %}
-        {{ link.text|default:'' }}{% if link.badge_text %}&nbsp;<span class="badge">{{ link.badge_text }}</span>
-        {% endif %}{% if link.error %} - {{ link.error }}{% endif %}
+        >
+        {% if link.text == "Ocr" %}
+            <div style="display: flex; align-items: center; justify-content: flex-start; gap: 12px;">
+                <img id="doc-chain-logo" src="{% static 'images/ai-logo.svg' %}"> <span>OCR</span>
+            </div>
+        {% elif link.text == "Summary" %}
+            <div style="display: flex; align-items: center; justify-content: flex-start; gap: 12px;">
+                <img id="doc-chain-logo" src="{% static 'images/ai-logo.svg' %}"> <span>Summary</span>
+            </div>
+        {% else %}
+            {% if link_icon and not hide_icon %}{{ link_icon.render }}{% endif %}
+            {{ link.text|default:'' }}{% if link.badge_text %}&nbsp;<span class="badge">{{ link.badge_text }}</span>
+            {% endif %}{% if link.error %} - {{ link.error }}{% endif %}
+        {% endif %}
         </a>
     {% endif %}
 {% endif %}

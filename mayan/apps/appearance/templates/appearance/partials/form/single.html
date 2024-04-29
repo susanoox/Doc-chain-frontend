@@ -1,6 +1,20 @@
 {% load i18n %}
 {% load static %}
 
+<style scoped>
+    #form-datas button{
+        height: 40px;
+        background: rgba(4, 114, 77, 1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        width: fit-content;
+        border-radius: 0px;
+        color: rgba(255, 255, 255, 1);
+    }
+</style>
+
 {% if title %}
 <h4>
     {{ title }}
@@ -8,7 +22,7 @@
 <hr>
 {% endif %}
 
-<div class="well" style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 0px !important;">
+<div class="well" id="form-datas" style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 0px !important;">
     {% if form.is_multipart %}
         <form action="{{ form_action }}" class="{{ form_css_classes|default:'' }}" enctype="multipart/form-data" method="{{ submit_method|default:'post' }}" name="{{ form.prefix|default:'' }}" target="{{ submit_target|default:'_self' }}">
     {% else %}
@@ -74,7 +88,7 @@
             {% if not form.management_form or wizard.management_form or form.forms %}
             {# Is a normal form, a wizard form, or a formset with at least one form #}
 
-                <div class="form-group">
+                <div class="form-group" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center;">
                     {% for button in form_button_overrides %}
                         <button class="btn btn-primary {{ button.css_classes }} {% if button.is_primary %}btn-hotkey-default{% endif %}" {% if button.disabled %}disabled="disabled"{% endif %} name="{% if button.name_override %}{{ button.name_override }}{% else %}{% if form.prefix %}{{ form.prefix }}-{{ button.name }}{% else %}{{ button.name }}{% endif %}{% endif %}" type="submit" value="{{ button.value }}">
                             {% if button.icon %}

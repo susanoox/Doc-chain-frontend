@@ -36,6 +36,24 @@
         letter-spacing: 0.3px !important;
         border-left: 4px solid #04724D !important;
     }
+    #sidebar::-webkit-scrollbar {
+        width: 5px; /* Width of the scrollbar */
+    }
+    
+    /* Track */
+    #sidebar::-webkit-scrollbar-track {
+        background: #ffffff00; /* Color of the track */
+    }
+    
+    /* Handle */
+    #sidebar::-webkit-scrollbar-thumb {
+        background: #04724d; /* Color of the scrollbar handle */
+    }
+    
+    /* Handle on hover */
+    #sidebar::-webkit-scrollbar-thumb:hover {
+        background: #5cae93; /* Color of the scrollbar handle on hover */
+    }
 </style>
 
 {% if sidebar_menus_link_results %}

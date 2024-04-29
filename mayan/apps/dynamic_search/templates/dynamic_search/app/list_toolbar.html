@@ -21,7 +21,7 @@
                     {# Avoids invalid page errors when the current page number is higher that the filter page count results #}
                     <input class="form-control" id="search-filter-page" name="page" type="hidden" value="1">
                     <span class="appearance-input-search-clearable">
-                        <input class="form-control input-sm custom-inp" data-submit-on-clear="true" id="search-filter-input-terms" name="{% search_get_filter_prefix %}{% search_get_query_parameter_any_field %}" placeholder="{% trans 'Filter terms' %}" type="search" value="{% search_get_query_any_field_value query=filter_query %}" style="background-color: #F8F8F8; border: 1px solid #bdbdbd; color: black !important; border-radius: 5px; width:248px;">
+                        <input class="form-control input-sm custom-inp" data-submit-on-clear="true" id="search-filter-input-terms" name="{% search_get_filter_prefix %}{% search_get_query_parameter_any_field %}" placeholder="{% trans 'Filter terms' %}" type="search" value="{% search_get_query_any_field_value query=filter_query %}" style="margin-left: 8px;background-color: #F8F8F8; border: 1px solid #bdbdbd; color: black !important; border-radius: 5px; width:248px;">
                         {{ icon_search_form_clear }}
                     </span>
                 </div>

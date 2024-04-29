@@ -183,3 +183,30 @@ docker images
 ############# blockchain ###############
 > Showing Message = (time < 1 min) then show "Waiting"
 ----------------------------------------
+
+
+
+sidebar, summary and ocr bg remove, border none .. file name "..."
+setup ui..
+list file stright one by one ..
+
+whit clr bg black font like paper
+
+
+--------------------------------------------------------------------
+chatbot  ui = [scroll, inputbox, responsive weight]
+pagination ui = [size, color, padding]
+Document Preview Page and Tool bar ui are fixed [color, size, ]
+action button = position and ui are fixed 
+title = position and alainments are fixed 
+Document Preview = page number problem solved and scroll design changed
+Recently accessed = all elements are in the stright equal line 
+-------------------------------------------------------------------
+Trush can ui updated
+title bug fixed
+--------------------------------------------------------------
+tools & setup ui completed
+new document buttons styles
+Right side tool bar, OCR, summary add ai icon and Ocr should be caps
+Document card file name if long show …
+

@@ -115,7 +115,7 @@ class SetupListView(SimpleView):
                 request=self.request, sort_results=True
             ),
             'subtitle': _(
-                'Here you can configure all aspects of the system.'
+                ''
             ),
             'title': _(message='Setup items')
         }
