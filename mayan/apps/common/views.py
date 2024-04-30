@@ -131,7 +131,7 @@ class ToolsListView(SimpleView):
                 request=self.request, sort_results=True
             ),
             'subtitle': _(
-                'These modules are used to do system maintenance.'
+                ''
             ),
             'title': _(message='Tools')
         }
