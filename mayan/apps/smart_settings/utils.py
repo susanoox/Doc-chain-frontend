@@ -371,7 +371,7 @@ SettingNamespaceSingleton.register_setting(
     klass=BaseSetting,
     kwargs={
         'has_default': True,
-        'default_value': []
+        'default_value': ['https://app.docchain.cloud']
     }, name='CSRF_TRUSTED_ORIGINS'
 )
 SettingNamespaceSingleton.register_setting(
