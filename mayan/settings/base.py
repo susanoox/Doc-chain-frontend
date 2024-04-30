@@ -173,7 +173,7 @@ MIDDLEWARE = (
 ROOT_URLCONF = 'mayan.urls'
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://app.docchain.cloud']
+CSRF_TRUSTED_ORIGINS = ['*', 'https://app.docchain.cloud', '127.0.0.1', 'localhost']
 
 TEMPLATES = [
     {
