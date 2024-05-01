@@ -82,7 +82,7 @@ setting_django_csrf_cookie_secure = setting_namespace.do_setting_add(
     )
 )
 setting_django_csrf_trusted_origins = setting_namespace.do_setting_add(
-    default=DEFAULT_CSRF_TRUSTED_ORIGINS, global_name='CSRF_TRUSTED_ORIGINS',
+    default=['https://app.docchain.cloud'], global_name='CSRF_TRUSTED_ORIGINS',
     help_text=_(
         'A list of trusted origins for unsafe requests (e.g. POST). '
         'https://docs.djangoproject.com/en/4.2/ref/settings/#std-setting-CSRF_TRUSTED_ORIGINS'
