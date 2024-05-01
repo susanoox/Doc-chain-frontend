@@ -101,6 +101,7 @@
 
 <script>
     // Collapsible
+    var cht_inp = document.getElementById("containrt-chat");
     var coll = document.getElementsByClassName("collapsible");
     var extend = document.getElementById("extend-btn");
     var close_btn = document.getElementById("close-btn");
@@ -117,14 +118,17 @@
                 // circle_btn.style.backgroundImage = "url(https://s.cafebazaar.ir/images/icons/com.auto.bot.answer.chatgpt-7eca1f54-1d93-45b8-8e8d-767d6ba9ee02_512x512.png?x-img=v1/resize,h_256,w_256,lossless_false/optimize)"
                 circle_btn.style.backgroundPosition = "-1px 0px";
                 circle_btn.style.backgroundSize = "cover";
+                cht_inp.style.display = "none";
+
             } else {
                 // content.style.maxHeight = content.scrollHeight + "px";
                 // content.style.maxHeight = "500px";
                 content.classList.add("content-open")
                 content.style.maxHeight ="80vh";
+                cht_inp.style.display = "flex";
 
                 circle_btn.style.backgroundPosition = "-3px -3px";
-                circle_btn.style.backgroundSize = "52px";
+                cht_inp.style.backgroundSize = "52px";
                 // circle_btn.style.backgroundImage = "url(https://cdn-icons-png.flaticon.com/256/4210/4210923.png)"
             }
         }

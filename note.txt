@@ -193,7 +193,7 @@ list file stright one by one ..
 whit clr bg black font like paper
 
 
---------------------------------------------------------------------
+--------------------------------------------- completed work --------------------------------------
 chatbot  ui = [scroll, inputbox, responsive weight]
 pagination ui = [size, color, padding]
 Document Preview Page and Tool bar ui are fixed [color, size, ]
@@ -209,4 +209,10 @@ tools & setup ui completed
 new document buttons styles
 Right side tool bar, OCR, summary add ai icon and Ocr should be caps
 Document card file name if long show …
+---------------------------------------------------------------------
 
+Pages overlap problem solved 
+Response should have max-width equal to first response bubble solved 
+red box should only have scrolling. blue box is fixed. now its like whole chat box is scrollable and input is sticky !
+animation for showing loading state in chatbot after hitting the backend api
+processing ui and functionoloty solved the bugs

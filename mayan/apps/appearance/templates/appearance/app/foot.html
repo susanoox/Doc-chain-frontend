@@ -66,6 +66,60 @@
         color: black;
         font-weight: 500;    
     }
+
+    .chat-bubble {
+        background-color:#E6F8F1;
+        padding:16px 28px;
+        -webkit-border-radius: 20px;
+        -webkit-border-bottom-left-radius: 2px;
+        -moz-border-radius: 20px;
+        -moz-border-radius-bottomleft: 2px;
+        border-radius: 20px;
+        border-bottom-left-radius: 2px;
+        display:inline-block;
+      }
+      .typing {
+        align-items: center;
+        display: flex;
+        height: 17px;
+      }
+      .typing .dot {
+        animation: mercuryTypingAnimation 1.8s infinite ease-in-out;
+        background-color: #6CAD96 ; //rgba(20,105,69,.7);
+        border-radius: 50%;
+        height: 7px;
+        margin-right: 4px;
+        vertical-align: middle;
+        width: 7px;
+        display: inline-block;
+      }
+      .typing .dot:nth-child(1) {
+        animation-delay: 200ms;
+      }
+      .typing .dot:nth-child(2) {
+        animation-delay: 300ms;
+      }
+      .typing .dot:nth-child(3) {
+        animation-delay: 400ms;
+      }
+      .typing .dot:last-child {
+        margin-right: 0;
+      }
+      
+      @keyframes mercuryTypingAnimation {
+        0% {
+          transform: translateY(0px);
+          background-color:#6CAD96; // rgba(20,105,69,.7);
+        }
+        28% {
+          transform: translateY(-7px);
+          background-color:#9ECAB9; //rgba(20,105,69,.4);
+        }
+        44% {
+          transform: translateY(0px);
+          background-color: #B5D9CB; //rgba(20,105,69,.2);
+        }
+      }
       
 </style>
 
@@ -82,7 +136,7 @@
         <div class="full-chat-block" style="width: 100%; border-radius: 0px;">
             <!-- <p style="text-align: start; padding: 11px; font-size: 16px; font-weight: 800;">Welcome to DocuBuddy chat !</p> -->
             <!-- Message Container -->
-            <div class="outer-container">
+            <div class="outer-container" style="min-height: 493px;">
                 <div class="chat-container">
                     <!-- Messages -->
                     <div class="chat-box-container">
@@ -99,7 +153,7 @@
                     <!-- Start voice input button -->
 
                     <!-- User input box -->
-                    <div class="chat-bar-input-block">
+                    <div class="chat-bar-input-block" id="containrt-chat" style="display: none;">
                         <div>
                             <div id="userInput" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; width: 352px; background: #ffffff; padding: 10px;  gap: 10px; border-left: none;">
                                 <input id="textInput" class="input-box" type="text" name="msg" placeholder="Ask your query...">
@@ -133,29 +187,12 @@
 
 <script>
     // Collapsible
+var cht_inp = document.getElementsByClassName(".chat-bar-input-block");
 var coll = document.getElementsByClassName("collapsible");
 var extend = document.getElementById("extend-btn");
 var close_btn = document.getElementById("close-btn");
 // var circle_btn = document.getElementById("circle-chat-button");
 
-// circle_btn.addEventListener("click", function () {
-//     // Loop through each element with class name "content"
-//     var contents = document.getElementsByClassName("content");
-//     for (var i = 0; i < contents.length; i++) {
-//         var content = contents[i];
-//         if (content.style.maxHeight) {
-//             content.style.maxHeight = null;
-//             circle_btn.style.backgroundImage = "url(https://s.cafebazaar.ir/images/icons/com.auto.bot.answer.chatgpt-7eca1f54-1d93-45b8-8e8d-767d6ba9ee02_512x512.png?x-img=v1/resize,h_256,w_256,lossless_false/optimize)"
-//             circle_btn.style.backgroundPosition = "-1px 0px";
-//             circle_btn.style.backgroundSize = "cover";
-//         } else {
-//             content.style.maxHeight = content.scrollHeight + "px";
-//             circle_btn.style.backgroundPosition = "-3px -3px";
-//             circle_btn.style.backgroundSize = "52px";
-//             circle_btn.style.backgroundImage = "url(https://cdn-icons-png.flaticon.com/256/4210/4210923.png)"
-//         }
-//     }
-// });
 
 var count = 0
 for (let i = 0; i < coll.length; i++) {
@@ -170,7 +207,6 @@ for (let i = 0; i < coll.length; i++) {
             extend.style.display = 'block';
         }
         count++;
-        console.log("samopke", count)
 
         var content = this.nextElementSibling;
 

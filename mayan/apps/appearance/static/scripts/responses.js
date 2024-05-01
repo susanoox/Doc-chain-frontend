@@ -30,6 +30,11 @@ function getBotResponse(input) {
     chatbotResUrl = `chatbot_res_with_id/${docid}`;
   }
   console.log("docid : ", docid, parts, currentURL)
+
+  let botHtml = '<p class="botText"><div class="bot-inner" style="color: white; padding: 10px; background: #04724D; width: 51px; margin-left: 10px; display: flex; border-radius: 4px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column; font-size: 12px; font-weight: 500;">' + '<div class="typing"> <div class="dot"></div> <div class="dot"></div> <div class="dot"></div> </div>'+ '</div></p>';
+  $("#chatbox").append(botHtml);
+
+  
   $.ajax({
     type: "GET",
     url: chatbotResUrl,
@@ -37,8 +42,14 @@ function getBotResponse(input) {
       message: input,
     },
     success: function (data) {
-      let botHtml = '<p class="botText"><div style="color: white; padding: 10px; background: #04724D; width: fit-content; margin-left: 10px; display: flex; border-radius: 4px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column; font-size: 12px; font-weight: 500;">' + data.response + '</div></p>';
-      $("#chatbox").append(botHtml);
+      let lastBotText = $("#chatbox").find(".bot-inner").last();
+      let botHtml = '<p class="botText"><div class="bot-inner" style="color: white; padding: 10px; background: #04724D; width: 267px; margin-left: 10px; display: flex; border-radius: 4px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column; font-size: 12px; font-weight: 500;">' + data.response +'</div></p>';
+      lastBotText.removeAttr('style');
+
+      lastBotText.html(botHtml)
+      document.querySelector(".powered").scrollIntoView(true);
+
+      // $("#chatbox").append(botHtml);
       console.log(data.response, data)
       document.querySelector(".powered").scrollIntoView(true);
 

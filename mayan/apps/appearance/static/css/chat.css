@@ -68,7 +68,7 @@
 }
 
 .outer-container {
-    min-height: 564px;
+    min-height: 479px;
     bottom: 0%;
     position: relative;
 }
@@ -110,7 +110,7 @@
     width: 100%;
     align-items: center;
     background-color: #ffffff;
-    position: sticky;
+    position: fixed;
     bottom: 0;
 }
 

@@ -57,7 +57,7 @@
                     <div class="full-chat-block" style="width: 100%; border-radius: 8px; border: 1px solid #eaeaea; background: #ffffff;">
                         <p style="text-align: start; padding: 11px; font-size: 16px; font-weight: 800;">Welcome to DocuBuddy chat !</p>
                         <!-- Message Container -->
-                        <div class="outer-container">
+                        <div class="outer-container" style="min-height: 564px;">
                             <div class="chat-container">
                                 <!-- Messages -->
                                 <div id="chatbox">
@@ -190,6 +190,7 @@
             // Retrieves the response
             function getHardResponse(userText) {
                 let botResponse = getBotResponse(userText);
+                document.querySelector(".powered").scrollIntoView(true);
                 document.getElementById("chat-bar-bottom").scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
             }
             
