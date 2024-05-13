@@ -7,6 +7,12 @@
 
 {% trans 'Views' as text_views %}
 
+<style>
+.white-btn{
+    background-color: transparent !important;
+}
+</style>
+
 {% if setting_common_collapse_list_menu_list_facet %}
     {% navigation_resolved_menus_is_single_link resolved_menus=facet_menus_link_results as resolved_menus_is_single_link %}
     {% if resolved_menus_is_single_link %}
@@ -20,7 +26,7 @@
             <div class="btn-group">
                 <div class="dropdown">
                     {% with 'appearance-dropdown-menu-slim' as navigation_action_dropdown_menu_css_classes_extra %}
-                    {% with 'btn btn-default btn-xs btn-invisible' as action_dropdown_classes %}
+                    {% with 'btn btn-default btn-xs btn-invisible white-btn' as action_dropdown_classes %}
                     {% with 'true' as action_menu_disable_labels %}
                     {% with text_views as action_dropdown_label %}
                     {% with icon_menu_views as action_dropdown_icon %}

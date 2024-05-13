@@ -6,6 +6,7 @@ import json, cv2, io, hashlib
 from requests.exceptions import ConnectionError, Timeout
 from requests.exceptions import JSONDecodeError
 import logging, nltk
+import pandas as pd
 
 # Define a logger
 logger = logging.getLogger(__name__)
@@ -22,6 +23,8 @@ from docx import Document as worddoc
 from ..models.document_models import Document 
 ############################ URL Variables #############################################
 
+NameSpaceList = ["dev", "test", "demo", "client"]
+NameSpace = NameSpaceList[0]
 BlockUrl = 'http://3.27.232.173/filehash'
 Ocrurl = 'http://3.107.59.224:8080/v2/ocr'
 url_BOT = 'http://3.107.59.224:8080/v2/upload'
@@ -200,6 +203,13 @@ def readFile(Data:Document):
         print('document_file', document_file.file)
         with document_file.file.open('r') as file_handle:
             return file_handle.read()
+    #----------------------------------- Extract From Excel File  -----------------------------------------------------------------------------
+        
+    elif str(document_file).lower().endswith(('.xls', '.xlsx', '.xlsm', '.xlsb')):
+        print("working xl..!")
+        excel_data = pd.read_excel(document_file.file)
+        print(excel_data)
+        return str(excel_data)
     
     #----------------------------------- Extract From Word Document -----------------------------------------------------------------------------
     elif str(document_file).lower().endswith(('.docs', '.docx')):
@@ -213,6 +223,7 @@ def readFile(Data:Document):
         return temp_content
     #----------------------------------- Extract From Pdf -----------------------------------------------------------------------------
     elif str(document_file).lower().endswith('.pdf'):
+        print("working doc...!")
         temp_content = ""
         print('document_file', document_file.file)
         with document_file.file.open('rb') as file_handle:

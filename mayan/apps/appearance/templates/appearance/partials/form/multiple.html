@@ -1,6 +1,6 @@
 {% load i18n %}
 {% load static %}
-    <div class="well" style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 0px !important;">
+    <div class="well" style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 0px !important; margin-top: 79px;">
         {% if is_multipart %}
             <form action="{{ form_action }}" class="{{ form_css_classes|default:'' }}" enctype="multipart/form-data" id="{{ form_id|default:'' }}" method="{{ submit_method|default:'post' }}">
         {% else %}

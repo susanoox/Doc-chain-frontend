@@ -355,7 +355,7 @@ class UserManagementApp(MayanAppConfig):
         )
         menu_user.bind_links(
             links=(
-                text_user_label, separator_user_label,
+                text_user_label,
                 link_current_user_details
             ), position=0
         )

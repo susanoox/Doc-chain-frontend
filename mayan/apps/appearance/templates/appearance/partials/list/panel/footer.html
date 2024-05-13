@@ -1,5 +1,14 @@
 {% load navigation_tags %}
 
+<style scoped>
+    .text-center{
+        display: flex;
+        align-items: center;
+        flex-direction: row;    
+    }
+</style>
+
+
 {% if not hide_links %}
     {% navigation_resolve_menus sort_results=True names='list facet' source=object as facet_menus_link_results %}
     {% navigation_resolve_menus sort_results=True names='object' source=object as object_menus_link_results %}

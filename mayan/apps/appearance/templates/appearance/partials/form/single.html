@@ -2,7 +2,10 @@
 {% load static %}
 
 <style scoped>
-    #form-datas button{
+    .btn:hover{
+        background: rgba(4, 114, 77, 1);
+    }
+    #form-datas button, .btn{
         height: 40px;
         background: rgba(4, 114, 77, 1);
         display: flex;
@@ -12,6 +15,20 @@
         width: fit-content;
         border-radius: 0px;
         color: rgba(255, 255, 255, 1);
+        gap:4px;
+    }
+    .btn-danger:active:hover, .btn-danger.active:hover, .open>.dropdown-toggle.btn-danger:hover, .btn-danger:active:focus, .btn-danger.active:focus, .open>.dropdown-toggle.btn-danger:focus, .btn-danger:active.focus, .btn-danger.active.focus, .open>.dropdown-toggle.btn-danger.focus{
+        color: #ffffff;
+        background-color: rgba(4, 114, 77, 1);
+    }
+    .btn-danger:focus{
+        background: rgba(4, 114, 77, 1);
+    }
+    .navigation-btn-dropdown{
+        background: rgba(255, 255, 255) !important;
+    }
+    .btn-danger{
+        background: rgba(4, 114, 77, 1) !important;
     }
 </style>
 
@@ -22,7 +39,7 @@
 <hr>
 {% endif %}
 
-<div class="well" id="form-datas" style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 0px !important;">
+<div class="well" id="form-datas" style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 0px !important; margin-top: 80px;">
     {% if form.is_multipart %}
         <form action="{{ form_action }}" class="{{ form_css_classes|default:'' }}" enctype="multipart/form-data" method="{{ submit_method|default:'post' }}" name="{{ form.prefix|default:'' }}" target="{{ submit_target|default:'_self' }}">
     {% else %}

@@ -153,7 +153,7 @@ class TrashedDocumentListView(DocumentListView):
                 'no_results_title': _(
                     'There are no documents in the trash can'
                 ),
-                'title': _(message='Documents in trash')
+                'title': _(message='Trash')
             }
         )
         return context

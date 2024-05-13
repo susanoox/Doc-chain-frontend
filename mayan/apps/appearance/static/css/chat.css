@@ -106,12 +106,12 @@
     display: flex;
     float: left;
     box-sizing: border-box;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
     align-items: center;
-    background-color: #ffffff;
-    position: fixed;
-    bottom: 0;
+    background-color: transparent;
+    border-radius: 10px 10px 0px 0px;
+    padding: 10px 0px 10px 10px;
 }
 
 .chat-bar-icons {

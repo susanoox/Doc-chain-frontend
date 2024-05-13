@@ -12,6 +12,15 @@
 {% smart_setting "COMMON_COLLAPSE_LIST_MENU_LIST_FACET" as setting_common_collapse_list_menu_list_facet %}
 {% smart_setting "COMMON_COLLAPSE_LIST_MENU_OBJECT" as setting_common_collapse_list_menu_object %}
 
+<style>
+    table tbody div{
+        width: 92%;
+        text-align: left;
+        text-wrap: wrap;
+        word-wrap: break-word;
+    }
+</style>
+
 <div class="row">
     <div class="col-xs-12">
         {% include 'appearance/partials/list/header.html' %}
@@ -21,7 +30,7 @@
         {% navigation_get_source_columns source=object_list only_identifier=True as source_columns_identifier %}
         {% navigation_get_source_columns source=object_list exclude_identifier=True as source_columns_non_identifier %}
 
-        <div class="well center-block">
+        <div class="well center-block" style="margin-top: 40px;">
             <div class="table-responsive">
                 <table class="table table-condensed table-striped appearance-table-condensed">
                     <thead>
@@ -58,7 +67,7 @@
                     </tbody>
                 </table>
                 {% if not object_list %}
-                    <div class="well center-block">
+                    <div class="well center-block" style="margin-top: 40px;">
                         {% include 'appearance/partials/list/no_results.html' %}
                     </div>
                 {% endif %}

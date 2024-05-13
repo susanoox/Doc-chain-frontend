@@ -13,8 +13,8 @@
         position: absolute;
         background: #f8f8f8;
         width: 100%;
-        margin-left: -3%;
-        margin-top: -3%;
+        margin-left: -5%;
+        margin-top: -34px;
         height: 75vh;
     }
 </style>
@@ -24,6 +24,18 @@
         {% if no_results_icon %}
             {% if no_results_title == "There are no documents in the trash can" %}
                 <img src="{% static 'images/trashcan.png' %}" style="width: 261.69px; margin-left: 138px; height: 160px;"/>
+            {% elif no_results_title == "There are no favorited documents." %}
+                <img src="{% static 'images/nodoc.png' %}" style="display: flex; flex-direction: column; align-items: center; padding: 0px; gap: 4px; width: 200px; height: 200px;"/>
+            {% elif no_results_title == "There are no recently accessed documents" %}
+                <img src="{% static 'images/nodoc.png' %}" style="display: flex; flex-direction: column; align-items: center; padding: 0px; gap: 4px; width: 200px; height: 200px;"/>
+            {% elif no_results_title == "There are no recently created documents" %}
+                <img src="{% static 'images/nodoc.png' %}" style="display: flex; flex-direction: column; align-items: center; padding: 0px; gap: 4px; width: 200px; height: 200px;"/>
+            {% elif no_results_title == "No documents available" %}
+                <img src="{% static 'images/nodoc.png' %}" style="display: flex; flex-direction: column; align-items: center; padding: 0px; gap: 4px; width: 200px; height: 200px;"/>
+            {% elif no_results_title == "There are no duplicated documents" %}
+                <img src="{% static 'images/nodoc.png' %}" style="display: flex; flex-direction: column; align-items: center; padding: 0px; gap: 4px; width: 200px; height: 200px;"/>
+            {% elif no_results_title == "No documents have been checked out" %}
+                <img src="{% static 'images/nodoc.png' %}" style="display: flex; flex-direction: column; align-items: center; padding: 0px; gap: 4px; width: 200px; height: 200px;"/>
             {% else %}
                 {{ no_results_icon.render }}
             {% endif %}

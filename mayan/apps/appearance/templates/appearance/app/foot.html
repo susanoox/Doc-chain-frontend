@@ -133,7 +133,7 @@
     </button> -->
 
     <div class="content" style="box-shadow: -1px 2px 20px #00000033;border-radius: 0px;     width: 334px;">
-        <div class="full-chat-block" style="width: 100%; border-radius: 0px;">
+        <div class="full-chat-block" style="width: 100%; display: flex; border-radius: 0px; flex-direction: column; justify-content: flex-end;">
             <!-- <p style="text-align: start; padding: 11px; font-size: 16px; font-weight: 800;">Welcome to DocuBuddy chat !</p> -->
             <!-- Message Container -->
             <div class="outer-container" style="min-height: 493px;">
@@ -153,18 +153,7 @@
                     <!-- Start voice input button -->
 
                     <!-- User input box -->
-                    <div class="chat-bar-input-block" id="containrt-chat" style="display: none;">
-                        <div>
-                            <div id="userInput" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; width: 352px; background: #ffffff; padding: 10px;  gap: 10px; border-left: none;">
-                                <input id="textInput" class="input-box" type="text" name="msg" placeholder="Ask your query...">
-                                <button id="startButton" style="padding: 4px 12px; display: flex; align-items: center; height: 42px; justify-content: center; width: 48px; color: #ffffff; border-radius: 4px; border: none; background: #04724d;" onclick="sendButton()">
-                                    <span class="material-symbols-outlined">
-                                        send
-                                    </span>
-                                </button>
-                            </div>
-                            <p class="powered">Powered by AI - Docubuddy </p>
-                        </div>
+                    
 
                         <!-- <div class="chat-bar-icons"> -->
 
@@ -179,6 +168,18 @@
 
                 </div>
             </div>
+            <div class="chat-bar-input-block" id="containrt-chat" style="display: none;position: sticky; background-size: 52px; bottom: 0;">
+                <div>
+                    <div id="userInput" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; width: 352px; background: #ffffff; padding: 10px;  gap: 10px; border-left: none;">
+                        <input id="textInput" class="input-box" type="text" name="msg" placeholder="Ask your query...">
+                        <button id="startButton" style="padding: 4px 12px; display: flex; align-items: center; height: 42px; justify-content: center; width: 48px; color: #ffffff; border-radius: 4px; border: none; background: #04724d;" onclick="sendButton()">
+                            <span class="material-symbols-outlined">
+                                send
+                            </span>
+                        </button>
+                    </div>
+                    <p class="powered">Powered by AI - Docubuddy </p>
+                </div>
 
         </div>
     </div>

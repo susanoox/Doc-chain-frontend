@@ -206,10 +206,11 @@ class summery(SingleObjectDetailView):
         try:
             obj = Document.objects.get(id=document_id)
             filetry = obj.file_latest.file
-            print(filetry)
+            print("filetry", filetry, document_id)
             try:
                 summary_data = Summary.objects.get(doc_id=document_id)
                 content = summary_data.summary
+                print(content)
             except Summary.DoesNotExist:
                 try:
                     if int(document_id) in PROCESSING_FILE_QUEUE:
@@ -218,8 +219,12 @@ class summery(SingleObjectDetailView):
                         content = "Summary text is not available in this file."
                 except:
                     content = "The summary is processing for this file. Please wait a moment."
+                    print("error..")
+                    
         except:
             content = "Summary text is not available in this file."
+            print("error..")
+        print("content :", content)
         
         return {
             'object': self.object,

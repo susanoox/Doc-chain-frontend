@@ -67,7 +67,7 @@ class DashboardWidgetDocumentsTotal(DashboardWidgetNumeric):
 
 class DashboardWidgetDocumentsInTrash(DashboardWidgetNumeric):
     icon = icon_dashboard_documents_in_trash
-    label = _(message='Documents in trash')
+    label = _(message='Trash')
     link = reverse_lazy(viewname='documents:document_list_deleted')
 
     def get_count(self):

@@ -1,3 +1,7 @@
+----------------------------------------------------------------------------------------------------------------------
+deactivate venv = source deactivate
+----------------------------------------------------------------------------------------------------------------------
+
 /home/nagipragalathan/mayan-edms-4.5.8/mayan/apps/documents/models/document_models.py = documet DB
 
 /home/nagipragalathan/mayan-edms-4.5.8/mayan/apps/checkouts/views.py = summary views
@@ -17,6 +21,9 @@ uploadTask py = /home/nagipragalathan/Test/mayan-edms-4.6.3/mayan/apps/documents
 
 NavBar Menu = /home/nagipragalathan/Test/mayan-edms-4.6.3/mayan/apps/common/apps.py : (144:151)
 /home/nagipragalathan/Test/mayan-edms-4.6.3/mayan/apps/navigation/templates/navigation/generic_subnavigation.html
+
+path of size = /home/nagipragalathan/.virtualenvs/mayan-edms-4.5.8/lib/python3.10/site-packages/django/conf/global_settings.py
+
 
 ##### Changes #######
 
@@ -216,3 +223,61 @@ Response should have max-width equal to first response bubble solved
 red box should only have scrolling. blue box is fixed. now its like whole chat box is scrollable and input is sticky !
 animation for showing loading state in chatbot after hitting the backend api
 processing ui and functionoloty solved the bugs
+
+--------------------------------------------------------------------
+Function:
+1. Increase the size of the uploading file
+Ui:
+1. All of the form old ui into new styles 
+2. Gived the gap for all of the buttons between text and icons
+3. in perticuler page select [First page, Previous page] option disable style are updated 
+4. Sidebar extra height bug fixed 
+5. in table Views & Actions.. button's background color removed 
+6. the hiding fillter term search box bug are solved 
+----------------------------------------------------------------------------------------------------
+1. scroll bar green color
+2. show in list view - remove
+3. Pagination hide if only 1 page available
+4. filter color is changed into white 
+5. Send namespace to server (expect - summary and ocr endpoint)
+   Add the namespace parameter in env
+6. Fix button UI (gap between icon and label)
+7. Change button ui for other buttons
+8. Hide on hover error message in upload documents (its blocking clear button)
+
+
+--------------------------------------------------------------------------------
+chatbot ui and response 
+harizondal line
+pagr number 12
+blockchain
+tag
+--------------------------------------------------------------------------------\
+ui changes:
+Chatbot UI and Response issue solved
+menubar username style added and hr removed
+sandbox inputbox and buttons ui changed 
+navbar and sidebar ui changed to fixed 
+after changing the sidebar and navbar the body screen margin top adjested 
+document file name removed
+empty comments, cabinet, log entries, metadata, captures white background ui issuse is solved
+Documents table datas word warp is added
+Document Files tag document views ui fixed
+action button drop down ui fixed 
+action dropdown harizondal line removed 
+Documents Subscriptions section ui fixed 
+documents's document weight's image position issue solved
+gear icon's harizondal line removed and user name alained correctlty
+delete file conformation ui and button 
+Empty Document ui Images are Update 
+
+functionolaty:
+change the upload task order. First block chain then ocr, upload and summary.
+excel file support
+
+
+incomplite:
+Page number updated to 12.
+blockchain namespace
+download functionolaty
+Need to call a new api on delete action with doc_id to wipe that vector from pinecone

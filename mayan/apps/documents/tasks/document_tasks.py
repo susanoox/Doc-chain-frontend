@@ -11,6 +11,7 @@ from mayan.celery import app
 
 from .document_file_tasks import task_document_file_create
 from .utils import execute_callback
+from .CustomFunctions import NameSpace
 
 ############################################## Custom Function Import ############################################
 from .CustomFunctions import readFile, UploadSummary, upload_to_blockchain, Bot_Content_Upload
@@ -113,6 +114,10 @@ def task_document_upload(
     Content = readFile(obj)
     print(Content)
     print("Content printed...!")
+    #---------------------------------------------------Blockchain---------------------------------------------
+    file_content = obj.file_latest.file.open('rb').read()
+    upload_to_blockchain(file_content, document.pk)
+    print("BlockChain Uploaded Complete..!")
     #---------------------------------------------------- Summery -----------------------------------------------
     
     payload = {
@@ -146,17 +151,14 @@ def task_document_upload(
             "label": obj.label,
             "document_type": str(obj.document_type)
         },
-        "namespace": "",
+        "namespace": NameSpace,
         "doc_id": str(obj.id)
     }
     Bot_Content_Upload(data_for_BOT)
     print("Bot Upload Complete...!")
-    #---------------------------------------------------Blockchain---------------------------------------------
-    file_content = obj.file_latest.file.open('rb').read()
-    upload_to_blockchain(file_content, document.pk)
-    print("BlockChain Uploaded Complete..!")
+
+    #----------------------------------------------------------------------------------------------------------
     PROCESSING_FILE_QUEUE.remove(document.pk)
     print(document.pk, "poped into the queue..!")
-    #----------------------------------------------------------------------------------------------------------
     ###########################################   End Upload    ###############################################
 

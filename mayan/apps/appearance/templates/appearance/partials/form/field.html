@@ -4,11 +4,13 @@
 
 {% load appearance_tags %}
 
-<div class="form-group {% if field.errors %}has-error{% endif %} {{ form_field_css_classes }}">
+<div class="form-group {% if field.errors %}has-error{% endif %} {{ form_field_css_classes }}" style="display: flex; flex-direction: column; gap: 5px;">
     {# We display the label then the field for all except checkboxes #}
-    {% if field|widget_type != 'checkboxinput' and not field.field.widget.attrs.hidden %}
-        {% if not hide_labels %}{{ field.label_tag }}{% if field.field.required and not read_only %} ({% trans 'required' %}){% endif %}{% endif %}
-    {% endif %}
+    <div>
+        {% if field|widget_type != 'checkboxinput' and not field.field.widget.attrs.hidden %}
+            {% if not hide_labels %}{{ field.label_tag }}{% if field.field.required and not read_only %} ({% trans 'required' %}){% endif %}{% endif %}
+        {% endif %}
+    </div>
     {% if field|widget_type == 'checkboxinput' %}
         <div class="checkbox">
             <label>
