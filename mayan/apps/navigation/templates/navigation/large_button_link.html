@@ -4,37 +4,28 @@
 {% navigation_link_get_icon link=link as link_icon %}
 
 <style>
-    .box-data:hover{
+    .box-data:hover {
+        color: rgb(4, 114, 77) !important;
+    }
+
+    .box-data:hover .link-text {
         color: rgba(0, 0, 0, 1) !important;
     }
 </style>
 
 <div class="{{ div_class }}">
+<<<<<<< HEAD
     <a id="box-data" style="border-radius: 0px;box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; padding: 16px 21px; gap: 16px; background-color: #FFFFFF !important; border: 1px solid rgba(0, 0, 0, 0.24); box-shadow: none; color: rgba(0, 0, 0, 0.7); text-shadow: none; font-size: 14px; font-weight: 600;" class="box-data btn btn-primary btn-lg appearance-btn-lg {% if 'new_window' in link.tags %}new_window{% endif %}" href="{{ link.url }}">
         {% if link_icon %}<span id="icon-data" style="font-weight: 400; font-size: 35px;color:rgba(0, 0, 0, 0.24);">{% appearance_icon_render link_icon %}</span>{% endif %}
+=======
+    <a id="box-data" style="border-radius: 0px; box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; padding: 16px 21px; gap: 16px; background: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.24); box-shadow: none; color: rgba(0, 0, 0, 0.7); text-shadow: none; font-size: 14px; font-weight: 600;" 
+       class="box-data btn btn-primary btn-lg appearance-btn-lg {% if 'new_window' in link.tags %}new_window{% endif %}" 
+       href="{{ link.url }}">
+        {% if link_icon %}
+            <span id="icon-data" style="font-weight: 400; font-size: 35px; color: currentColor;">{% appearance_icon_render link_icon %}</span>
+        {% endif %}
+>>>>>>> origin/main
         <br>
-        {{ link.text }}
+        <span class="link-text">{{ link.text }}</span>
     </a>
 </div>
-<script>
-    // Select all elements and icons by class name
-    const elements = document.querySelectorAll('#box-data');
-    const icons = document.querySelectorAll('#icon-data');
-
-    // Loop through each element and add event listeners for mouseover and mouseout events
-    elements.forEach((element, index) => {
-        const icon = icons[index]; // Get the corresponding icon for the current element
-        element.addEventListener('mouseover', function(event) {
-            // Code to execute when mouse hovers over the element
-            console.log('Mouse hovered over the element');
-            icon.style.color = "rgba(4, 114, 77, 1)";
-            
-        });
-
-        element.addEventListener('mouseout', function(event) {
-            // Code to execute when mouse hovers out of the element
-            console.log('Mouse moved out of the element');
-            icon.style.color = "rgba(0, 0, 0, 0.24)";
-        });
-    });
-</script>
