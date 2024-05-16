@@ -18,7 +18,7 @@
         height: 75vh;
     }
 </style>
-
+{% if "indexing/instances" not in request.path %}
 <div class="text-center details" style="margin-top: 20px">
     <div style="font-size: 150%;">
         {% if no_results_icon %}
@@ -30,7 +30,7 @@
                 <img src="{% static 'images/nodoc.png' %}" style="display: flex; flex-direction: column; align-items: center; padding: 0px; gap: 4px; width: 200px; height: 200px;"/>
             {% elif no_results_title == "There are no recently created documents" %}
                 <img src="{% static 'images/nodoc.png' %}" style="display: flex; flex-direction: column; align-items: center; padding: 0px; gap: 4px; width: 200px; height: 200px;"/>
-            {% elif no_results_title == "No documents available" %}
+            {% elif no_results_title == "No documents available" and "indexing/instances" not in request.path %}
                 <img src="{% static 'images/nodoc.png' %}" style="display: flex; flex-direction: column; align-items: center; padding: 0px; gap: 4px; width: 200px; height: 200px;"/>
             {% elif no_results_title == "There are no duplicated documents" %}
                 <img src="{% static 'images/nodoc.png' %}" style="display: flex; flex-direction: column; align-items: center; padding: 0px; gap: 4px; width: 200px; height: 200px;"/>
@@ -77,3 +77,4 @@
     {% endif %}
 </div>
 
+{% endif  %}
