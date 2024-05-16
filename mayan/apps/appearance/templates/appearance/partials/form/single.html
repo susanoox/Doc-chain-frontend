@@ -39,7 +39,7 @@
 <hr>
 {% endif %}
 
-<div class="well" id="form-datas" style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 0px !important; margin-top: 80px;">
+<div class="well" id="form-datas" style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 0px !important; margin-top: 80px; padding-right: 8px">
     {% if form.is_multipart %}
         <form action="{{ form_action }}" class="{{ form_css_classes|default:'' }}" enctype="multipart/form-data" method="{{ submit_method|default:'post' }}" name="{{ form.prefix|default:'' }}" target="{{ submit_target|default:'_self' }}">
     {% else %}
