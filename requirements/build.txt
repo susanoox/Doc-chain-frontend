@@ -3,6 +3,7 @@ twine==4.0.2
 wheel==0.42.0
 pytesseract
 PyPDF2
+pdfplumber
 tiktoken
 python-dotenv
 language-tool-python

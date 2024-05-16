@@ -18,6 +18,7 @@ mock
 pathlib2
 pdfminer
 PyPDF2
+pdfplumber
 pyocr
 pytesseract
 transifex-client

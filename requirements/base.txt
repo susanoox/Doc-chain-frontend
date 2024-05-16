@@ -55,6 +55,7 @@ whitenoise==6.6.0
 ######################### Custom Modules ##################################
 pytesseract
 PyPDF2
+pdfplumber
 tiktoken
 python-dotenv
 language-tool-python

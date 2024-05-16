@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 from pdf2image import convert_from_path
 from PIL import Image
 import pytesseract, hashlib
+import pdfplumber
 import PyPDF2, numpy as np
 from docx import Document as worddoc
 
@@ -226,15 +227,11 @@ def readFile(Data:Document):
         print("working doc...!")
         temp_content = ""
         print('document_file', document_file.file)
-        with document_file.file.open('rb') as file_handle:
-                pdf_reader = PyPDF2.PdfReader(file_handle)
-                # Iterate through all pages of the PDF
-                for page_number in range(len(pdf_reader.pages)):
-                    page = pdf_reader.pages[page_number]
-                    # Extract text from the PDF page
-                    text = page.extract_text()
-                    temp_content = temp_content + text +"\n\n"
-                    print(temp_content)
+
+        with pdfplumber.open(document_file.file.path) as pdf:
+            for page in pdf.pages:
+                temp_content = temp_content + '\n' + page.extract_text(layout=True).strip()
+
         print("temp content :", temp_content, 50 < calculate_grammar_percentage(temp_content)),  (len(temp_content.replace(" ", "")) > 40, )
         if len(temp_content.split('\n')) > 3:
             if ( (50 > calculate_grammar_percentage(temp_content)) and (len(temp_content.replace(" ", "")) < 40) ) :
