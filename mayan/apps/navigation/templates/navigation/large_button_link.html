@@ -10,7 +10,7 @@
 </style>
 
 <div class="{{ div_class }}">
-    <a id="box-data" style="border-radius: 0px;box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; padding: 16px 21px; gap: 16px; background: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.24); box-shadow: none; color: rgba(0, 0, 0, 0.7); text-shadow: none; font-size: 14px; font-weight: 600;" class="box-data btn btn-primary btn-lg appearance-btn-lg {% if 'new_window' in link.tags %}new_window{% endif %}" href="{{ link.url }}">
+    <a id="box-data" style="border-radius: 0px;box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; padding: 16px 21px; gap: 16px; background-color: #FFFFFF !important; border: 1px solid rgba(0, 0, 0, 0.24); box-shadow: none; color: rgba(0, 0, 0, 0.7); text-shadow: none; font-size: 14px; font-weight: 600;" class="box-data btn btn-primary btn-lg appearance-btn-lg {% if 'new_window' in link.tags %}new_window{% endif %}" href="{{ link.url }}">
         {% if link_icon %}<span id="icon-data" style="font-weight: 400; font-size: 35px;color:rgba(0, 0, 0, 0.24);">{% appearance_icon_render link_icon %}</span>{% endif %}
         <br>
         {{ link.text }}
