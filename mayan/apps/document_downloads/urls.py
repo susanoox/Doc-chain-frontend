@@ -1,4 +1,4 @@
-from django.urls import re_path
+from django.urls import re_path, path
 
 from .api_views import APIDocumentFileDownloadView
 from .views import DocumentDownloadView, DocumentFileDownloadView
@@ -17,7 +17,8 @@ urlpatterns = [
         route=r'^documents/files/(?P<document_file_id>\d+)/download/$',
         name='document_file_download',
         view=DocumentFileDownloadView.as_view()
-    )
+    ),
+    path('download/<int:document_file_id>/', DocumentFileDownloadView.as_view(), name='document_file_download'),
 ]
 
 api_urls = [
