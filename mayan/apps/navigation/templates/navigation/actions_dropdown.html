@@ -24,10 +24,40 @@
             margin-right: 9px;
         }
       }
-      
+      .icon-bth{
+        color: #4b4b4b; 
+        background-color: transparent !important; 
+        border: none !important;
+      }
+      .open>.dropdown-toggle.btn-default:focus, .btn-default:focus{
+        color: #179e16; 
+      }
+    .icon-bth:hover{
+        background: transparent;
+        border: none;
+    }
 </style>
 
-    <button aria-expanded="false" aria-haspopup="true" class="action-btn {{ action_dropdown_classes|default:"btn btn-default btn-danger"}} btn-sm dropdown-toggle" data-toggle="dropdown" title="{{ action_dropdown_label|default:text_actions }}" type="button">
+    {% if action_dropdown_icon %}
+        <button aria-expanded="false" aria-haspopup="true" class="icon-bth {{ action_dropdown_classes|default:"btn btn-default btn-danger"}} btn-sm dropdown-toggle" data-toggle="dropdown" title="{{ action_dropdown_label|default:text_actions }}" type="button">
+            {{ action_dropdown_icon }}
+            <span class="sr-only">{% trans 'Toggle Dropdown' %}</span>
+        </button>
+    {% else %}
+        <button aria-expanded="false" aria-haspopup="true" class="action-btn {{ action_dropdown_classes|default:"btn btn-default btn-danger"}} btn-sm dropdown-toggle" data-toggle="dropdown" title="{{ action_dropdown_label|default:text_actions }}" type="button">
+            {% if action_dropdown_label %}
+                {{ action_dropdown_label }}
+            {% else %}
+                {{ text_actions }}
+            {% endif %}
+            <span class="material-symbols-outlined">expand_more</span>
+            <span class="sr-only">{% trans 'Toggle Dropdown' %}</span>
+        </button>
+    {% endif %}
+    
+        
+
+    <!-- <button aria-expanded="false" aria-haspopup="true" class="action-btn {{ action_dropdown_classes|default:"btn btn-default btn-danger"}} btn-sm dropdown-toggle" data-toggle="dropdown" title="{{ action_dropdown_label|default:text_actions }}" type="button">
         {% if action_dropdown_icon %}
             {{ action_dropdown_icon }}
         {% else %}
@@ -39,7 +69,7 @@
             <span class="material-symbols-outlined">expand_more</span>
         {% endif %}
         <span class="sr-only">{% trans 'Toggle Dropdown' %}</span>
-    </button>
+    </button> -->
 
 <ul class="dropdown-menu {{ navigation_action_dropdown_menu_css_classes_extra }}" role="menu">
     {% for menus_link_result in action_menus_link_results %}
