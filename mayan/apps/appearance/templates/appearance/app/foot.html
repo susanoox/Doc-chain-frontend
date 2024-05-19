@@ -168,7 +168,7 @@
 
                 </div>
             </div>
-            <div class="chat-bar-input-block" id="containrt-chat" style="display: none;position: sticky; background-size: 52px; bottom: 0;">
+            <div class="chat-bar-input-block" id="containrt-chat" style="display: none;position: sticky; background-size: 52px; bottom: 0; background-color:#ffffff">
                 <div>
                     <div id="userInput" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; width: 352px; background: #ffffff; padding: 10px;  gap: 10px; border-left: none;">
                         <input id="textInput" class="input-box" type="text" name="msg" placeholder="Ask your query...">
@@ -246,25 +246,33 @@ function firstBotMessage() {
     let time = getTime();
 
     $("#chat-timestamp").append(time);
-    // document.getElementById("userInput").scrollIntoView(false);
-    // document.getElementById("chat-bar-bottom").scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
-    document.querySelector(".powered").scrollIntoView(true);
+    scrollChatToBottom(); // Scroll to bottom after setting the first message
 }
 
-firstBotMessage();
+// Scrolls the chat container to the bottom
+function scrollChatToBottom() {
+    var chatContainer = document.querySelector('.outer-container');
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+// Scrolls the chat container to the specified position
+function scrollToPosition(position) {
+    var chatContainer = document.querySelector('.outer-container');
+    chatContainer.scrollTop = position;
+}
 
 // Retrieves the response
 function getHardResponse(userText) {
-    let botResponse = getBotResponse(userText);
+    {% comment %} let botResponse = getBotResponse(userText);
     // document.getElementById("chat-bar-bottom").scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
     // document.getElementById("chat-bar-bottom").scrollIntoView(true);
-    document.querySelector(".powered").scrollIntoView(true);
-
-
+    document.querySelector(".powered").scrollIntoView(true); {% endcomment %}
+    let botHtml = '<p class="botText"><span>' + botResponse + '</span></p>';
+    $("#chatbox").append(botHtml);
+    scrollChatToBottom(); // Scroll to bottom after appending bot response
 }
 
-
-//Gets the text text from the input box and processes it
+// Gets the text from the input box and processes it
 function getResponse() {
     let userText = $("#textInput").val();
 
@@ -276,14 +284,13 @@ function getResponse() {
 
     $("#textInput").val("");
     $("#chatbox").append(userHtml);
-    // document.getElementById("chat-bar-bottom").scrollIntoView(true);
-    document.querySelector("#textInput").scrollIntoView(true);
-
+    {% comment %} // document.getElementById("chat-bar-bottom").scrollIntoView(true);
+    document.querySelector("#textInput").scrollIntoView(true); {% endcomment %}
+    scrollChatToBottom(); // Scroll to bottom after appending user message
 
     setTimeout(() => {
         getHardResponse(userText);
-    }, 1000)
-
+    }, 1000); // Simulate a delay for bot response
 }
 
 // Handles sending text via button clicks
@@ -292,14 +299,13 @@ function buttonSendText(sampleText) {
 
     $("#textInput").val("");
     $("#chatbox").append(userHtml);
-    // document.getElementById("chat-bar-bottom").scrollIntoView(true);
-    document.querySelector(".powered").scrollIntoView(true);
+     {% comment %} // document.getElementById("chat-bar-bottom").scrollIntoView(true);
+     document.querySelector(".powered").scrollIntoView(true); {% endcomment %}
+    scrollChatToBottom(); // Scroll to bottom after appending button text
 
-
-    //Uncomment this if you want the bot to respond to this buttonSendText event
-    // setTimeout(() => {
-    //     getHardResponse(sampleText);
-    // }, 1000)
+    setTimeout(() => {
+        getHardResponse(sampleText);
+    }, 1000); // Simulate a delay for bot response
 }
 
 function sendButton() {
@@ -308,11 +314,20 @@ function sendButton() {
 
 // Press enter to send a message
 $("#textInput").keypress(function (e) {
-    console.log("key pressed ", e);
     if (e.which == 13) {
         getResponse();
     }
 });
+
+// Initialize the first bot message
+firstBotMessage();
+
+// MutationObserver to handle dynamic content changes
+const chatContainer = document.querySelector('.outer-container');
+const observer = new MutationObserver(scrollChatToBottom);
+
+observer.observe(chatContainer, { childList: true, subtree: true });
+
 </script>
 
 <script src="{% static 'appearance/node_modules/jquery/dist/jquery.min.js' %}" type="text/javascript"></script>
