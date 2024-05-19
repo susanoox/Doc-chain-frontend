@@ -44,6 +44,10 @@ link_document_favorites_add_multiple = Link(
     text=_(message='Add to favorites'), icon=icon_favorite_document_add,
     view='documents:document_favorite_add_multiple'
 )
+dirct_download = Link(
+    text=_(message='Direct Download'), icon=icon_favorite_document_add,
+    view='documents:document_favorite_add_multiple'
+)
 link_document_favorites_remove_multiple = Link(
     text=_(message='Remove from favorites'), icon=icon_favorite_document_remove,
     view='documents:document_favorite_remove_multiple'

@@ -15,6 +15,10 @@ from .icons import (
 )
 from .permissions import permission_document_file_download
 from .tasks import task_document_file_compress
+from django.views import View
+import os
+from django.http import HttpResponse, Http404
+
 
 
 class DocumentDownloadView(
@@ -47,8 +51,8 @@ class DocumentDownloadView(
         context = {
             'form_display_mode_table': True,
             'subtitle': _(
-                'The process will be performed in the background. The '
-                'document files will be available in the downloads area.'
+                ''
+                ''
             )
         }
 
@@ -134,3 +138,24 @@ class DocumentFileDownloadView(SingleObjectDownloadView):
 
     def get_download_mime_type_and_encoding(self, file_object):
         return (self.object.mimetype, self.object.encoding)
+
+
+class DocumentFileDownloadView(View):
+    def get(self, request, document_file_id):
+        try:
+            document_file = DocumentFile.objects.get(pk=document_file_id)
+        except DocumentFile.DoesNotExist:
+            raise Http404("Document file not found")
+
+        # Check permissions (assuming you have a function to do so)
+        if not request.user.has_perm(permission_document_file_download, document_file):
+            return HttpResponse(status=403)
+
+        file_path = document_file.file.path
+        if not os.path.exists(file_path):
+            raise Http404("File not found on the server")
+
+        with open(file_path, 'rb') as file:
+            response = HttpResponse(file.read(), content_type='application/octet-stream')
+            response['Content-Disposition'] = f'attachment; filename="{document_file.filename or os.path.basename(file_path)}"'
+            return response

@@ -8,7 +8,7 @@ from mayan.apps.events.classes import ModelEventType
 
 from .events import event_document_file_downloaded
 from .links import (
-    link_document_download_multiple, link_document_download_single,
+    link_document_download_multiple, link_document_download_single,link_document_direct_download_single,
     link_document_file_download_quick
 )
 from .methods import method_document_get_download_file_object
@@ -52,6 +52,10 @@ class DocumentDownloadsApp(MayanAppConfig):
 
         menu_object.bind_links(
             links=(link_document_download_single,),
+            sources=(Document,)
+        )
+        menu_object.bind_links(
+            links=(link_document_direct_download_single,),
             sources=(Document,)
         )
         menu_object.bind_links(

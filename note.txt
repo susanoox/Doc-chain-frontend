@@ -281,3 +281,7 @@ Page number updated to 12.
 blockchain namespace
 download functionolaty
 Need to call a new api on delete action with doc_id to wipe that vector from pinecone
+-----------------------------------------------------------------------------------------------------------------
+
+1. The process will be performed in the background. The document files will be available in the downloads area. Removed
+2. Table icon position centered
