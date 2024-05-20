@@ -23,7 +23,7 @@
             {% else %}
                 {% blocktrans with object.get_results.datetime as datetime %}Last update: {{ datetime }}{% endblocktrans %}
             {% endif %}
-            <canvas id="canvas-chart"></canvas>
+            <canvas id="canvas-chart" style="margin-top: 50px; margin-left: 10px"></canvas>
         </div>
     </div>
 {% endblock %}

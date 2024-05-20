@@ -200,12 +200,14 @@ class summery(SingleObjectDetailView):
     source_queryset = Document.valid.all()
     
     view_icon = icon_check_out_info
+    file_format_available = ('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp','.pptx','.pdf','.txt','.xls', '.xlsx', '.xlsm', '.xlsb','.doc', '.docx')
 
     def get_extra_context(self):
         document_id = self.kwargs['document_id']
         try:
             obj = Document.objects.get(id=document_id)
             filetry = obj.file_latest.file
+            document_file = obj.file_latest
             print("filetry", filetry, document_id)
             try:
                 summary_data = Summary.objects.get(doc_id=document_id)
@@ -215,6 +217,8 @@ class summery(SingleObjectDetailView):
                 try:
                     if (document_id != None) and (int(document_id) in PROCESSING_FILE_QUEUE):
                         content = "Summary is generating please wait !"
+                    elif not str(document_file).lower().endswith(self.file_format_available):
+                        content = "Summary text is not available for this file format."
                     else:
                         content = "Summary is generating please wait !"
                 except:
@@ -240,21 +244,25 @@ class Ocr(SingleObjectDetailView):
     source_queryset = Document.valid.all()
     
     view_icon = icon_check_out_info
+    file_format_available = ('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp','.pptx','.pdf','.txt','.xls', '.xlsx', '.xlsm', '.xlsb','.doc', '.docx')
 
     def get_extra_context(self):
         document_id = self.kwargs['document_id']
         try:
             obj = Document.objects.get(id=document_id)
             filetry = obj.file_latest.file
+            document_file = obj.file_latest
             try:
                 ocr_data = Summary.objects.get(doc_id=document_id)
                 content = ocr_data.content
             except Summary.DoesNotExist:
                 try:
                     if (document_id != None) and (int(document_id) in PROCESSING_FILE_QUEUE):
-                        content = "OCR is generating pleas wait !"
+                        content = "OCR is generating please wait !"
+                    elif not str(document_file).lower().endswith(self.file_format_available):
+                        content = "Ocr text is not available for this file format."
                     else:
-                        content = "OCR is generating pleas wait !"
+                        content = "OCR is generating please wait !"
                 except:
                     content = "OCR not found for this document."
         except:
