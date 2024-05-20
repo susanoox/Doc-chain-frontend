@@ -12,3 +12,5 @@ pdf2image
 opencv-python
 nltk
 python-docx
+python-pptx
+openpyxl

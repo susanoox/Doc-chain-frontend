@@ -19,6 +19,8 @@ import pytesseract, hashlib
 import pdfplumber
 import PyPDF2, numpy as np
 from docx import Document as worddoc
+from pptx import Presentation
+import subprocess
 
 ########################################################################################
 from ..models.document_models import Document 
@@ -185,6 +187,17 @@ def extract_text_from_image_google(content):
 ##################################### End of Functions ##################################################
 
 image_extensions = ('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp')
+ppt_extensions = ('.pptx')
+
+################################### Function for doc format #########################################
+def extract_text_from_doc(file_path):
+    try:
+        result = subprocess.run(["antiword", file_path], capture_output=True, text=True)
+        return result.stdout
+    except Exception as e:
+        print(f"Error extracting text from .doc file: {e}")
+        return None
+    
 def readFile(Data:Document):
     global text_content
     document_file = Data.file_latest
@@ -206,11 +219,21 @@ def readFile(Data:Document):
             return file_handle.read()
     #----------------------------------- Extract From Excel File  -----------------------------------------------------------------------------
         
+    # elif str(document_file).lower().endswith(('.xls', '.xlsx', '.xlsm', '.xlsb')):
+    #     print("working xl..!")
+    #     excel_data = pd.read_excel(document_file.file)
+    #     print(excel_data)
+    #     return str(excel_data)
     elif str(document_file).lower().endswith(('.xls', '.xlsx', '.xlsm', '.xlsb')):
         print("working xl..!")
-        excel_data = pd.read_excel(document_file.file)
-        print(excel_data)
-        return str(excel_data)
+        excel_data = pd.read_excel(document_file.file, sheet_name=None)  # Read all sheets
+        content = ""
+        for sheet_name, sheet_data in excel_data.items():
+            content += f"Sheet: {sheet_name}\n"
+            content += sheet_data.to_string(index=False, header=True)  # Convert to string
+            content += "\n\n"
+        print(content)
+        return content
     
     #----------------------------------- Extract From Word Document -----------------------------------------------------------------------------
     elif str(document_file).lower().endswith(('.docs', '.docx')):
@@ -263,4 +286,45 @@ def readFile(Data:Document):
                 return temp_content
         else:
             return temp_content
-        
+    # elif str(document_file).lower().endswith(('.ppt', '.pptx')):
+    #     print("working ppt...!")
+    #     temp_content = ""
+    #     with document_file.file.open('rb') as file_handle:
+    #         presentation = Presentation(file_handle)
+    #         for slide in presentation.slides:
+    #             for shape in slide.shapes:
+    #                 if hasattr(shape, "text"):
+    #                     temp_content += shape.text + '\n'
+    #     print(temp_content)
+    #     return temp_content    
+    elif str(document_file).lower().endswith(ppt_extensions):
+        print("working ppt...!")
+        temp_content = ""
+        try:
+            with document_file.file.open('rb') as file_handle:
+                presentation = Presentation(file_handle)
+                for slide_num, slide in enumerate(presentation.slides, start=1):
+                    temp_content += f"Slide {slide_num}:\n"
+                    for shape in slide.shapes:
+                        if shape.has_text_frame:
+                            for paragraph in shape.text_frame.paragraphs:
+                                temp_content += paragraph.text + '\n'
+                    temp_content += '\n'
+            print(temp_content)
+            return temp_content
+        except Exception as e:
+            print(f"Error processing PowerPoint file: {e}")
+            return None
+    elif str(document_file).lower().endswith('.doc'):
+        print('working doc...!')
+        try:
+            text_content = extract_text_from_doc(document_file.file.path)
+            if text_content is not None:
+                return text_content
+            else:
+                return "Error: Unable to extract text from .doc file"
+        except Exception as e:
+            print(f"Error reading .doc file: {e}")
+            return None
+    else:
+        return None
