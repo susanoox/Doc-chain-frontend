@@ -22,7 +22,7 @@ from docx import Document as worddoc
 from ..models.document_models import Document 
 ############################ URL Variables #############################################
 
-BlockUrl = 'http://3.27.232.173/filehash'
+BlockUrl = 'http://54.66.31.125:3001/filehash'
 Ocrurl = 'http://3.107.59.224:8080/v2/ocr'
 url_BOT = 'http://3.107.59.224:8080/v2/upload'
 SummaryUrl = "http://3.107.59.224:8080/v2/summary" 
@@ -89,7 +89,6 @@ def UploadSummary(payload):
         print("Error upload summary:", e)
     
         
-
 #--------------------------------------- Tools -----------------------------------------------
 
 

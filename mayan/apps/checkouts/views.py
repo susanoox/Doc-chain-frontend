@@ -213,14 +213,13 @@ class summery(SingleObjectDetailView):
                 print(content)
             except Summary.DoesNotExist:
                 try:
-                    if int(document_id) in PROCESSING_FILE_QUEUE:
+                    if (document_id != None) and (int(document_id) in PROCESSING_FILE_QUEUE):
                         content = "The summary is processing for this file. Please wait a moment."
                     else:
-                        content = "Summary text is not available in this file."
+                        content = "The summary is processing for this file. Please wait a moment."
                 except:
-                    content = "The summary is processing for this file. Please wait a moment."
+                    content = "Summary text is not available in this file."
                     print("error..")
-                    
         except:
             content = "Summary text is not available in this file."
             print("error..")
@@ -252,10 +251,10 @@ class Ocr(SingleObjectDetailView):
                 content = ocr_data.content
             except Summary.DoesNotExist:
                 try:
-                    if int(document_id) in PROCESSING_FILE_QUEUE:
+                    if (document_id != None) and (int(document_id) in PROCESSING_FILE_QUEUE):
                         content = "The OCR is processing for this file. Please wait a moment."
                     else:
-                        content = "Ocr text is not available in this file."
+                        content = "The OCR is processing for this file. Please wait a moment."
                 except:
                     content = "ocr not found for this document."
         except:
