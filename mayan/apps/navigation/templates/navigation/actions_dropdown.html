@@ -22,12 +22,22 @@
         background: white;
         color: #04724D !important;
     }
-    .action-btn:hover {
-        {% comment %} background: white; {% endcomment %}
-        color: #04724D !important;
+    .action-btn:hover,
+    .action-btn:focus {
+        background: white;
+        color: white !important; /* Sets text to white */
+    }
+    
+    .action-btn:hover .action-icon {
+        color: #04724D !important; /* Sets icon to green */
+    }
+    .action-btn:hover .action-text,
+    .action-btn:focus .action-text,
+    .action-btn:focus .material-symbols-outlined {
+        color: white !important; /* Ensures text stays white on hover */
     }
     .btn-default:focus{
-        color: #2c3e50
+        color: #2c3e50 !important;
     }
     @media only screen and (max-width: 706px) {
         .action-btn{
@@ -40,12 +50,12 @@
 
     <button aria-expanded="false" aria-haspopup="true" class="action-btn {{ action_dropdown_classes|default:"btn btn-default btn-danger"}} btn-sm dropdown-toggle" data-toggle="dropdown" title="{{ action_dropdown_label|default:text_actions }}" type="button">
         {% if action_dropdown_icon %}
-            {{ action_dropdown_icon }}
+            <span class="action-icon">{{ action_dropdown_icon }}</span>
         {% else %}
             {% if action_dropdown_label %}
-                {{ action_dropdown_label }}
+                <span class="action-text">{{ action_dropdown_label }}</span>
             {% else %}
-                {{ text_actions }}
+                <span class="action-text">{{ text_actions }}</span>
             {% endif %}
             <span class="material-symbols-outlined">expand_more</span>
         {% endif %}
