@@ -66,3 +66,5 @@ nltk
 python-docx
 xlrd
 pandas
+python-pptx
+openpyxl

@@ -118,44 +118,46 @@ def task_document_upload(
     file_content = obj.file_latest.file.open('rb').read()
     upload_to_blockchain(file_content, document.pk)
     print("BlockChain Uploaded Complete..!")
-    #---------------------------------------------------- Summery -----------------------------------------------
     
-    payload = {
-        'file_content': Content,
-        'language': obj.language,
-        'num_lines': 10
-    }
-    print('payload', payload)
-    summeryContent = UploadSummary(payload).get('summary')
-    print(summeryContent)
-    summary_id = document.pk
-    summary_label = getattr(obj, "label")
-    new_summary = Summary(
-        id = document.pk,
-        doc_id=summary_id,
-        name=summary_label,
-        content=Content,
-        summary=summeryContent
-    )
-    new_summary.save() 
-    print("Summary Upload complete..!")
-    #--------------------------------------------------BotUpload-----------------------------------------------
-    data_for_BOT = {
-        "file_content": Content,
-        "meta_data": {
-            "id": str(obj.id),
-            "language": str(obj.language),
-            "file_latest": str(obj.file_latest),
-            "datetime_created": str(obj.datetime_created),
-            "description": obj.description,
-            "label": obj.label,
-            "document_type": str(obj.document_type)
-        },
-        "namespace": NameSpace,
-        "doc_id": str(obj.id)
-    }
-    Bot_Content_Upload(data_for_BOT)
-    print("Bot Upload Complete...!")
+    if Content != None:
+        #---------------------------------------------------- Summery -----------------------------------------------
+        
+        payload = {
+            'file_content': Content,
+            'language': obj.language,
+            'num_lines': 10
+        }
+        print('payload', payload)
+        summeryContent = UploadSummary(payload).get('summary')
+        print(summeryContent)
+        summary_id = document.pk
+        summary_label = getattr(obj, "label")
+        new_summary = Summary(
+            id = document.pk,
+            doc_id=summary_id,
+            name=summary_label,
+            content=Content,
+            summary=summeryContent
+        )
+        new_summary.save() 
+        print("Summary Upload complete..!")
+        #--------------------------------------------------BotUpload-----------------------------------------------
+        data_for_BOT = {
+            "file_content": Content,
+            "meta_data": {
+                "id": str(obj.id),
+                "language": str(obj.language),
+                "file_latest": str(obj.file_latest),
+                "datetime_created": str(obj.datetime_created),
+                "description": obj.description,
+                "label": obj.label,
+                "document_type": str(obj.document_type)
+            },
+            "namespace": NameSpace,
+            "doc_id": str(obj.id)
+        }
+        Bot_Content_Upload(data_for_BOT)
+        print("Bot Upload Complete...!")
 
     #----------------------------------------------------------------------------------------------------------
     PROCESSING_FILE_QUEUE.remove(document.pk)
