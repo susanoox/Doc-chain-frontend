@@ -256,12 +256,12 @@ class Ocr(SingleObjectDetailView):
                     else:
                         content = "OCR is generating pleas wait !"
                 except:
-                    content = "ocr not found for this document."
+                    content = "OCR not found for this document."
         except:
-            content = "ocr not found for this document."
+            content = "OCR not found for this document."
         return {
             'object': self.object,
-            'title': _('Ocr Details of: %s') % self.object,
+            'title': _('OCR Details of: %s') % self.object,
             'content': content, 
             'type':'ocr',
             'doc_id':document_id
