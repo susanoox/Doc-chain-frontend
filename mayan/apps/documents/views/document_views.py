@@ -173,25 +173,25 @@ class DocumentPreviewView(DocumentVersionPreviewView):
         }
         json_data = json.dumps(data_for_BC)
         response = requests.post(url_BC, data=json_data, headers={'Content-Type': 'application/json'}, timeout=1200)
-        print(data_for_BC, response, response.status_code)
+        # print(data_for_BC, response, response.status_code)
         try:
             data = response.json()
         except:
             print("error in the json request")
         # print(data) 9c5bbd0ec4a83a63dc4dbc6ceaaf3b25, 
-        print("status code :", response.status_code)
+        # print("status code :", response.status_code)
         if response.status_code == 200:
-            print("isFileIntact :",data.get("isFileIntact"), "isLoading: ", data.get("isLoading"))
+            # print("isFileIntact :",data.get("isFileIntact"), "isLoading: ", data.get("isLoading"))
             if data.get("isFileIntact") == True:
-                flag = "✅Verified"
+                flag = "✅ Verified"
             elif (data.get("isLoading") == True):
-                flag = "⏳ Processing..."
+                flag = "⏳ Processing"
             else:
                 flag = "❌File Compromised"
-            print("File uploaded")
+            # print("File uploaded")
         else:
             flag = "❌File Compromised"
-            print("Upload failed")
+            # print("Upload failed")
 
         return {
             'hide_labels': True,

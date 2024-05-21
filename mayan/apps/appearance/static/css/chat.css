@@ -1,7 +1,7 @@
 .chat-bar-collapsible {
     z-index: 900;
     position: fixed;
-    bottom: -25px;
+    bottom: -19px;
     right: 50px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 

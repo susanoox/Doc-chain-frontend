@@ -234,6 +234,13 @@ def readFile(Data:Document):
             content += "\n\n"
         print(content)
         return content
+    #----------------------------------- Extract From CSV Document -----------------------------------------------------------------------------
+    
+    elif str(document_file).lower().endswith('.csv'):
+        print("working csv..!")
+        csv_data = pd.read_csv(document_file.file)  # Read CSV file
+        print(csv_data)
+        return csv_data.to_string(index=False, header=True)
     
     #----------------------------------- Extract From Word Document -----------------------------------------------------------------------------
     elif str(document_file).lower().endswith(('.docs', '.docx')):
@@ -255,8 +262,9 @@ def readFile(Data:Document):
             for page in pdf.pages:
                 temp_content = temp_content + '\n' + page.extract_text(layout=True).strip()
 
-        print("temp content :", temp_content, 50 < calculate_grammar_percentage(temp_content)),  (len(temp_content.replace(" ", "")) > 40, )
-        if len(temp_content.split('\n')) > 3:
+        print("temp content :", temp_content, 50 < calculate_grammar_percentage(temp_content),  (len(temp_content.replace(" ", "")) > 40, ),"'",temp_content.split('\n'),"'",len(temp_content.split('\n')) )
+        print(len(temp_content.split('\n')), len(temp_content.split('\n')) < 3, (50 > calculate_grammar_percentage(temp_content)), (len(temp_content.replace(" ", "")) < 40), len(temp_content.replace(" ", "")))
+        if len(temp_content.replace(" ", "").split('\n')) < 10:
             if ( (50 > calculate_grammar_percentage(temp_content)) and (len(temp_content.replace(" ", "")) < 40) ) :
                 print("Running inside of image loop")
                 try:
