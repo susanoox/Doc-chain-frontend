@@ -164,7 +164,7 @@ class DocumentPreviewView(DocumentVersionPreviewView):
         with document.file_latest.file.open('rb') as file_obj:
             file_contents = file_obj.read()
 
-        url_BC = 'http://3.27.232.173/compare'
+        url_BC = 'http://54.66.31.125:3001/compare'
         hash_value = hashlib.md5(file_contents).hexdigest()
 
         data_for_BC = {
@@ -179,11 +179,12 @@ class DocumentPreviewView(DocumentVersionPreviewView):
         except:
             print("error in the json request")
         # print(data) 9c5bbd0ec4a83a63dc4dbc6ceaaf3b25, 
+        print("status code :", response.status_code)
         if response.status_code == 200:
-            print(data.get("isFileIntact"), data.get("isLoading"))
+            print("isFileIntact :",data.get("isFileIntact"), "isLoading: ", data.get("isLoading"))
             if data.get("isFileIntact") == True:
                 flag = "✅Verified"
-            elif (data.get("isLoading") == True) and(document.pk in  PROCESSING_FILE_QUEUE):
+            elif (data.get("isLoading") == True):
                 flag = "⏳ Processing..."
             else:
                 flag = "❌File Compromised"

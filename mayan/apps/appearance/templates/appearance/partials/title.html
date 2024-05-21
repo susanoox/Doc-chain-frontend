@@ -105,14 +105,14 @@
     }
 </style>
 
-{% comment %} {% if not non_html_title and result.title %}
+{% if not non_html_title and result.title %}
             </h3>
-            {% if subtitle %}
+            <!-- {% if subtitle %}
                 <p>
                     <small>{{ subtitle }}</small>
                 </p>
-            {% endif %}
-{% endif %} {% endcomment %}
+            {% endif %} -->
+{% endif %}
 
 {% if not non_html_title %}
         </div>

@@ -215,16 +215,15 @@ class summery(SingleObjectDetailView):
                 print(content)
             except Summary.DoesNotExist:
                 try:
-                    if int(document_id) in PROCESSING_FILE_QUEUE:
-                        content = "The summary is processing for this file. Please wait a moment."
+                    if (document_id != None) and (int(document_id) in PROCESSING_FILE_QUEUE):
+                        content = "Summary is generating please wait !"
                     elif not str(document_file).lower().endswith(self.file_format_available):
                         content = "Summary text is not available for this file format."
                     else:
-                        content = "Summary text is not available in this file."
+                        content = "Summary is generating please wait !"
                 except:
-                    content = "The summary is processing for this file. Please wait a moment."
+                    content = "Summary text is not available in this file."
                     print("error..")
-                    
         except:
             content = "Summary text is not available in this file."
             print("error..")
@@ -258,19 +257,19 @@ class Ocr(SingleObjectDetailView):
                 content = ocr_data.content
             except Summary.DoesNotExist:
                 try:
-                    if int(document_id) in PROCESSING_FILE_QUEUE:
-                        content = "The OCR is processing for this file. Please wait a moment."
+                    if (document_id != None) and (int(document_id) in PROCESSING_FILE_QUEUE):
+                        content = "OCR is generating please wait !"
                     elif not str(document_file).lower().endswith(self.file_format_available):
                         content = "Ocr text is not available for this file format."
                     else:
-                        content = "Ocr text is not available in this file."
+                        content = "OCR is generating please wait !"
                 except:
-                    content = "ocr not found for this document."
+                    content = "OCR not found for this document."
         except:
-            content = "ocr not found for this document."
+            content = "OCR not found for this document."
         return {
             'object': self.object,
-            'title': _('Ocr Details of: %s') % self.object,
+            'title': _('OCR Details of: %s') % self.object,
             'content': content, 
             'type':'ocr',
             'doc_id':document_id

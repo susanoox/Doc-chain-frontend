@@ -285,3 +285,7 @@ Need to call a new api on delete action with doc_id to wipe that vector from p
 
 1. The process will be performed in the background. The document files will be available in the downloads area. Removed
 2. Table icon position centered
+3. chatbot ui 
+4. gearbox menu z-index
+5. All of the unwanted heading are removed
+6. in all documents item showing div overflow fixed
