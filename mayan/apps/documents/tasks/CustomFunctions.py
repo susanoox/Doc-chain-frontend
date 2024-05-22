@@ -262,7 +262,7 @@ def readFile(Data:Document):
             for page in pdf.pages:
                 temp_content = temp_content + '\n' + page.extract_text(layout=True).strip()
 
-        if (90 > calculate_grammar_percentage(temp_content)):
+        if (98 > calculate_grammar_percentage(temp_content)):
             print("Running inside of image loop")
             try:
                 global text_content
