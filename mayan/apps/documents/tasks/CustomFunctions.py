@@ -262,36 +262,31 @@ def readFile(Data:Document):
             for page in pdf.pages:
                 temp_content = temp_content + '\n' + page.extract_text(layout=True).strip()
 
-        print("temp content :", temp_content, 50 < calculate_grammar_percentage(temp_content),  (len(temp_content.replace(" ", "")) > 40, ),"'",temp_content.split('\n'),"'",len(temp_content.split('\n')) )
-        print(len(temp_content.split('\n')), len(temp_content.split('\n')) < 3, (50 > calculate_grammar_percentage(temp_content)), (len(temp_content.replace(" ", "")) < 40), len(temp_content.replace(" ", "")))
-        if len(temp_content.replace(" ", "").split('\n')) < 10:
-            if ( (50 > calculate_grammar_percentage(temp_content)) and (len(temp_content.replace(" ", "")) < 40) ) :
-                print("Running inside of image loop")
-                try:
-                    global text_content
-                    images = convert_from_path(document_file.file.path)
-                    for i, image in enumerate(images):
-                        print("image", i)
-                        try:
-                            text = pytesseract.image_to_string(image)
-                            if 80 > calculate_grammar_percentage(text) and len(temp_content.replace(" ", "")) < 40:
-                                rgb_image = image.convert("RGB")
-                                image_bytes = io.BytesIO()
-                                rgb_image.save(image_bytes, format="JPEG")  # You can change the format if needed
-                                image_bytes = image_bytes.getvalue()
-                                content_text = extract_text_from_image_google(image_bytes)
-                                text_content = text_content + content_text
-                            else:
-                                text_content = text_content + text
-                        except Exception as e:
-                            print("error while reading image",e)
-                    content = text_content
-                    return content
-                except Exception as pdf_processing_error:
-                        print(f"Error processing PDF: {pdf_processing_error}")
-                        return None
-            else:
-                return temp_content
+        if (98 > calculate_grammar_percentage(temp_content)):
+            print("Running inside of image loop")
+            try:
+                global text_content
+                images = convert_from_path(document_file.file.path)
+                for i, image in enumerate(images):
+                    print("image", i)
+                    try:
+                        text = pytesseract.image_to_string(image)
+                        if 80 > calculate_grammar_percentage(text) and len(temp_content.replace(" ", "")) < 40:
+                            rgb_image = image.convert("RGB")
+                            image_bytes = io.BytesIO()
+                            rgb_image.save(image_bytes, format="JPEG")  # You can change the format if needed
+                            image_bytes = image_bytes.getvalue()
+                            content_text = extract_text_from_image_google(image_bytes)
+                            text_content = text_content + content_text
+                        else:
+                            text_content = text_content + text
+                    except Exception as e:
+                        print("error while reading image",e)
+                content = text_content
+                return content
+            except Exception as pdf_processing_error:
+                    print(f"Error processing PDF: {pdf_processing_error}")
+                    return None
         else:
             return temp_content
     # elif str(document_file).lower().endswith(('.ppt', '.pptx')):
