@@ -2,7 +2,7 @@
 Features
 ========
 
-- Free open source software.
+- AI Enabled software.
 
   - :doc:`Very permissive license compatible with commercial usage <../parts/license>`.
   - Use as-is or add your own customizations.
