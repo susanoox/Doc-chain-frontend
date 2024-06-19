@@ -5,7 +5,7 @@
 {% load smart_settings_tags %}
 
 {% smart_setting "COMMON_PROJECT_TITLE" as common_project_title %}
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <style>
 
@@ -43,7 +43,23 @@
         font-weight: 400;
         font-size: 14px;
     }
-    
+    .nav-item-icon span, .panel-title span{
+        font-size: 18px;
+    }
+    .nav-item-icon{
+        display: flex;
+        gap: 8px;
+        align-items: flex-end;
+        justify-content: center;
+        align-content: center;
+        flex-direction: row;
+    }
+    .extra-style{
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        margin-left: 15px;
+    }
 </style>
 
 
@@ -68,7 +84,28 @@
                                     <h4 class="panel-title">
                                         <a aria-controls="collapse-{{ link.name }} collapse" aria-expanded="false" class="non-ajax collapsed" data-parent="#accordion-sidebar" data-toggle="collapse" href="#accordion-body-{{ forloop.counter }}" role="button">
                                             <div class="pull-left">
-                                                {{ link.label }}
+                                                {%  if forloop.counter == 1 %}
+                                                    <div class="nav-item-icon">
+                                                        <span class="material-symbols-outlined">
+                                                            description
+                                                        </span>
+                                                        {{ link.label }}
+                                                    </div>
+                                                {%  elif forloop.counter == 2 %}
+                                                    <div class="nav-item-icon">
+                                                        <span class="material-symbols-outlined">
+                                                            data_table
+                                                        </span>
+                                                        {{ link.label }}
+                                                    </div>
+                                                {%  else %}
+                                                    <div class="nav-item-icon">
+                                                        <span class="material-symbols-outlined">
+                                                            shoppingmode
+                                                        </span>
+                                                        {{ link.label }}
+                                                    </div>
+                                                {% endif %}
                                             </div>
                                             <div class="accordion-indicator pull-right"><span class="material-symbols-outlined">expand_more</span></div>
                                             <div class="clearfix"></div>
@@ -114,7 +151,21 @@
                                 <div class="panel-heading new-panel-heading" role="tab">
                                     <h4 class="panel-title">
                                         {% with 'a-main-menu-accordion-link' as link_classes %}
-                                            {% include 'navigation/generic_link_instance.html' %}
+                                            {% if forloop.counter == 3 %}
+                                            <div class="panel-title extra-style">
+                                                <span class="material-symbols-outlined">
+                                                    task_alt
+                                                </span>
+                                                {% include 'navigation/generic_link_instance.html' %}
+                                            </div>
+                                            {% elif forloop.counter == 4 %}
+                                            <div class="panel-title extra-style">
+                                                <span class="material-symbols-outlined">
+                                                    lists
+                                                </span>
+                                                {% include 'navigation/generic_link_instance.html' %}
+                                            </div>
+                                            {% endif %}
                                         {% endwith %}
                                     </h4>
                                 </div>
