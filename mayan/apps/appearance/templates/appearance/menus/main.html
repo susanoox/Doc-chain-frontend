@@ -16,6 +16,9 @@
     .new-panel-heading:hover{
         background-color: #F0F0F0 !important;
     }
+    #accordion-sidebar a{
+        text-decoration: none;
+    }
     #accordion-sidebar a[aria-expanded="true"] {
         background: #ffffff !important;
         border: none;
@@ -32,8 +35,9 @@
     #accordion-sidebar > .panel > div > .panel-body > ul > li:hover{
         background-color: #F0F0F0 !important;
     }
-    .a-main-menu-accordion-link-new{
+    .a-main-menu-accordion-link-new, .a-main-menu-accordion-link-new a, .add-style a {
         padding-left: 17% !important;
+        text-decoration: none !important;
     }
     #accordion-sidebar > .panel > div > .panel-body > ul > li.active {
         background: #F0F0F0 !important;
@@ -59,6 +63,7 @@
         align-items: center;
         flex-direction: row;
         margin-left: 15px;
+        text-decoration: none !important;
     }
 </style>
 
@@ -91,14 +96,14 @@
                                                         </span>
                                                         {{ link.label }}
                                                     </div>
-                                                {%  elif forloop.counter == 2 %}
+                                                {%  elif forloop.counter == 3 %}
                                                     <div class="nav-item-icon">
                                                         <span class="material-symbols-outlined">
                                                             data_table
                                                         </span>
                                                         {{ link.label }}
                                                     </div>
-                                                {%  else %}
+                                                {%  elif forloop.counter == 6 %}
                                                     <div class="nav-item-icon">
                                                         <span class="material-symbols-outlined">
                                                             shoppingmode
@@ -119,7 +124,7 @@
                                             {% for sub_menu_results in sub_menus_results %}
                                                 {% for link_group in sub_menu_results.link_groups %}
                                                     {% with '' as link_class_active %}
-                                                    {% with 'a-main-menu-accordion-link a-main-menu-accordion-link-new' as link_classes %}
+                                                    {% with 'a-main-menu-accordion-link a-main-menu-accordion-link-new add-style' as link_classes %}
                                                     {% with 'true' as as_li %}
                                                     {% with link_group.links as object_navigation_links %}
                                                         {% include 'navigation/generic_navigation.html' %}
