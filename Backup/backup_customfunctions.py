@@ -23,8 +23,8 @@ from ..models.document_models import Document
 ############################ URL Variables #############################################
 
 BlockUrl = 'http://54.66.31.125:3001/filehash'
-Ocrurl = 'http://3.107.59.224:8080/v2/ocr'
-url_BOT = 'http://3.107.59.224:8080/v2/upload'
+Ocrurl = 'http://13.201.187.144:8080/v2/ocr'
+url_BOT = 'http://13.201.187.144:8080/v2/upload'
 SummaryUrl = "http://3.107.59.224:8080/v2/summary" 
 RequestTimeOut = 1200
 text_content = ""
