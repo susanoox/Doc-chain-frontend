@@ -40,7 +40,7 @@ def chatbot_res(request):
         query = request.GET.get('message', '')
         print("Without id")
         # Define the URL and payload
-        url = "http://3.107.59.224:8080/v2/response"
+        url = "http://13.233.48.180:3000/response"
         payload = {"query": query, "namespace":""}
         print(payload)
         # Send a POST request with the payload

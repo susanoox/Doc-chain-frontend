@@ -93,11 +93,8 @@ def UploadSummary(payload):
         return response_json.get('response')
     except Exception as e:
         print("Error upload summary:", e)
-    
-        
 
 #--------------------------------------- Tools -----------------------------------------------
-
 
 def calculate_grammar_percentage(text):
     # Tokenize the text into sentences
