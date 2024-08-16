@@ -28,10 +28,10 @@ from ..models.document_models import Document
 
 NameSpaceList = ["dev", "test", "demo", "client"]
 NameSpace = NameSpaceList[0]
-BlockUrl = 'http://54.66.31.125:3001/filehash'
-Ocrurl = 'http://13.233.48.180:3000/ocr'
-url_BOT = 'http://13.233.48.180:3000/upload'
-SummaryUrl = "http://13.233.48.180:3000/summary" 
+BlockUrl = 'http://13.233.48.180:3000/filehash'
+Ocrurl = 'http://13.233.48.180:8080/v2/ocr'
+url_BOT = 'http://13.233.48.180:8080/v2/upload'
+SummaryUrl = "http://13.233.48.180:8080/v2/summary" 
 RequestTimeOut = 1200
 text_content = ""
 

@@ -164,7 +164,7 @@ class DocumentPreviewView(DocumentVersionPreviewView):
         with document.file_latest.file.open('rb') as file_obj:
             file_contents = file_obj.read()
 
-        url_BC = 'http://54.66.31.125:3001/compare'
+        url_BC = 'http://13.233.48.180:3000/compare'
         hash_value = hashlib.md5(file_contents).hexdigest()
 
         data_for_BC = {
