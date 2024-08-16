@@ -67,7 +67,7 @@
                         {% else %}
                             {% ifchanged link_group.object %}
                                 {% common_get_object_verbose_name obj=link_group.object as link_group_object_verbose_name %}
-                                <!-- <li class="dropdown-header">{% if link_group_object_verbose_name %}{{ link_group_object_verbose_name }}{% else %}{% trans 'Object' %}{% endif %}</li> -->
+                                    <li class="dropdown-header">{% if link_group_object_verbose_name %}{{ link_group_object_verbose_name }}{% else %}{% trans 'Object' %}{% endif %}</li>
                             {% endifchanged %}
                         {% endif %}
                     {% endif %}

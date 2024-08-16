@@ -68,7 +68,30 @@
                                     <h4 class="panel-title">
                                         <a aria-controls="collapse-{{ link.name }} collapse" aria-expanded="false" class="non-ajax collapsed" data-parent="#accordion-sidebar" data-toggle="collapse" href="#accordion-body-{{ forloop.counter }}" role="button">
                                             <div class="pull-left">
-                                                {{ link.label }}
+                                                <div style="display: flex; align-items: center; gap: 14px;">
+                                                    {% if forloop.counter == 2 %}
+                                                        <div style="display: flex; align-items: center; gap: 14px;">
+                                                            <span class="material-symbols-outlined" style="font-size: 20px;">
+                                                                data_table
+                                                            </span>
+                                                            <p style="display: contents;">{{ link.label }}</p>
+                                                        </div>
+                                                    {% elif forloop.counter == 5 %}
+                                                        <div style="display: flex; align-items: center; gap: 14px;">
+                                                            <span class="material-symbols-outlined" style="font-size: 20px;">
+                                                                shoppingmode
+                                                            </span>
+                                                            <p style="display: contents;">{{ link.label }}</p>
+                                                        </div>
+                                                    {% elif forloop.counter == 1 %}
+                                                        <div style="display: flex; align-items: center; gap: 14px;">
+                                                            <span class="material-symbols-outlined" style="font-size: 20px;">
+                                                                description
+                                                            </span>
+                                                            <p style="display: contents;">{{ link.label }}</p>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
                                             </div>
                                             <div class="accordion-indicator pull-right"><span class="material-symbols-outlined">expand_more</span></div>
                                             <div class="clearfix"></div>
@@ -111,12 +134,26 @@
                     {% with ' ' as link_classes %}
                         {% if link|common_get_type != "<class 'mayan.apps.navigation.classes.Menu'>" %}
                             <div class="panel panel-default" style="box-shadow: none;">
-                                <div class="panel-heading new-panel-heading" role="tab">
+                                <div class="panel-heading new-panel-heading" role="tab" style="display: flex; align-items: center; flex-direction: row; margin-left: 13px;">
+                                    {% if forloop.counter == 3 %}
+                                    <span class="material-symbols-outlined" style="font-size: 20px;">
+                                        task_alt
+                                    </span>
                                     <h4 class="panel-title">
                                         {% with 'a-main-menu-accordion-link' as link_classes %}
                                             {% include 'navigation/generic_link_instance.html' %}
                                         {% endwith %}
                                     </h4>
+                                    {% elif forloop.counter == 4 %}
+                                    <span class="material-symbols-outlined" style="font-size: 20px;">
+                                        lists
+                                    </span>
+                                    <h4 class="panel-title">
+                                        {% with 'a-main-menu-accordion-link' as link_classes %}
+                                            {% include 'navigation/generic_link_instance.html' %}
+                                        {% endwith %}
+                                    </h4>
+                                    {% endif %}
                                 </div>
                             </div>
                         {% endif %}
