@@ -33,7 +33,6 @@ Ocrurl = 'http://13.233.48.180:8080/v2/ocr'
 url_BOT = 'http://13.233.48.180:8080/v2/upload'
 SummaryUrl = "http://13.233.48.180:8080/v2/summary" 
 RequestTimeOut = 1200
-text_content = ""
 
 ################################### Upload Functions ###################################
 
@@ -196,7 +195,6 @@ def extract_text_from_doc(file_path):
         return None
     
 def readFile(Data:Document):
-    global text_content
     document_file = Data.file_latest
     print('document_file', document_file)
     ReadContent = ""
@@ -250,42 +248,84 @@ def readFile(Data:Document):
         print(temp_content)
         return temp_content
     #----------------------------------- Extract From Pdf -----------------------------------------------------------------------------
+    # elif str(document_file).lower().endswith('.pdf'):
+    #     print("working doc...!")
+    #     temp_content = ""
+    #     print('document_file', document_file.file)
+
+    #     with pdfplumber.open(document_file.file.path) as pdf:
+    #         for page in pdf.pages:
+    #             temp_content = temp_content + '\n' + page.extract_text(layout=True).strip()
+
+    #     if (98 > calculate_grammar_percentage(temp_content)):
+    #         print("Running inside of image loop")
+    #         try:
+    #             global text_content
+    #             images = convert_from_path(document_file.file.path)
+    #             for i, image in enumerate(images):
+    #                 print("image", i)
+    #                 try:
+    #                     text = pytesseract.image_to_string(image)
+    #                     if 80 > calculate_grammar_percentage(text) and len(temp_content.replace(" ", "")) < 40:
+    #                         rgb_image = image.convert("RGB")
+    #                         image_bytes = io.BytesIO()
+    #                         rgb_image.save(image_bytes, format="JPEG")  # You can change the format if needed
+    #                         image_bytes = image_bytes.getvalue()
+    #                         content_text = extract_text_from_image_google(image_bytes)
+    #                         text_content = text_content + content_text
+    #                     else:
+    #                         text_content = text_content + text
+    #                 except Exception as e:
+    #                     print("error while reading image",e)
+    #             content = text_content
+    #             return content
+    #         except Exception as pdf_processing_error:
+    #                 print(f"Error processing PDF: {pdf_processing_error}")
+    #                 return None
+    #     else:
+    #         return temp_content
+    
     elif str(document_file).lower().endswith('.pdf'):
         print("working doc...!")
-        temp_content = ""
-        print('document_file', document_file.file)
+        content = ""
+        try:
+            # Extract text content from PDF
+            with pdfplumber.open(document_file.file.path) as pdf:
+                temp_content = ""
+                for page in pdf.pages:
+                    extracted_text = page.extract_text(layout=True)
+                    if extracted_text:
+                        temp_content += '\n' + extracted_text.strip()
 
-        with pdfplumber.open(document_file.file.path) as pdf:
-            for page in pdf.pages:
-                temp_content = temp_content + '\n' + page.extract_text(layout=True).strip()
-
-        if (98 > calculate_grammar_percentage(temp_content)):
-            print("Running inside of image loop")
-            try:
-                global text_content
+            if not temp_content.strip() or len(temp_content.replace(" ", "")) < 40:
+                print("PDF contains images or very little text, processing images...")
                 images = convert_from_path(document_file.file.path)
+                text_content = ""
                 for i, image in enumerate(images):
-                    print("image", i)
+                    print("Processing image", i)
                     try:
                         text = pytesseract.image_to_string(image)
-                        if 80 > calculate_grammar_percentage(text) and len(temp_content.replace(" ", "")) < 40:
+                        if len(text.replace(" ", "")) < 40:
                             rgb_image = image.convert("RGB")
                             image_bytes = io.BytesIO()
-                            rgb_image.save(image_bytes, format="JPEG")  # You can change the format if needed
+                            rgb_image.save(image_bytes, format="JPEG")
                             image_bytes = image_bytes.getvalue()
-                            content_text = extract_text_from_image_google(image_bytes)
-                            text_content = text_content + content_text
+                            text_content += extract_text_from_image_google(image_bytes)
                         else:
-                            text_content = text_content + text
+                            text_content += text
                     except Exception as e:
-                        print("error while reading image",e)
+                        print(f"Error while reading image {i}: {e}")
                 content = text_content
-                return content
-            except Exception as pdf_processing_error:
-                    print(f"Error processing PDF: {pdf_processing_error}")
-                    return None
-        else:
-            return temp_content
+            else:
+                content = temp_content
+
+            return content
+
+        except Exception as pdf_processing_error:
+            print(f"Error processing PDF: {pdf_processing_error}")
+            return None
+        
+    
     # elif str(document_file).lower().endswith(('.ppt', '.pptx')):
     #     print("working ppt...!")
     #     temp_content = ""
