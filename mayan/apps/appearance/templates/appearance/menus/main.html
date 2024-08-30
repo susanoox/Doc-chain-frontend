@@ -69,21 +69,21 @@
                                         <a aria-controls="collapse-{{ link.name }} collapse" aria-expanded="false" class="non-ajax collapsed" data-parent="#accordion-sidebar" data-toggle="collapse" href="#accordion-body-{{ forloop.counter }}" role="button">
                                             <div class="pull-left">
                                                 <div style="display: flex; align-items: center; gap: 14px;">
-                                                    {% if forloop.counter == 2 %}
+                                                    {% if link.label == "Documents" %}
                                                         <div style="display: flex; align-items: center; gap: 14px;">
                                                             <span class="material-symbols-outlined" style="font-size: 20px;">
                                                                 data_table
                                                             </span>
                                                             <p style="display: contents;">{{ link.label }}</p>
                                                         </div>
-                                                    {% elif forloop.counter == 5 %}
+                                                    {% elif link.label == "Cabinets" %}
                                                         <div style="display: flex; align-items: center; gap: 14px;">
                                                             <span class="material-symbols-outlined" style="font-size: 20px;">
                                                                 shoppingmode
                                                             </span>
                                                             <p style="display: contents;">{{ link.label }}</p>
                                                         </div>
-                                                    {% elif forloop.counter == 1 %}
+                                                    {% elif link.label == "Tags" %}
                                                         <div style="display: flex; align-items: center; gap: 14px;">
                                                             <span class="material-symbols-outlined" style="font-size: 20px;">
                                                                 description

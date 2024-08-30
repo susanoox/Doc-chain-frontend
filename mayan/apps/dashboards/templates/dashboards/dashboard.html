@@ -1,46 +1,87 @@
-<style>
-    .grid-container {
-        display: grid !important;
-        grid-template-columns: repeat(2, 1fr) !important; /* Two columns with equal width */
-        grid-gap: 10px !important;
-    }    
-    
-    .widget {
-        padding: 10px !important;
-    }
-    
-    .widget-0 {
-        grid-column: 1 !important; /* Widget 2 will appear first */
-    }
-    
-    @media (max-width: 768px) {
+{% if widgets|length == 3 %}
+    <style>
         .grid-container {
-            grid-template-columns: 1fr !important; /* Single column layout on small screens */
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important; /* Two columns with equal width */
+            grid-gap: 10px !important;
+        }    
+        
+        .widget {
+            padding: 10px !important;
         }
-    }
+        
+        .widget-0 {
+            grid-column: 1 !important; /* Widget 2 will appear first */
+        }
+        
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr !important; /* Single column layout on small screens */
+            }
+        }
 
-    .dashboards-panel-widget {
-        box-shadow: none;
-        border: 1px solid #e0e0e0 !important;
-        border-radius: 9px;
-    }
-    .well{
-        background-color: #F8F8F8 !important ;
-    }
-    
-    
-    
-    
-</style>
+        .dashboards-panel-widget {
+            box-shadow: none;
+            border: 1px solid #e0e0e0 !important;
+            border-radius: 9px;
+        }
+        .well{
+            background-color: #F8F8F8 !important ;
+        }
+    </style>
+{% elif widgets|length == 12 %}
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns */
+            gap: 20px; /* Space between grid items */
+        }
+        
+        .widget {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .grid-container {
+                grid-template-columns: 1fr; /* 1 column on small screens */
+            }
+        }
+        .grid-container::before {
+            content: ""; /* Ensure no content is added */
+            display: none; /* Prevent it from taking up space */
+        }    
+    </style>
+{% endif %}
 
 
-<div class="well" style="margin-top: 44px;">
-    <div class="row grid-container">
-        <div class="widget widget-0">{{ widgets.0 }}</div>
-        <div class="widget widget-1">{{ widgets.1 }}</div>
+{{ widgets|length }}
+
+{% if widgets|length == 3 %}
+    <div class="well" style="margin-top: 44px; background-color: #ffffff;">
+        <div class="row grid-container">
+            <div class="widget widget-0">{{ widgets.0 }}</div>
+            <div class="widget widget-1">{{ widgets.1 }}</div>
+        </div>
+        <div class="row grid-container">
+            <div class="widget widget-0">{{ widgets.2 }}</div>
+        </div>
     </div>
-    <div class="row grid-container">
-        <div class="widget widget-0">{{ widgets.2 }}</div>
+{% elif widgets|length == 12 %}
+    <div class="well" style="margin-top: 44px; background-color: #ffffff;">
+        <div class="row grid-container">
+            {% for widget in widgets %}
+                {{ widget }}
+            {% endfor %}
+        </div>
     </div>
-    
-</div>
+{% endif %}
