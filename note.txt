@@ -322,3 +322,45 @@ Indexs: 4
 <span class="material-symbols-outlined">
 lists
 </span>
+
+
+
+----------------------------------------------------------------------------------------------
+     .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns */
+        gap: 20px; /* Space between grid items */
+    }
+    
+    .widget {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .grid-container {
+            grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .grid-container {
+            grid-template-columns: 1fr; /* 1 column on small screens */
+        }
+    }
+    .grid-container::before {
+        content: ""; /* Ensure no content is added */
+        display: none; /* Prevent it from taking up space */
+    }    
+
+
+<div class="well" style="margin-top: 44px;">
+    <div class="row grid-container">
+        {% for widget in widgets %}
+            {{ widget }}
+        {% endfor %}
+    </div>
+</div>

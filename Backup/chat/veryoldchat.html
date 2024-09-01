@@ -1,0 +1,166 @@
+{% load navigation_tags %}
+{% navigation_resolve_menus names='object,secondary' sort_results=True as action_menus_link_results %}
+
+<div class="pull-right btn-group" id="menu-actions" style="position: fixed; right: 20px; top: 13px; z-index: 999; margin-top: 62px; margin-right: -7px;">
+        {% if action_menus_link_results %}
+        {% include 'navigation/actions_dropdown.html' %}
+        {% endif %}
+        
+        <div class="pull-right btn-group">
+            <button id="ai-chat-button" type="button">
+                <img id="doc-chain-logo" src="{% static 'appearance/images/ai-logo.svg' %}" />
+                AI</button>        
+        </div>
+</div>
+<div class="clearfix"></div>
+
+<script>
+    // Collapsible
+    var cht_inp = document.getElementById("containrt-chat");
+    var coll = document.getElementsByClassName("collapsible");
+    var extend = document.getElementById("extend-btn");
+    var close_btn = document.getElementById("close-btn");
+    var circle_btn = document.getElementById("ai-chat-button");
+
+    circle_btn.addEventListener("click", function () {
+        // Loop through each element with class name "content"
+        var contents = document.getElementsByClassName("content");
+        for (var i = 0; i < contents.length; i++) {
+            var content = contents[i];
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                content.classList.remove("content-open")
+                // circle_btn.style.backgroundImage = "url(https://s.cafebazaar.ir/images/icons/com.auto.bot.answer.chatgpt-7eca1f54-1d93-45b8-8e8d-767d6ba9ee02_512x512.png?x-img=v1/resize,h_256,w_256,lossless_false/optimize)"
+                circle_btn.style.backgroundPosition = "-1px 0px";
+                circle_btn.style.backgroundSize = "cover";
+                cht_inp.style.display = "none";
+
+            } else {
+                // content.style.maxHeight = content.scrollHeight + "px";
+                // content.style.maxHeight = "500px";
+                content.classList.add("content-open")
+                content.style.maxHeight ="80vh";
+                cht_inp.style.display = "flex";
+
+                circle_btn.style.backgroundPosition = "-3px -3px";
+                cht_inp.style.backgroundSize = "52px";
+                // circle_btn.style.backgroundImage = "url(https://cdn-icons-png.flaticon.com/256/4210/4210923.png)"
+            }
+        }
+    });
+
+    var count = 0
+    for (let i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            if (count%2 === 0){
+                close_btn.style.display = 'block';
+                extend.style.display = 'none';
+            }else{
+                close_btn.style.display = 'none';
+                extend.style.display = 'block';
+            }
+            count++;
+            console.log("samopke", count)
+
+            var content = this.nextElementSibling;
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                // content.style.maxHeight = content.scrollHeight + "px";
+                content.style.maxHeight ="95vh";
+
+            }
+
+        });
+    }
+
+    function getTime() {
+        let today = new Date();
+        hours = today.getHours();
+        minutes = today.getMinutes();
+
+        if (hours < 10) {
+            hours = "0" + hours;
+        }
+
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+
+        let time = hours + ":" + minutes;
+        return time;
+    }
+
+    // Gets the first message
+    function firstBotMessage() {
+        let firstMessage = "📁 Welcome to docuBuddy! Need answers about your documents? I'm your digital guide through the maze of files. Ask me anything, and I'll unlock the secrets hidden within your uploads. Let's navigate the paperwork jungle together! 🌟"
+        document.getElementById("botStarterMessage").innerHTML = `<p class="botText"><div style="color: #fff; padding: 12px; background: #04724D; width: 267px; margin-left: 10px; display: flex; border-radius: 4px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column; font-size: 12px; font-weight: 400;">` + firstMessage + '</div></p>';
+
+        let time = getTime();
+
+        $("#chat-timestamp").append(time);
+        document.getElementById("userInput").scrollIntoView(false);
+        document.getElementById("chat-bar-bottom").scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+    }
+
+    firstBotMessage();
+
+    // Retrieves the response
+    function getHardResponse(userText) {
+        let botResponse = getBotResponse(userText);
+        document.getElementById("chat-bar-bottom").scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+    }
+
+
+    //Gets the text text from the input box and processes it
+    function getResponse() {
+        let userText = $("#textInput").val();
+
+        if (userText == "") {
+            return;
+        }
+
+        let userHtml = '<p class="userText"><span>' + userText + '</span></p>';
+
+        $("#textInput").val("");
+        $("#chatbox").append(userHtml);
+        document.getElementById("chat-bar-bottom").scrollIntoView(true);
+
+        setTimeout(() => {
+            getHardResponse(userText);
+        }, 1000)
+
+    }
+
+    // Handles sending text via button clicks
+    function buttonSendText(sampleText) {
+        let userHtml = '<p class="userText"><span>' + sampleText + '</span></p>';
+
+        $("#textInput").val("");
+        $("#chatbox").append(userHtml);
+        document.getElementById("chat-bar-bottom").scrollIntoView(true);
+
+        //Uncomment this if you want the bot to respond to this buttonSendText event
+        // setTimeout(() => {
+        //     getHardResponse(sampleText);
+        // }, 1000)
+    }
+
+    function sendButton() {
+        getResponse();
+    }
+
+    // Press enter to send a message
+    $("#textInput").keypress(function (e) {
+        console.log("key pressed ", e);
+
+        if (e.which == 13) {
+            getResponse();
+        }
+    });
+
+    // $(".pull-right.btn-group .chat-bar-collapsible").remove(); 
+    // $("#circle-chat-button").remove();
+</script>
