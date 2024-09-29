@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import simple_string_view, chatbot_res, chatbot_res_with_id, check_process
+from .views import simple_string_view, chatbot_res, chatbot_res_with_id, check_process, document_details
 from .config import config_list, create_config
 
 __all__ = ('urlpatterns',)
@@ -16,6 +16,7 @@ urlpatterns = [
     path('check_process/<int:doc_id>', check_process, name='check_process'),
     path('chatbot_res', chatbot_res, name='chatbot_res'),
     path('chatbot_res_with_id/<int:doc_id>', chatbot_res_with_id, name='chatbot_res_with_id'),
+    path('verified_files',  document_details, name='verified_files'),
 ]
 
 urlpatterns.extend(config)

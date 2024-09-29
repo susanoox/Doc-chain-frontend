@@ -3,6 +3,10 @@ from django.http import JsonResponse
 import os
 import requests
 from mayan.apps.documents.tasks.document_tasks import PROCESSING_FILE_QUEUE
+from mayan.apps.documents.models import Document
+from django.shortcuts import render
+
+BlockUrl = 'http://13.233.48.180:3000/files'
 
 
 def simple_string_view(request):
@@ -136,3 +140,25 @@ def check_process(request, doc_id):
         return JsonResponse({"file": True}, status=200)
     else:
         return JsonResponse({"file": False}, status=404)
+
+def document_details(request):
+    output_data = []
+    response = requests.get(BlockUrl)
+    if response.status_code == 200:
+        data = response.json()
+        obj1 = Document.objects.all()
+        for i in obj1:
+            print("Doc id is : ", i.id)
+        obj = Document.objects.get(id=3)
+        output_data.append(obj)
+        for document in data:
+            try:
+                obj = Document.objects.get(id=document['id'])
+                output_data.append(obj)
+            except:
+                print("match does't exist at : ", document['id'])
+    context = {
+        'objs': output_data,
+    }
+
+    return render(request, 'document_details.html', context)
