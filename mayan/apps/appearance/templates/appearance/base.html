@@ -52,6 +52,8 @@
                         {% appearance_app_templates template_name='viewport' %}
                     </div>
                 </div>
+                {% block BC_Document %}{% endblock BC_Document %}
+
                 {% include 'appearance/partials/title.html' %}
                 {% include 'appearance/partials/actions.html' %}
 {% endif %}

@@ -1,10 +1,10 @@
 from django.http import HttpResponse
 from django.http import JsonResponse
-import os
 import requests
 from mayan.apps.documents.tasks.document_tasks import PROCESSING_FILE_QUEUE
 from mayan.apps.documents.models import Document
 from django.shortcuts import render
+import markdown
 
 BlockUrl = 'http://13.233.48.180:3000/files'
 
@@ -67,9 +67,11 @@ def chatbot_res(request):
             # print(data)
             try:
                 # print(data['metadata'])
+                bot_content = data['response']['response'].replace('code 404: ', '')
+                md_content = markdown.markdown(bot_content)
                 out_str = f"""
                     <div style="display: flex;flex-direction: column;align-items: flex-start;">
-                        <div>{data['response']['response'].replace('code 404: ', '')}</div>
+                        <div>{md_content}</div>
                         <ul style="margin-left: 20px;">"""
             
                 # for i in unique_data:
@@ -81,6 +83,7 @@ def chatbot_res(request):
                 data['response'] = out_str
             except:
                 data=data
+            print(data)
             return JsonResponse(data)  # Return the JSON response
         else:
             return JsonResponse({"error": "Failed to send data."}, status=500)
@@ -149,8 +152,8 @@ def document_details(request):
         obj1 = Document.objects.all()
         for i in obj1:
             print("Doc id is : ", i.id)
-        obj = Document.objects.get(id=3)
-        output_data.append(obj)
+        # obj = Document.objects.get(id=3)
+        output_data.append(obj1)
         for document in data:
             try:
                 obj = Document.objects.get(id=document['id'])
@@ -160,5 +163,6 @@ def document_details(request):
     context = {
         'objs': output_data,
     }
+    print(context)
 
     return render(request, 'document_details.html', context)

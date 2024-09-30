@@ -1,13 +1,8 @@
+let lastQuery = ""; // Variable to store the last query
+let responsesMap = {}; // Dictionary to map unique IDs to responses
+
 function cleanText(inputText) {
-  // Remove special characters using a regular expression
-  let cleanText = inputText.replace(/[^\w\s]/g, '');
-
-  // Remove extra spaces by replacing multiple spaces with a single space
-  cleanText = cleanText.replace(/\s+/g, ' ');
-
-  // Remove newline characters (line breaks) and carriage returns
-  cleanText = cleanText.replace(/[\n\r]/g, '');
-
+  let cleanText = inputText.replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').replace(/[\n\r]/g, '');
   return cleanText;
 }
 
@@ -15,95 +10,126 @@ function isPureNumber(str) {
   return !isNaN(parseFloat(str)) && isFinite(str);
 }
 
-function getBotResponse(input) {
-  var currentURL = window.location.href;
-  console.log('currentURL', currentURL, !(currentURL.includes("preview") || currentURL.includes("ocr/") || currentURL.includes("summery/") || currentURL.includes("cabinets/")))
-  let chatbotResUrl = "";
-  if (!(currentURL.includes("preview") || currentURL.includes("ocr/") || currentURL.includes("summery/") || currentURL.includes("cabinets/"))) {
-    chatbotResUrl = "chatbot_res";
-  } else {
-    var parts = currentURL.split('/');
-    // Filter the array to get only the purely numeric elements
-    var docid = parts.filter(isPureNumber)[0];
-    // var docid = parts[parts.length - 2];
-    console.log("docid : ", docid, parts)
-    chatbotResUrl = `chatbot_res_with_id/${docid}`;
+function determineChatbotUrl(currentURL) {
+  if (currentURL.includes("preview") || currentURL.includes("ocr/") || currentURL.includes("summery/") || currentURL.includes("cabinets/")) {
+    let parts = currentURL.split('/');
+    let docid = parts.filter(isPureNumber)[0];
+    return `chatbot_res_with_id/${docid}`;
   }
-  console.log("docid : ", docid, parts, currentURL)
+  return "chatbot_res";
+}
 
-  let botHtml = '<p class="botText"><div class="bot-inner" style="color: white; padding: 10px; background: #04724D; width: 51px; margin-left: 10px; display: flex; border-radius: 4px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column; font-size: 12px; font-weight: 500;">' + '<div class="typing"> <div class="dot"></div> <div class="dot"></div> <div class="dot"></div> </div>'+ '</div></p>';
+function createBotHtml(responseContent, messageId) {
+  return `<p class="botText">
+    <div class="bot-inner" id="${messageId}" style="color: white; padding: 10px; background: #04724D; width: 267px; margin-left: 10px; display: flex; border-radius: 4px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column; font-size: 12px; font-weight: 500;">
+      ${responseContent}
+    </div>
+    <div style="display: flex; flex-direction: row; align-content: center; align-items: center; justify-content: space-around; gap: 16%; margin-left: -12%;">
+      <div>
+        <button class="copy-button" style="margin-top: 5px;" data-id="${messageId}">
+          <i style="font-size: 16px; padding: 5px;" class="material-icons">content_copy</i>
+        </button>
+        <button class="speak-button" style="margin-top: 5px;" data-id="${messageId}">
+          <i style="font-size: 16px; padding: 5px;" class="material-icons">volume_up</i>
+        </button>
+      </div>
+      <button class="regenerate-button" style="margin-top: 5px;" data-id="${messageId}">
+        <i style="font-size: 16px; padding: 5px;" class="material-icons">autorenew</i>
+      </button>
+    </div>
+  </p>`;
+}
+
+function addButtonListeners() {
+  $('.copy-button').on('click', function() {
+    let messageId = $(this).data('id');
+    let messageContent = responsesMap[messageId];
+    let tempDiv = document.createElement("div");
+    tempDiv.innerHTML = messageContent;
+    let plainText = tempDiv.textContent || tempDiv.innerText || "";
+    navigator.clipboard.writeText(plainText).then(() => {
+      Toastify({
+        text: "Text Copied to clipboard",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        close: true,
+        backgroundColor: "#4CAF50",
+      }).showToast();
+    }).catch(err => {
+      console.error('Failed to copy text: ', err);
+    });
+  });
+
+  $('.speak-button').on('click', function() {
+    let messageId = $(this).data('id');
+    let messageContent = responsesMap[messageId];
+    let tempDiv = document.createElement("div");
+    tempDiv.innerHTML = messageContent;
+    let plainText = tempDiv.textContent || tempDiv.innerText || "";
+    let utterance = new SpeechSynthesisUtterance(plainText);
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+      this.querySelector('i').textContent = "volume_up"; 
+    } else {
+      window.speechSynthesis.speak(utterance);
+      this.querySelector('i').textContent = "volume_off";
+    }
+  });
+
+  $('.regenerate-button').on('click', function() {
+    if (lastQuery) {
+      getBotResponse(lastQuery);
+      Toastify({
+        text: "Regenerating response...",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        close: true,
+        backgroundColor: "#2196F3",
+      }).showToast();
+    } else {
+      Toastify({
+        text: "No query to regenerate.",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        close: true,
+        backgroundColor: "#FF5722",
+      }).showToast();
+    }
+  });
+}
+
+function getBotResponse(input) {
+  lastQuery = input; // Store the last query when a new query is sent
+  var currentURL = window.location.href;
+  let chatbotResUrl = determineChatbotUrl(currentURL);
+  let botHtml = '<p class="botText"><div class="bot-inner" style="color: white; padding: 10px; background: #04724D; width: 51px; margin-left: 10px; display: flex; border-radius: 4px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column; font-size: 12px; font-weight: 500;">' + '<div class="typing"> <div class="dot"></div> <div class="dot"></div> <div the="dot"></div> </div>'+ '</div></p>';
   $("#chatbox").append(botHtml);
 
-  
   $.ajax({
     type: "GET",
     url: chatbotResUrl,
-    data: {
-      message: input,
-    },
+    data: { message: input },
     success: function (data) {
       let lastBotText = $("#chatbox").find(".bot-inner").last();
-      let botHtml = '<p class="botText"><div class="bot-inner" style="color: white; padding: 10px; background: #04724D; width: 267px; margin-left: 10px; display: flex; border-radius: 4px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column; font-size: 12px; font-weight: 500;">' + data.response +'</div></p>';
+      let messageId = Date.now().toString(); // Generate a unique ID
+      responsesMap[messageId] = data.response; // Store response in the dictionary
+
+      let botHtml = createBotHtml(data.response, messageId);
       lastBotText.removeAttr('style');
+      lastBotText.html(botHtml);
 
-      lastBotText.html(botHtml)
       document.querySelector(".powered").scrollIntoView(true);
-
-      // $("#chatbox").append(botHtml);
-      console.log(data.response, data)
-      document.querySelector(".powered").scrollIntoView(true);
-
-      return data
+      addButtonListeners();
     },
-    error: function (data) {
-      console.log(data)
-      return data
+    error: function (error) {
+      console.error("Error:", error);
     },
   });
 }
 
-
-
-let botTextElements = document.querySelectorAll('.botText');
-
-// Loop through each element and attach a click event listener
-botTextElements.forEach(function (element) {
-  element.addEventListener('click', function () {
-    // Get the text content of the clicked p tag
-    let text = this.querySelector('span').textContent;
-    // Copy the text to clipboard
-    navigator.clipboard.writeText(text)
-      .then(function () {
-        // Alert the user that the text has been copied
-        alert("Copied to clipboard: " + text);
-      })
-      .catch(function (error) {
-        console.error('Failed to copy text: ', error);
-      });
-  });
+$(document).ready(function() {
+  addButtonListeners();
 });
-
-
-
-
-
-
-// function getBotResponse(input) {
-//     //rock paper scissors
-//     if (input == "rock") {
-//         return "paper";
-//     } else if (input == "paper") {
-//         return "scissors";
-//     } else if (input == "scissors") {
-//         return "rock";
-//     }
-
-//     // Simple responses
-//     if (input == "hello") {
-//         return "Hello there!";
-//     } else if (input == "goodbye") {
-//         return "Talk to you later!";
-//     } else {
-//         return "Try asking something else!";
-//     }
-// }

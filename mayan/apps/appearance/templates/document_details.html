@@ -1,38 +1,127 @@
 {% extends 'appearance/base.html' %}
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-{% block content %}
-<div class="container mx-auto p-6" style="pos">
-    <h1 class="text-3xl font-bold text-center mb-6">Document Details</h1>
-    <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
-            <thead>
-                <tr class="bg-gray-100 border-b">
-                    <th class="py-3 px-5 text-left font-semibold text-gray-700">ID</th>
-                    <th class="py-3 px-5 text-left font-semibold text-gray-700">UUID</th>
-                    <th class="py-3 px-5 text-left font-semibold text-gray-700">Document Type</th>
-                    <th class="py-3 px-5 text-left font-semibold text-gray-700">Label</th>
-                    <th class="py-3 px-5 text-left font-semibold text-gray-700">Description</th>
-                    <th class="py-3 px-5 text-left font-semibold text-gray-700">Created Date</th>
-                    <th class="py-3 px-5 text-left font-semibold text-gray-700">Language</th>
-                    <th class="py-3 px-5 text-left font-semibold text-gray-700">Is Stub?</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for obj in objs %}
-                <tr class="border-b hover:bg-gray-50">
-                    <td class="py-3 px-5 text-gray-600">{{ obj.id }}</td>
-                    <td class="py-3 px-5 text-gray-600">{{ obj.uuid }}</td>
-                    <td class="py-3 px-5 text-gray-600">{{ obj.document_type }}</td>
-                    <td class="py-3 px-5 text-gray-600">{{ obj.label }}</td>
-                    <td class="py-3 px-5 text-gray-600">{{ obj.description }}</td>
-                    <td class="py-3 px-5 text-gray-600">{{ obj.datetime_created|date:"Y-m-d H:i" }}</td>
-                    <td class="py-3 px-5 text-gray-600">{{ obj.language }}</td>
-                    <td class="py-3 px-5 text-gray-600">{{ obj.is_stub|yesno:"Yes,No" }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+{% block BC_Document %}
+<!-- Custom CSS for enhancing the card design -->
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden; /* Ensures nothing spills out of the card */
+        margin-top: 5%;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-img-top {
+        height: 200px;
+        width: 100%; /* Ensures image takes the full width of the card */
+        object-fit: cover; /* Ensures the image covers the area without distortion */
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .card-title {
+        color: #333;
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .list-group-item {
+        font-size: 0.9rem;
+        padding: 0.75rem 1.25rem;
+        border: none;
+        border-bottom: 1px solid #eaeaea;
+    }
+
+    .list-group-item:last-child {
+        border-bottom: none;
+    }
+
+    .card-link {
+        transition: color 0.3s ease;
+        color: #fff;
+        background-color: #007bff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+    .card-link:hover {
+        background-color: #0056b3;
+        color: #fff;
+        text-decoration: none;
+    }
+</style>
+
+<div class="container my-5" style="position: absolute; height: 100%; z-index: 999; background: #f8f8f8;">
+    <h1 class="text-center mb-4">Verified Documents ✅</h1>
+
+    <!-- Grid for displaying documents as cards using Bootstrap -->
+    <div class="row g-4">
+        {% for obj in objs %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card" style="width: 100%;">
+
+                <!-- Card Image - Conditionally Render the Image -->
+                {% if obj.thumbnail_url %}
+                <img 
+                    src="{{ obj.thumbnail_url }}" 
+                    class="card-img-top" 
+                    alt="Document Image">
+                {% else %}
+                <img 
+                    src="https://uploads.sitepoint.com/wp-content/uploads/2020/08/1597254478svg-squashed-768x404.jpg" 
+                    class="card-img-top" 
+                    alt="Default Image">
+                {% endif %}
+
+                <!-- Card Body with description -->
+                <div class="card-body">
+                    <p class="card-text">{{ obj.description }}</p>
+                </div>
+
+                <!-- List Group to display document properties -->
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Document Type:</strong> {{ obj.document_type }}</li>
+                    <li class="list-group-item"><strong>Label:</strong> {{ obj.label }}</li>
+                    <li class="list-group-item"><strong>Created Date:</strong> {{ obj.datetime_created|date:"Y-m-d H:i" }}</li>
+                    <li class="list-group-item"><strong>Language:</strong> {{ obj.language }}</li>
+                    <li class="list-group-item"><strong>Is Stub:</strong> {{ obj.is_stub|yesno:"Yes,No" }}</li>
+                </ul>
+
+                <!-- Card Footer with links -->
+                <div class="card-body text-center">
+                    <a href="/documents/documents/{{ obj.id }}/preview/" class="card-link">View Document</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
+
+<!-- JavaScript to remove the element on load -->
+<script>
+    // Function to attempt to remove the element every 500ms
+    function removeAppearanceTitle() {
+        const element = document.getElementById('appearance-title-text');
+        if (element) {
+            element.remove(); // Remove the element if found
+            console.log("Element removed");
+        } else {
+            // Retry after 500ms if the element is not found
+            setTimeout(removeAppearanceTitle, 500);
+        }
+    }
+
+    // Start the removal process when the DOM is fully loaded
+    window.addEventListener('DOMContentLoaded', (event) => {
+        removeAppearanceTitle(); // Call the function to remove the element
+    });
+</script>
+
 {% endblock %}

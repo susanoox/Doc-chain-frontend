@@ -68,3 +68,4 @@ xlrd
 pandas
 python-pptx
 openpyxl
+markdown

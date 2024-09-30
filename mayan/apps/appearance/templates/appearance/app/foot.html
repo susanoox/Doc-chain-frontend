@@ -10,9 +10,35 @@
 <script src=" {% static 'scripts/responses.js' %} "></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
+<!-- Add Toastify CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+<!-- Add Toastify JS -->
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+
 <style>
+    .copy-button, .speak-button, .regenerate-button{
+        padding: 3px;
+        border-radius: 18px;
+        border: none;
+        background: #04724d;
+        color: aliceblue;    
+    }
     .content{
         background-color: transparent;
+    }
+    h1{
+        font-size: 20px;
+    }
+    h2{
+        font-size: 18px;
+    }
+    h3{
+        font-size: 16px;
+    }
+    p{
+        font-size: 12px;
     }
     .chat-bar-collapsible{
         background-color: transparent;
@@ -63,8 +89,11 @@
     }
     #textInput{
         font-size: 11px;
-        color: black;
-        font-weight: 500;    
+        color: white;
+        font-weight: 500;
+        background: #2d2d2d;
+        outline: none;
+        border: none !important;
     }
 
     .chat-bubble {
@@ -170,9 +199,9 @@
             </div>
             <div class="chat-bar-input-block" id="containrt-chat" style="display: none;position: sticky; background-size: 52px; bottom: 0; background-color:#ffffff">
                 <div>
-                    <div id="userInput" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; width: 352px; background: #ffffff; padding: 10px;  gap: 10px; border-left: none;">
+                    <div id="userInput" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; width: 352px; background: #2d2d2d; padding: 10px; gap: 10px; border-left: none; border-radius: 30px; margin-left: -1.5%;">
                         <input id="textInput" class="input-box" type="text" name="msg" placeholder="Ask your query...">
-                        <button id="startButton" style="padding: 4px 12px; display: flex; align-items: center; height: 42px; justify-content: center; width: 48px; color: #ffffff; border-radius: 4px; border: none; background: #04724d;" onclick="sendButton()">
+                        <button id="startButton" style="padding: 4px 12px; display: flex; align-items: center; height: 41px; justify-content: center; color: #ffffff; border-radius: 32px !important; background: #04724d; border: none; width: 41px;" onclick="sendButton()">
                             <span class="material-symbols-outlined">
                                 send
                             </span>
