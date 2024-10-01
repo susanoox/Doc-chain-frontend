@@ -5,13 +5,17 @@ from mayan.apps.navigation.classes import Link
 from .icons import (
     icon_check_version, icon_dependency_group_entry_list,
     icon_dependency_group_entry_detail, icon_dependency_licenses,
-    icon_dependency_group_list
+    icon_dependency_group_list, icon_blockchain
 )
 from .permissions import permission_dependencies_view
 
 link_check_version = Link(
     icon=icon_check_version, permission=permission_dependencies_view,
     text=_(message='Check for updates'), view='dependencies:check_version_view'
+)
+link_blockchain = Link(
+    icon=icon_blockchain, permission=permission_dependencies_view,
+    text=_(message='Blockchain'), view='dependencies:document_details'
 )
 link_dependency_group_list = Link(
     icon=icon_dependency_group_list,

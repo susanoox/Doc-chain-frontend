@@ -12,7 +12,8 @@ from .icons import (
 )
 from .permissions import permission_dependencies_view
 from .utils import PyPIClient
-
+from django.shortcuts import redirect
+from django.urls import reverse
 
 class CheckVersionView(SimpleView):
     template_name = 'appearance/content_container.html'
@@ -144,3 +145,7 @@ class DependencyLicensesView(SimpleView):
             'read_only': True,
             'title': _(message='Other packages licenses')
         }
+
+def document_details(request):
+    # Replace 'target_url_name' with the name of the URL pattern you want to redirect to
+    return redirect(reverse('verified_files'))

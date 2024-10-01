@@ -5,8 +5,12 @@
 <style>
     .card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
-        overflow: hidden; /* Ensures nothing spills out of the card */
+        overflow: hidden;
         margin-top: 5%;
+        width: 100%; /* Set width to 100% so it fits within the grid columns */
+        border: 1px solid #dcdcdc;
+        padding: 10px;
+        border-radius: 10px;
     }
 
     .card:hover {
@@ -15,9 +19,10 @@
     }
 
     .card-img-top {
-        height: 200px;
-        width: 100%; /* Ensures image takes the full width of the card */
-        object-fit: cover; /* Ensures the image covers the area without distortion */
+        height: 150px; /* Adjusted image height for the reduced width */
+        width: 100%; /* Ensures the image takes the full width of the card */
+        object-fit: contain; /* Ensures the full image is displayed without cropping */
+        background-color: #f8f8f8; /* Adds a background color in case of empty space around the image */
     }
 
     .card-body {
@@ -58,45 +63,28 @@
     }
 </style>
 
-<div class="container my-5" style="position: absolute; height: 100%; z-index: 999; background: #f8f8f8;">
+<div class="container my-5" style="background: #f8f8f8; position: absolute">
     <h1 class="text-center mb-4">Verified Documents ✅</h1>
 
     <!-- Grid for displaying documents as cards using Bootstrap -->
     <div class="row g-4">
         {% for obj in objs %}
-        <div class="col-md-6 col-lg-4">
-            <div class="card" style="width: 100%;">
-
-                <!-- Card Image - Conditionally Render the Image -->
-                {% if obj.thumbnail_url %}
+        <!-- Set up responsive columns: 6 cards on large screens, 4 on medium, and 2 on small -->
+        <div class="col-sm-6 col-md-4 col-lg-2">
+            <div class="card">
                 <img 
-                    src="{{ obj.thumbnail_url }}" 
-                    class="card-img-top" 
-                    alt="Document Image">
-                {% else %}
-                <img 
-                    src="https://uploads.sitepoint.com/wp-content/uploads/2020/08/1597254478svg-squashed-768x404.jpg" 
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBoqug-lJ41nA8S2gHV0vqJc85TEbvAVYTVQ&s" 
                     class="card-img-top" 
                     alt="Default Image">
-                {% endif %}
-
-                <!-- Card Body with description -->
-                <div class="card-body">
-                    <p class="card-text">{{ obj.description }}</p>
-                </div>
 
                 <!-- List Group to display document properties -->
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><strong>Document Type:</strong> {{ obj.document_type }}</li>
-                    <li class="list-group-item"><strong>Label:</strong> {{ obj.label }}</li>
-                    <li class="list-group-item"><strong>Created Date:</strong> {{ obj.datetime_created|date:"Y-m-d H:i" }}</li>
-                    <li class="list-group-item"><strong>Language:</strong> {{ obj.language }}</li>
-                    <li class="list-group-item"><strong>Is Stub:</strong> {{ obj.is_stub|yesno:"Yes,No" }}</li>
+                    <li class="list-group-item"><strong>{{ obj.label }}</strong></li>
                 </ul>
 
                 <!-- Card Footer with links -->
                 <div class="card-body text-center">
-                    <a href="/documents/documents/{{ obj.id }}/preview/" class="card-link">View Document</a>
+                    <a href="/documents/documents/{{ obj.id }}/preview/" class="card-link">View</a>
                 </div>
             </div>
         </div>
