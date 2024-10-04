@@ -1,0 +1,115 @@
+{% extends 'appearance/base.html' %}
+
+{% block BC_Document %}
+<!-- Custom CSS for enhancing the card design -->
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        margin-top: 5%;
+        width: 100%; /* Set width to 100% so it fits within the grid columns */
+        border: 1px solid #dcdcdc;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-img-top {
+        height: 150px; /* Adjusted image height for the reduced width */
+        width: 100%; /* Ensures the image takes the full width of the card */
+        object-fit: contain; /* Ensures the full image is displayed without cropping */
+        background-color: #f8f8f8; /* Adds a background color in case of empty space around the image */
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .card-title {
+        color: #333;
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .list-group-item {
+        font-size: 0.9rem;
+        padding: 0.75rem 1.25rem;
+        border: none;
+        border-bottom: 1px solid #eaeaea;
+    }
+
+    .list-group-item:last-child {
+        border-bottom: none;
+    }
+
+    .card-link {
+        transition: color 0.3s ease;
+        color: #fff;
+        background-color: #007bff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+    .card-link:hover {
+        background-color: #0056b3;
+        color: #fff;
+        text-decoration: none;
+    }
+</style>
+
+<div class="container my-5" style="background: #f8f8f8; position: absolute">
+    <h1 class="text-center mb-4">Verified Documents ✅</h1>
+
+    <!-- Grid for displaying documents as cards using Bootstrap -->
+    <div class="row g-4">
+        {% for obj in objs %}
+        <!-- Set up responsive columns: 6 cards on large screens, 4 on medium, and 2 on small -->
+        <div class="col-sm-6 col-md-4 col-lg-2">
+            <div class="card">
+                <img 
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBoqug-lJ41nA8S2gHV0vqJc85TEbvAVYTVQ&s" 
+                    class="card-img-top" 
+                    alt="Default Image">
+
+                <!-- List Group to display document properties -->
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>{{ obj.label }}</strong></li>
+                </ul>
+
+                <!-- Card Footer with links -->
+                <div class="card-body text-center">
+                    <a href="/documents/documents/{{ obj.id }}/preview/" class="card-link">View</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- JavaScript to remove the element on load -->
+<script>
+    // Function to attempt to remove the element every 500ms
+    function removeAppearanceTitle() {
+        const element = document.getElementById('appearance-title-text');
+        if (element) {
+            element.remove(); // Remove the element if found
+            console.log("Element removed");
+        } else {
+            // Retry after 500ms if the element is not found
+            setTimeout(removeAppearanceTitle, 500);
+        }
+    }
+
+    // Start the removal process when the DOM is fully loaded
+    window.addEventListener('DOMContentLoaded', (event) => {
+        removeAppearanceTitle(); // Call the function to remove the element
+    });
+</script>
+
+{% endblock %}

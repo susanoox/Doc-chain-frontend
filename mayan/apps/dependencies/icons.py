@@ -12,3 +12,5 @@ icon_dependency_group_entry_detail = Icon(
 icon_dependency_licenses = Icon(
     driver_name='fontawesome', symbol='certificate'
 )
+# New icon for blockchain
+icon_blockchain = Icon(driver_name='fontawesome', symbol='link')

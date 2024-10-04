@@ -9,7 +9,7 @@ from mayan.apps.views.column_widgets import TwoStateWidget
 
 from .classes import Dependency, DependencyGroup, DependencyGroupEntry
 from .links import (
-    link_check_version, link_dependency_group_entry_detail,
+    link_check_version, link_dependency_group_entry_detail, link_blockchain,
     link_dependency_group_entry_list, link_dependency_group_list,
     link_packages_licenses, link_dependency_tool
 )
@@ -100,6 +100,9 @@ class DependenciesApp(MayanAppConfig):
             sources=(
                 DependencyGroup, 'dependencies:dependency_group_list'
             )
+        )
+        menu_tools.bind_links(
+            links=(link_blockchain,)
         )
         menu_tools.bind_links(
             links=(link_dependency_tool, link_check_version)

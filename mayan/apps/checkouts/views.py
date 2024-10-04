@@ -17,13 +17,29 @@ from .icons import (
     icon_check_in_document, icon_check_out_document, icon_check_out_info,
     icon_check_out_list
 )
-from .models import DocumentCheckout
+from .models import DocumentCheckout, Document
+
 from .permissions import (
     permission_document_check_in, permission_document_check_in_override,
     permission_document_check_out, permission_document_check_out_detail_view
 )
 from mayan.apps.documents.tasks.document_tasks import PROCESSING_FILE_QUEUE
+import requests
 
+
+SummaryUrl = "http://13.233.48.180:8080/v2/summary" 
+RequestTimeOut = 1200
+
+def UploadSummary(payload):  
+    try:
+        print("SummaryUrl", SummaryUrl)
+        response = requests.post(SummaryUrl, json=payload, timeout=RequestTimeOut)
+        print("payload",payload, response)
+        
+        response_json = response.json()
+        return response_json.get('response')
+    except Exception as e:
+        print("Error upload summary:", e)
 
 class DocumentCheckInView(MultipleObjectConfirmActionView):
     error_message = _(
@@ -212,7 +228,12 @@ class summery(SingleObjectDetailView):
             try:
                 summary_data = Summary.objects.get(doc_id=document_id)
                 content = summary_data.summary
-                print(content)
+                if content is None or content == "" or content.strip() == "":
+                    content = "🔄️ Summary is generating please wait !"
+                    summeryContent = UploadSummary(summary_data.content).get('summary')
+                    print(summeryContent)
+                    summary_data.summary = summeryContent
+                    summary_data.save()
             except Summary.DoesNotExist:
                 try:
                     if (document_id != None) and (int(document_id) in PROCESSING_FILE_QUEUE):

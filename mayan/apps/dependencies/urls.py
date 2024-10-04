@@ -1,9 +1,9 @@
-from django.urls import re_path
+from django.urls import re_path, path
 
 from .views import (
     CheckVersionView, DependencyGroupEntryListView,
     DependencyGroupEntryDetailView, DependencyGroupListView,
-    DependencyLicensesView
+    DependencyLicensesView, document_details
 )
 
 urlpatterns = [
@@ -28,5 +28,6 @@ urlpatterns = [
     re_path(
         route=r'^licenses/$', name='dependency_licenses_view',
         view=DependencyLicensesView.as_view()
-    )
+    ),
+    path('document_details', document_details, name="document_details")
 ]
