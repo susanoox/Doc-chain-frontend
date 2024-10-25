@@ -118,9 +118,12 @@ def chatbot_res_with_id(request, doc_id):
             # print(data)
             try:
                 # print(data['metadata'])
+                bot_content = data['response']['response'].replace('code 404: ', '')
+                md_content = markdown.markdown(bot_content)
+                
                 out_str = f"""
                     <div style="display: flex;flex-direction: column;align-items: flex-start;">
-                        <div>{data['response']['response'].replace('code 404: ', '')}</div>
+                        <div>{md_content}</div>
                         <ul style="margin-left: 20px;">"""
 
                 # for i in unique_data:
@@ -157,6 +160,8 @@ def document_details(request):
         for document in data:
             try:
                 obj = Document.objects.get(id=document['id'])
+                output_data.append(obj)
+                output_data.append(obj)
                 output_data.append(obj)
             except:
                 print("match does't exist at : ", document['id'])

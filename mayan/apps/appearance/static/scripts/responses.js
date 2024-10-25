@@ -105,7 +105,7 @@ function getBotResponse(input) {
   lastQuery = input; // Store the last query when a new query is sent
   var currentURL = window.location.href;
   let chatbotResUrl = determineChatbotUrl(currentURL);
-  let botHtml = '<p class="botText"><div class="bot-inner" style="color: white; padding: 10px; background: #04724D; width: 51px; margin-left: 10px; display: flex; border-radius: 4px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column; font-size: 12px; font-weight: 500;">' + '<div class="typing"> <div class="dot"></div> <div class="dot"></div> <div the="dot"></div> </div>'+ '</div></p>';
+  let botHtml = '<p class="botText"><div class="bot-inner" style="color: white; padding: 10px; background: #04724D; width: 51px; margin-left: 10px; display: flex; border-radius: 4px; align-items: flex-start; justify-content: flex-start; text-align: justify; flex-direction: column; font-size: 12px; font-weight: 500;">' + '<div class="typing"> <div class="dot"></div> <div class="dot"></div> <div class="dot"></div> </div>'+ '</div></p>';
   $("#chatbox").append(botHtml);
 
   $.ajax({
