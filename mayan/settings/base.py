@@ -419,3 +419,77 @@ if not DATABASES:
                 )
             }
         }
+
+# settings.py
+
+import os
+
+
+SAML_CONFIG = {
+    'strict': True,
+    'debug': True,
+    'sp': {
+        'entityId': 'urn:dev-k1ilanovtx5hlljf.us.auth0.com',  # Ensure this matches the expected issuer
+        'assertionConsumerService': {
+            'url': 'http://127.0.0.1:8000/saml-callback/',  # Make sure this matches the Auth0 ACS URL
+            'binding': 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
+        },
+        'singleLogoutService': {
+            'url': 'http://127.0.0.1:8000/slo',
+            'binding': 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
+        },
+        'x509cert': open(os.path.join(BASE_DIR, 'certificate.crt')).read(),
+        'privateKey': open(os.path.join(BASE_DIR, 'private.key')).read(),
+    },
+    'idp': {
+        'entityId': 'urn:dev-k1ilanovtx5hlljf.us.auth0.com',  # Match this to the actual IdP issuer (Auth0)
+        'singleSignOnService': {
+            'url': 'https://dev-k1ilanovtx5hlljf.us.auth0.com/samlp/5lDgkJNJqSwHSrXPsYbR7MkIMDuM6b4F',
+            'binding': 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
+        },
+        'singleLogoutService': {
+            'url': 'https://dev-k1ilanovtx5hlljf.us.auth0.com/logout',
+            'binding': 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
+        },
+        'x509cert': '''-----BEGIN CERTIFICATE-----
+MIIDHTCCAgWgAwIBAgIJY9UQASVDUiRRMA0GCSqGSIb3DQEBCwUAMCwxKjAoBgNV
+BAMTIWRldi1rMWlsYW5vdnR4NWhsbGpmLnVzLmF1dGgwLmNvbTAeFw0yNDEwMjEw
+NDUwMDZaFw0zODA2MzAwNDUwMDZaMCwxKjAoBgNVBAMTIWRldi1rMWlsYW5vdnR4
+NWhsbGpmLnVzLmF1dGgwLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+ggEBANwC5BwKEwAHJP1q9SFg0Vf1l8YMn1xAo+yY0CY2ZLgB+qDeLV/noPHb0vb0
+cWWEvT3XtHIEilMRv/mQdrfvVPxkZI3CM4LupuhMU2tVHwSIeDK8Hvkwz/fq5NfF
+sAmOm+blFVsj4ovzgC/cJxWohpzOC5tWaEg7lFIYW1gp2LczaIAGGRLbU4tY0Hqy
+eiR85XnG1c87oEhKNps+A5g0e8gWslwM95Qg78viUkVcolWs0hplngUyS2wcYut6
+E/lTncjJD66yGPb4wvLoe0t/j7+IRBiC6d8WdZOktKixluNFHO0htvTiat19vNX5
+4qyqwRevVunkOBY6loxsiWCbwYsCAwEAAaNCMEAwDwYDVR0TAQH/BAUwAwEB/zAd
+BgNVHQ4EFgQU8wc2nsfe7m8Ge9TJnb9TgdqKeWEwDgYDVR0PAQH/BAQDAgKEMA0G
+CSqGSIb3DQEBCwUAA4IBAQDYUjPxyg35xDKJwuVbTiKW3zxRLNsA6MC8fdLMHTtm
+BNdF1kQcdlLTpCSkQqQ4mARt6LUyH6WNVQSvIeXv1AUwZI2jmtkCrnkotxCJkgXP
+siiPQ3XcK9twfIazFuYKeyNce4VapmWptgTDRD/O3qOHolzCXn4+mBP9vPTR8Rzx
+gL/+mQVZXj5ZBqQe2ExBzgQ5v8J5Q+v4LUe7NKjmafJT9ogEe9E5K7xplhZqP9Rm
+qH/Z5T/0hrAcVT+HYSGFLsZpS6Pu76uYB2wyqtiunTTNMkBtG+pULklapQlpVLwS
+sNhTZ7n8IT35x2Nn6N2MY26XtjCF6yxs70pzFeFKVUBy
+        -----END CERTIFICATE-----''',
+        'certFingerprint': '42:42:C5:B8:36:B3:D4:FF:E7:52:E4:2B:0A:A6:E8:0B:1B:D9:A5:EE',
+        'certFingerprintAlgorithm': 'sha1',
+    },
+    'security': {
+        'authnRequestsSigned': False,
+        'logoutRequestSigned': True,
+        'logoutResponseSigned': False,
+        'wantAssertionsSigned': True,
+        'signatureAlgorithm': 'rsa-sha1',
+        'digestAlgorithm': 'sha1',
+    },
+}
+
+
+# LOGIN_URL = '/saml/login/' 
+# APPEND_SLASH=False
+
+SESSION_COOKIE_SAMESITE = 'Lax'  # Other options: 'Strict' or 'None'
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_AGE = 1209600  # 2 weeks
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+CORS_ALLOW_ALL_ORIGINS = True  

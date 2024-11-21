@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import simple_string_view, chatbot_res, chatbot_res_with_id, check_process, document_details
 from .config import config_list, create_config
+from .saml_auth import *
 
 __all__ = ('urlpatterns',)
 
@@ -19,4 +20,11 @@ urlpatterns = [
     path('verified_files',  document_details, name='verified_files'),
 ]
 
+saml_url = [
+    path('saml/login/', saml_login, name='saml_login'),
+    path('saml/logout/', saml_logout, name='saml_logout'),
+    path('saml-callback/', saml_acs, name='saml_acs'),  # Ensure a trailing slash here
+]
+
 urlpatterns.extend(config)
+urlpatterns.extend(saml_url)

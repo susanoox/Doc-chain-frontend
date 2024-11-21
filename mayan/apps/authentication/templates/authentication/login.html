@@ -75,14 +75,17 @@
                                         </button>
                                         &nbsp;
                                     {% empty %}
-                                            <button class="login-button" name="{% if form.prefix %}{{ form.prefix }}-submit{% else %}submit{% endif %}" type="submit">
-                                                <!-- {% if submit_icon %}
-                                                {{ submit_icon.render }}
-                                            {% else %}
-                                                <i class="fa fa-check"></i>
-                                                {% endif %} -->
-                                            {% if submit_label %}{{ submit_label }}{% else %}{% if form.instance %}{% trans 'Save' %}{% else %}{% trans 'Submit' %}{% endif %}{% endif %}
-                                        </button>
+                                            <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                                <button class="login-button" name="{% if form.prefix %}{{ form.prefix }}-submit{% else %}submit{% endif %}" type="submit">
+                                                    <!-- {% if submit_icon %}
+                                                    {{ submit_icon.render }}
+                                                {% else %}
+                                                    <i class="fa fa-check"></i>
+                                                    {% endif %} -->
+                                                {% if submit_label %}{{ submit_label }}{% else %}{% if form.instance %}{% trans 'Save' %}{% else %}{% trans 'Submit' %}{% endif %}{% endif %}
+                                                {% if submit_label %}<a style="width:100%" href="{% url 'saml_login' %}"><button type="button" id="samlLoginButton" style="width: 100%; background: #06c182; border: none; padding: 9px; color: white;">Saml login</button></a> {% endif %}
+                                                </button>
+                                            </div>
                                         {% if previous %}
                                               &nbsp;<a class="btn btn-default" onclick='history.back();'>
                                                 <i class="fa fa-times"></i> {% if cancel_label %}{{ cancel_label }}{% else %}{% trans 'Cancel' %}{% endif %}
@@ -115,5 +118,16 @@
             </div>
         </div> -->
     </div>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            var loginButton = document.getElementById('samlLoginButton');
+            if (loginButton) {
+                loginButton.onclick = function() {
+                    window.location.href = "login"; // Make sure 'login' is the correct name of your URL pattern
+                };
+            }
+        });
+    </script>
+    
     {% appearance_app_templates template_name='login_content' %}
 {% endblock %}
