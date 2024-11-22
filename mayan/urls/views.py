@@ -171,3 +171,30 @@ def document_details(request):
     print(context)
 
     return render(request, 'document_details.html', context)
+
+
+def document_unverified(request):
+    compromised_documents = [1113]  
+
+    response = requests.get(BlockUrl)
+    print(response.json())
+    if response.status_code == 200:
+        api_data = response.json()  
+
+        api_document_ids = {document['id'] for document in api_data}
+
+        all_documents = Document.objects.all()
+
+        for document in all_documents:
+            if document.id not in api_document_ids:
+                compromised_documents.append(document)
+
+    else:
+        print(f"Failed to fetch data from API. Status code: {response.status_code}")
+
+    context = {
+        'compromised_docs': compromised_documents,
+    }
+    print(context)
+
+    return render(request, 'document_unverified.html', context)

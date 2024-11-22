@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import simple_string_view, chatbot_res, chatbot_res_with_id, check_process, document_details
+from .views import simple_string_view, chatbot_res, chatbot_res_with_id, check_process, document_details, document_unverified
 from .config import config_list, create_config
 from .saml_auth import *
 
@@ -18,6 +18,7 @@ urlpatterns = [
     path('chatbot_res', chatbot_res, name='chatbot_res'),
     path('chatbot_res_with_id/<int:doc_id>', chatbot_res_with_id, name='chatbot_res_with_id'),
     path('verified_files',  document_details, name='verified_files'),
+    path('document_unverified',  document_unverified, name='document_unverified'),
 ]
 
 saml_url = [
