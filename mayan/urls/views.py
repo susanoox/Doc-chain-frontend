@@ -152,16 +152,13 @@ def document_details(request):
     response = requests.get(BlockUrl)
     if response.status_code == 200:
         data = response.json()
-        obj1 = Document.objects.all()
-        for i in obj1:
-            print("Doc id is : ", i.id)
+        # obj1 = Document.objects.all()
+        # for i in obj1:
+        #     print("Doc id is : ", i.id)
         # obj = Document.objects.get(id=3)
-        output_data.append(obj1)
         for document in data:
             try:
                 obj = Document.objects.get(id=document['id'])
-                output_data.append(obj)
-                output_data.append(obj)
                 output_data.append(obj)
             except:
                 print("match does't exist at : ", document['id'])
