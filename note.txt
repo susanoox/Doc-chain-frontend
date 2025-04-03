@@ -1,3 +1,17 @@
+https://github.com/SAML-Toolkits/python3-saml = saml installation method!
+use this:  pip install python3-saml if python-saml is not working
+
+(docchain) root@srv774976:~/Doc-chain-frontend# python --version
+Python 3.12.3
+Python 3.10.16
+
+if you are facing any issue on 
+```
+Installing package: Bootstrap (=3.4.1)... Downloading... Verifying... Extracting... maximum recursion depth exceeded
+```
+like that the error should occer in "/root/Doc-chain-frontend/mayan/apps/dependencies/classes.py" it's the issue of extraction of downloaded packages.
+
+
 ----------------------------------------------------------------------------------------------------------------------
 deactivate venv = source deactivate
 ----------------------------------------------------------------------------------------------------------------------

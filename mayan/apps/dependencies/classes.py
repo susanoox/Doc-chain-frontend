@@ -5,6 +5,9 @@ from packaging import version
 import pkg_resources
 import shutil
 import sys
+import tarfile
+import os
+
 
 from furl import furl
 import requests
@@ -596,56 +599,31 @@ class JavaScriptDependency(Dependency):
             path_compressed_file = self.get_tar_file_path()
             path_temporary = Path(temporary_directory)
 
-            with path_compressed_file.open(mode='rb') as file_object:
-                archive = TarArchive.open(file_object=file_object)
+            # Safely extract using tarfile
+            with tarfile.open(path_compressed_file, mode='r:*') as tar:
+                def is_within_directory(directory, target):
+                    abs_directory = os.path.abspath(directory)
+                    abs_target = os.path.abspath(target)
+                    return os.path.commonpath([abs_directory]) == os.path.commonpath([abs_directory, abs_target])
 
-                for member in archive.members():
-                    member_path = (path_temporary / member).resolve()
+                def safe_extract(tar_obj, path="."):
+                    for member in tar_obj.getmembers():
+                        member_path = os.path.join(path, member.name)
+                        if not is_within_directory(path, member_path):
+                            raise DependenciesException(f"Path traversal detected in tar file: {member.name}")
+                    tar_obj.extractall(path=path)
 
-                    if member_path.parent.is_relative_to(path_temporary):
-                        with archive.open_member(filename=str(member)) as member_archive_file_object:
-                            member_path.parent.mkdir(exist_ok=True, parents=True)
-                            with member_path.open(mode='wb+') as member_storage_file_object:
-                                shutil.copyfileobj(
-                                    fsrc=member_archive_file_object,
-                                    fdst=member_storage_file_object
-                                )
-                    else:
-                        raise DependenciesException(
-                            'Suspicious path traversal: {}. Dependency '
-                            'might be compromised'.format(member)
-                        )
+                safe_extract(tar, path=path_temporary)
 
-            self.patch_files(
-                path=temporary_directory, replace_list=replace_list
-            )
+            self.patch_files(path=temporary_directory, replace_list=replace_list)
 
             path_install = self.get_install_path()
-
-            # Clear the installation path of previous content.
-            shutil.rmtree(
-                path=str(path_install), ignore_errors=True
-            )
-
-            # Scoped packages are nested under a parent directory create it
-            # to avoid rename errors.
-            path_install.mkdir(parents=True)
-
-            # Copy the content under the dependency's extracted content
-            # folder 'package' to the final location.
-            # We do a copy and delete instead of move because os.rename
-            # doesn't support renames across filesystems.
             path_uncompressed_package = Path(temporary_directory, 'package')
-            shutil.rmtree(
-                path=str(path_install)
-            )
-            shutil.copytree(
-                src=str(path_uncompressed_package),
-                dst=str(path_install)
-            )
 
-            # Clean up temporary directory used for download.
-            shutil.rmtree(path=self.path_cache, ignore_errors=True)
+            shutil.rmtree(str(path_install), ignore_errors=True)
+            path_install.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copytree(src=str(path_uncompressed_package), dst=str(path_install))
+            shutil.rmtree(self.path_cache, ignore_errors=True)
 
     def download(self):
         self.path_cache = mkdtemp()
