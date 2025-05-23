@@ -378,3 +378,20 @@ lists
         {% endfor %}
     </div>
 </div>
+
+--------------------------------------------------------------------
+
+steps to setup docchain:
+2. apt install python3-venv
+3. python3 -m venv docchain
+4. source docchain/bin/activate
+5. make setup-dev-environment
+6. ./manage.py common_initial_setup
+7. make runserver
+
+to run the server in tempory staging env
+1. make docker-staging-start
+2. make docker-staging-frontend
+3. make docker-staging-logger
+
+----------------------------------------------------------------------
